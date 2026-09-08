@@ -1,59 +1,85 @@
 import React from 'react';
 
 export default function Footer({ onNavigate }) {
-  const handleNavClick = (page, e) => {
+  const handleNav = (page, e) => {
     if (e) e.preventDefault();
     if (onNavigate) onNavigate(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <footer className="footer">
-      <div className="footer-inner">
+    <footer className="marketplace-footer">
+      <div className="footer-top-columns">
         <div>
-          <a href="/" className="brand-logo" onClick={(e) => handleNavClick('home', e)}>
-            <span className="brand-icon">🛍️</span>
-            <span>ShopSphere</span>
-          </a>
-          <p className="footer-brand-desc">
-            Modern shopping made simple. Discover high-quality electronics, jewelry, and fashion with real-time API catalog updates.
+          <h4 className="footer-title">ABOUT</h4>
+          <ul className="footer-list">
+            <li><a href="#/about" onClick={(e) => handleNav('about', e)}>About Us</a></li>
+            <li><a href="#/about" onClick={(e) => handleNav('about', e)}>Contact Us</a></li>
+            <li><span className="footer-link-disabled">Careers</span></li>
+            <li><span className="footer-link-disabled">ShopSphere Stories</span></li>
+            <li><span className="footer-link-disabled">Press & Media</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="footer-title">HELP</h4>
+          <ul className="footer-list">
+            <li><span className="footer-link-disabled">Payments</span></li>
+            <li><span className="footer-link-disabled">Shipping Info</span></li>
+            <li><span className="footer-link-disabled">Cancellation & Returns</span></li>
+            <li><span className="footer-link-disabled">FAQ & Support</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="footer-title">CONSUMER POLICY</h4>
+          <ul className="footer-list">
+            <li><span className="footer-link-disabled">Cancellation & Return Policy</span></li>
+            <li><span className="footer-link-disabled">Terms Of Use</span></li>
+            <li><span className="footer-link-disabled">Security</span></li>
+            <li><span className="footer-link-disabled">Privacy Policy</span></li>
+            <li><span className="footer-link-disabled">Sitemap</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="footer-title">SOCIAL</h4>
+          <ul className="footer-list">
+            <li><span className="footer-link-disabled">Facebook</span></li>
+            <li><span className="footer-link-disabled">Twitter / X</span></li>
+            <li><span className="footer-link-disabled">Instagram</span></li>
+            <li><span className="footer-link-disabled">YouTube</span></li>
+          </ul>
+        </div>
+
+        <div className="footer-address-col">
+          <h4 className="footer-title">REGISTERED OFFICE ADDRESS</h4>
+          <p className="footer-address-text">
+            ShopSphere Internet Private Limited,<br />
+            Buildings Alyssa, Begonia & Clover Elephant Tech Park,<br />
+            Outer Ring Road, Devarabeesanahalli Village,<br />
+            Bengaluru, 560103, Karnataka, India
           </p>
-        </div>
-
-        <div>
-          <h4 className="footer-col-title">Quick Links</h4>
-          <ul className="footer-links">
-            <li><a href="/" className="footer-link" onClick={(e) => handleNavClick('home', e)}>Home</a></li>
-            <li><a href="/products" className="footer-link" onClick={(e) => handleNavClick('products', e)}>Products</a></li>
-            <li><a href="/about" className="footer-link" onClick={(e) => handleNavClick('about', e)}>About Us</a></li>
-            <li><a href="/cart" className="footer-link" onClick={(e) => handleNavClick('cart', e)}>Shopping Cart</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="footer-col-title">Categories</h4>
-          <ul className="footer-links">
-            <li><a href="/products" className="footer-link" onClick={(e) => handleNavClick('products', e)}>Electronics</a></li>
-            <li><a href="/products" className="footer-link" onClick={(e) => handleNavClick('products', e)}>Jewelry</a></li>
-            <li><a href="/products" className="footer-link" onClick={(e) => handleNavClick('products', e)}>Men's Clothing</a></li>
-            <li><a href="/products" className="footer-link" onClick={(e) => handleNavClick('products', e)}>Women's Clothing</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="footer-col-title">Customer Care</h4>
-          <ul className="footer-links">
-            <li><span className="footer-link">24/7 Support</span></li>
-            <li><span className="footer-link">Fast Shipping</span></li>
-            <li><span className="footer-link">Easy Returns</span></li>
-            <li><span className="footer-link">Secure Payment</span></li>
-          </ul>
         </div>
       </div>
 
-      <div className="footer-bottom">
-        <span>&copy; {new Date().getFullYear()} ShopSphere. All rights reserved. Capstone Web Project.</span>
-        <span>Powered by Fake Store REST API & React 18</span>
+      <div className="footer-bottom-trust-bar">
+        <div className="trust-item">
+          <span>🛍️ 100% Original Products</span>
+        </div>
+        <div className="trust-item">
+          <span>⚡ Fast Express Delivery</span>
+        </div>
+        <div className="trust-item">
+          <span>🛡️ 30-Day Easy Returns</span>
+        </div>
+        <div className="trust-item">
+          <span>🔒 100% Safe & Secure Payments</span>
+        </div>
+      </div>
+
+      <div className="footer-copyright-bar">
+        <span>&copy; {new Date().getFullYear()} ShopSphere. All rights reserved. Capstone Indian Marketplace.</span>
       </div>
     </footer>
   );

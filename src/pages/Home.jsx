@@ -1,105 +1,157 @@
-import React, { useEffect, useState } from 'react';
-import ProductGrid from '../components/ProductGrid';
-import Loading from '../components/Loading';
+import React, { useState, useEffect } from 'react';
+import CategoryBar from '../components/CategoryBar';
+import HeroCarousel from '../components/HeroCarousel';
 import FlashSaleTimer from '../components/FlashSaleTimer';
+import ProductSection from '../components/ProductSection';
+import Loading from '../components/Loading';
 import { getProducts } from '../services/api';
+import { useWishlist } from '../context/WishlistContext';
 
-export default function Home({ onNavigate, onSelectProduct }) {
-  const [featuredProducts, setFeaturedProducts] = useState([]);
+export default function Home({ onNavigate, onSelectProduct, onSelectCategory }) {
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { recentlyViewed } = useWishlist();
 
   useEffect(() => {
-    async function loadFeatured() {
+    async function loadData() {
       setLoading(true);
       const data = await getProducts();
-      setFeaturedProducts(data.slice(0, 4));
+      setProducts(data);
       setLoading(false);
     }
-    loadFeatured();
+    loadData();
   }, []);
 
-  const handleShopNow = () => {
-    if (onNavigate) onNavigate('products');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleCategoryClick = (cat) => {
+    if (onSelectCategory) onSelectCategory(cat);
   };
 
+  const handleViewAllCategory = (cat) => {
+    if (onSelectCategory) onSelectCategory(cat);
+  };
+
+  // Product Section Subsets
+  const dealsOfDay = products.filter(p => p.discount && p.discount >= 10).slice(0, 4);
+  const mobiles = products.filter(p => p.category === 'Mobiles').slice(0, 4);
+  const electronics = products.filter(p => p.category === 'Electronics' || p.category === 'Laptops').slice(0, 4);
+  const fashion = products.filter(p => p.category.includes('Fashion')).slice(0, 4);
+  const appliances = products.filter(p => p.category === 'Appliances' || p.category === 'TVs').slice(0, 4);
+  const bestSellers = products.filter(p => p.isBestSeller).slice(0, 4);
+  const recommended = products.slice(4, 8);
+
   return (
-    <div>
-      {/* Real-time Flash Sale Countdown Banner */}
+    <div className="home-page-container">
+      {/* Category Navigation Bar */}
+      <CategoryBar selectedCategory="all" onSelectCategory={handleCategoryClick} />
+
+      {/* Hero Carousel */}
+      <HeroCarousel onNavigateCategory={handleCategoryClick} />
+
+      {/* Promotional Bank Offer Cards */}
+      <section className="bank-offers-grid">
+        <div className="bank-offer-card hdfc">
+          <span className="offer-badge">HDFC BANK</span>
+          <h4>10% Instant Discount</h4>
+          <p>On Credit & Debit Cards • Min order ₹5,000</p>
+        </div>
+        <div className="bank-offer-card icici">
+          <span className="offer-badge">ICICI BANK</span>
+          <h4>Up to ₹3,000 Off</h4>
+          <p>On No Cost EMI Transactions</p>
+        </div>
+        <div className="bank-offer-card sbi">
+          <span className="offer-badge">AXIS BANK</span>
+          <h4>5% Unlimited Cashback</h4>
+          <p>Using ShopSphere Axis Credit Card</p>
+        </div>
+        <div className="bank-offer-card delivery">
+          <span className="offer-badge">FREE DELIVERY</span>
+          <h4>Zero Shipping Cost</h4>
+          <p>On All Orders Over ₹500 across India</p>
+        </div>
+      </section>
+
+      {/* Real-time Flash Sale Countdown */}
       <FlashSaleTimer />
 
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-badge">✨ Live Interactive Shopping Platform</div>
-        <h1 className="hero-title">Shop smarter. Live better.</h1>
-        <p className="hero-subtitle">
-          Discover quality products at great prices. Real-time currency conversions, live stock updates, and instant global shipping.
-        </p>
-        <button type="button" className="hero-cta-btn" onClick={handleShopNow}>
-          <span>Shop Now</span>
-          <span>→</span>
-        </button>
-      </section>
+      {loading ? (
+        <Loading message="Loading ShopSphere Marketplace deals..." />
+      ) : (
+        <>
+          {/* Deals of the Day */}
+          <ProductSection 
+            title="🔥 Deals of the Day" 
+            subtitle="Massive price drops on top-rated products • Limited Time Offers"
+            products={dealsOfDay}
+            onSelectProduct={onSelectProduct}
+            onViewAll={() => handleViewAllCategory('all')}
+          />
 
-      {/* Value Proposition Benefits */}
-      <section className="benefits-grid">
-        <div className="benefit-card">
-          <div className="benefit-icon">🚀</div>
-          <div>
-            <h3 className="benefit-title">Fast Global Shipping</h3>
-            <p className="benefit-desc">Free express delivery on all orders over $50</p>
-          </div>
-        </div>
+          {/* Best Mobiles & Smartphones */}
+          <ProductSection 
+            title="📱 Top Smartphones & Mobiles" 
+            subtitle="Samsung, Apple, OnePlus, Xiaomi & More"
+            products={mobiles.length ? mobiles : products.slice(0, 4)}
+            onSelectProduct={onSelectProduct}
+            onViewAll={() => handleViewAllCategory('Mobiles')}
+          />
 
-        <div className="benefit-card">
-          <div className="benefit-icon">🛡️</div>
-          <div>
-            <h3 className="benefit-title">Buyer Protection</h3>
-            <p className="benefit-desc">Full 30-day money-back guarantee policy</p>
-          </div>
-        </div>
+          {/* Best Electronics & Laptops */}
+          <ProductSection 
+            title="💻 Laptops, Headphones & Wearables" 
+            subtitle="MacBooks, ROG Gaming, Sony Noise Canceling, Apple Watch"
+            products={electronics.length ? electronics : products.slice(2, 6)}
+            onSelectProduct={onSelectProduct}
+            onViewAll={() => handleViewAllCategory('Electronics')}
+          />
 
-        <div className="benefit-card">
-          <div className="benefit-icon">⚡</div>
-          <div>
-            <h3 className="benefit-title">Real-Time API Sync</h3>
-            <p className="benefit-desc">Live currency selector & inventory stock counters</p>
-          </div>
-        </div>
+          {/* Fashion & Apparel */}
+          <ProductSection 
+            title="👗 Fashion & Apparel Trends" 
+            subtitle="Kurtas, Cotton Shirts, Nike Sneakers & Handbags"
+            products={fashion.length ? fashion : products.slice(6, 10)}
+            onSelectProduct={onSelectProduct}
+            onViewAll={() => handleViewAllCategory("Men's Fashion")}
+          />
 
-        <div className="benefit-card">
-          <div className="benefit-icon">🔒</div>
-          <div>
-            <h3 className="benefit-title">Secure Checkout</h3>
-            <p className="benefit-desc">Encrypted payments & zero transaction fees</p>
-          </div>
-        </div>
-      </section>
+          {/* Home & TV Appliances */}
+          <ProductSection 
+            title="📺 TVs & Home Appliances" 
+            subtitle="LG OLED 4K, Smart Fridges, AI Washing Machines"
+            products={appliances.length ? appliances : products.slice(8, 12)}
+            onSelectProduct={onSelectProduct}
+            onViewAll={() => handleViewAllCategory('Appliances')}
+          />
 
-      {/* Featured Products */}
-      <section style={{ marginBottom: '3.5rem' }}>
-        <div className="section-header">
-          <div>
-            <h2 className="section-title">Featured Collections</h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-              Handpicked trending items updated in real time
-            </p>
-          </div>
-          <button 
-            type="button" 
-            className="category-btn active"
-            onClick={handleShopNow}
-          >
-            View All Catalog →
-          </button>
-        </div>
+          {/* Best Sellers */}
+          <ProductSection 
+            title="⭐ Highest Rated Best Sellers" 
+            subtitle="Most loved by millions of ShopSphere shoppers"
+            products={bestSellers.length ? bestSellers : products.slice(1, 5)}
+            onSelectProduct={onSelectProduct}
+            onViewAll={() => handleViewAllCategory('all')}
+          />
 
-        {loading ? (
-          <Loading message="Loading featured items..." />
-        ) : (
-          <ProductGrid products={featuredProducts} onSelectProduct={onSelectProduct} />
-        )}
-      </section>
+          {/* Recommended For You */}
+          <ProductSection 
+            title="🎯 Recommended for You" 
+            subtitle="Personalized suggestions based on your browsing"
+            products={recommended}
+            onSelectProduct={onSelectProduct}
+            onViewAll={() => handleViewAllCategory('all')}
+          />
+
+          {/* Recently Viewed Products */}
+          {recentlyViewed.length > 0 && (
+            <ProductSection 
+              title="👁️ Recently Viewed Products" 
+              subtitle="Continue shopping from where you left off"
+              products={recentlyViewed.slice(0, 4)}
+              onSelectProduct={onSelectProduct}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 }

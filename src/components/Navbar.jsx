@@ -1,94 +1,138 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useCart } from '../context/CartContext';
-import { CURRENCY_RATES } from '../utils/helpers';
+import { useWishlist } from '../context/WishlistContext';
+import { INDIAN_PRODUCTS } from '../services/indianProductsData';
 
-export default function Navbar({ activePage = 'home', onNavigate }) {
-  const { totalItems, currency, setCurrency } = useCart();
-  const [mobileOpen, setMobileOpen] = useState(false);
+export default function Navbar({ activePage = 'home', onNavigate, onSearch }) {
+  const { totalItems } = useCart();
+  const { wishlistItems } = useWishlist();
 
-  const handleNavClick = (page, e) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const searchRef = useRef(null);
+
+  // Live Autocomplete Suggestions Logic
+  useEffect(() => {
+    const q = searchTerm.trim().toLowerCase();
+    if (q.length < 2) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    const matches = INDIAN_PRODUCTS.filter(p => 
+      p.title.toLowerCase().includes(q) ||
+      p.brand.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q)
+    ).slice(0, 6);
+
+    setSuggestions(matches);
+    setShowSuggestions(matches.length > 0);
+  }, [searchTerm]);
+
+  // Click outside listener for suggestions box
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSearchSubmit = (e) => {
+    if (e) e.preventDefault();
+    if (onSearch) onSearch(searchTerm);
+    setShowSuggestions(false);
+  };
+
+  const handleSuggestionClick = (product) => {
+    if (onNavigate) onNavigate('product-details', product.id);
+    setSearchTerm('');
+    setShowSuggestions(false);
+  };
+
+  const handleNav = (page, e) => {
     if (e) e.preventDefault();
     if (onNavigate) onNavigate(page);
-    setMobileOpen(false);
+    setMobileMenuOpen(false);
   };
 
   return (
-    <header className="navbar">
-      <div className="navbar-inner">
-        <a 
-          href="#/" 
-          className="brand-logo"
-          onClick={(e) => handleNavClick('home', e)}
-        >
-          <span className="brand-icon">🛍️</span>
-          <span>ShopSphere</span>
+    <header className="marketplace-header">
+      <div className="header-top-container">
+        {/* Brand Logo */}
+        <a href="#/" className="header-brand" onClick={(e) => handleNav('home', e)}>
+          <div className="brand-logo-text">
+            <span className="brand-icon">🛍️</span>
+            <span className="brand-name">ShopSphere</span>
+          </div>
+          <span className="brand-tagline">Explore Plus ✦</span>
         </a>
 
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <ul className={`nav-links ${mobileOpen ? 'open' : ''}`}>
-            <li>
-              <a 
-                href="#/" 
-                className={`nav-link ${activePage === 'home' ? 'active' : ''}`}
-                onClick={(e) => handleNavClick('home', e)}
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#/products" 
-                className={`nav-link ${activePage === 'products' ? 'active' : ''}`}
-                onClick={(e) => handleNavClick('products', e)}
-              >
-                Products
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#/about" 
-                className={`nav-link ${activePage === 'about' ? 'active' : ''}`}
-                onClick={(e) => handleNavClick('about', e)}
-              >
-                About
-              </a>
-            </li>
-          </ul>
+        {/* Large Marketplace Search Bar */}
+        <div className="header-search-wrapper" ref={searchRef}>
+          <form className="header-search-form" onSubmit={handleSearchSubmit}>
+            <input 
+              type="text" 
+              className="header-search-input"
+              placeholder="Search for products, brands and categories..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
+              aria-label="Search catalog"
+            />
+            <button type="submit" className="header-search-btn" aria-label="Search">
+              🔍
+            </button>
+          </form>
 
-          {/* Real-time Currency Converter Selector */}
-          <div className="currency-selector-wrapper">
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', fontWeight: 600 }}>Curr:</span>
-            <select 
-              className="currency-select"
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value)}
-              aria-label="Select currency"
-            >
-              {Object.keys(CURRENCY_RATES).map(code => (
-                <option key={code} value={code}>
-                  {CURRENCY_RATES[code].label}
-                </option>
+          {/* Autocomplete Suggestions Box */}
+          {showSuggestions && (
+            <ul className="search-suggestions-dropdown">
+              {suggestions.map(p => (
+                <li key={p.id} className="suggestion-item" onClick={() => handleSuggestionClick(p)}>
+                  <img src={p.image} alt={p.title} className="suggestion-img" />
+                  <div className="suggestion-info">
+                    <span className="suggestion-title">{p.title}</span>
+                    <span className="suggestion-meta">{p.brand} • in {p.category}</span>
+                  </div>
+                </li>
               ))}
-            </select>
-          </div>
+            </ul>
+          )}
+        </div>
 
-          <a 
-            href="#/cart" 
-            className="cart-badge-btn"
-            onClick={(e) => handleNavClick('cart', e)}
-            aria-label={`Cart with ${totalItems} items`}
-          >
-            <span>🛒 Cart</span>
-            <span className="cart-count">{totalItems}</span>
+        {/* Action Controls */}
+        <div className={`header-actions ${mobileMenuOpen ? 'open' : ''}`}>
+          <a href="#/account" className={`header-action-btn ${activePage === 'account' ? 'active' : ''}`} onClick={(e) => handleNav('account', e)}>
+            👤 Login / Profile
           </a>
-        </nav>
 
-        <button 
-          className="mobile-toggle"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle navigation menu"
-        >
-          {mobileOpen ? '✕' : '☰'}
+          <a href="#/orders" className={`header-action-btn ${activePage === 'orders' ? 'active' : ''}`} onClick={(e) => handleNav('orders', e)}>
+            📦 My Orders
+          </a>
+
+          <a href="#/wishlist" className="header-action-btn badge-btn" onClick={(e) => handleNav('wishlist', e)}>
+            ❤️ Wishlist
+            {wishlistItems.length > 0 && (
+              <span className="action-badge red">{wishlistItems.length}</span>
+            )}
+          </a>
+
+          <a href="#/cart" className="header-action-btn badge-btn cart-btn-highlight" onClick={(e) => handleNav('cart', e)}>
+            🛒 Cart
+            <span className="action-badge yellow">{totalItems}</span>
+          </a>
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <button className="mobile-menu-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle Menu">
+          {mobileMenuOpen ? '✕' : '☰'}
         </button>
       </div>
     </header>
