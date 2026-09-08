@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { CURRENCY_RATES } from '../utils/helpers';
 
 export default function Navbar({ activePage = 'home', onNavigate }) {
-  const { totalItems } = useCart();
+  const { totalItems, currency, setCurrency } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleNavClick = (page, e) => {
@@ -15,7 +16,7 @@ export default function Navbar({ activePage = 'home', onNavigate }) {
     <header className="navbar">
       <div className="navbar-inner">
         <a 
-          href="/" 
+          href="#/" 
           className="brand-logo"
           onClick={(e) => handleNavClick('home', e)}
         >
@@ -23,11 +24,11 @@ export default function Navbar({ activePage = 'home', onNavigate }) {
           <span>ShopSphere</span>
         </a>
 
-        <nav>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
           <ul className={`nav-links ${mobileOpen ? 'open' : ''}`}>
             <li>
               <a 
-                href="/" 
+                href="#/" 
                 className={`nav-link ${activePage === 'home' ? 'active' : ''}`}
                 onClick={(e) => handleNavClick('home', e)}
               >
@@ -36,7 +37,7 @@ export default function Navbar({ activePage = 'home', onNavigate }) {
             </li>
             <li>
               <a 
-                href="/products" 
+                href="#/products" 
                 className={`nav-link ${activePage === 'products' ? 'active' : ''}`}
                 onClick={(e) => handleNavClick('products', e)}
               >
@@ -45,25 +46,41 @@ export default function Navbar({ activePage = 'home', onNavigate }) {
             </li>
             <li>
               <a 
-                href="/about" 
+                href="#/about" 
                 className={`nav-link ${activePage === 'about' ? 'active' : ''}`}
                 onClick={(e) => handleNavClick('about', e)}
               >
                 About
               </a>
             </li>
-            <li>
-              <a 
-                href="/cart" 
-                className="cart-badge-btn"
-                onClick={(e) => handleNavClick('cart', e)}
-                aria-label={`Cart with ${totalItems} items`}
-              >
-                <span>🛒 Cart</span>
-                <span className="cart-count">{totalItems}</span>
-              </a>
-            </li>
           </ul>
+
+          {/* Real-time Currency Converter Selector */}
+          <div className="currency-selector-wrapper">
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', fontWeight: 600 }}>Curr:</span>
+            <select 
+              className="currency-select"
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
+              aria-label="Select currency"
+            >
+              {Object.keys(CURRENCY_RATES).map(code => (
+                <option key={code} value={code}>
+                  {CURRENCY_RATES[code].label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <a 
+            href="#/cart" 
+            className="cart-badge-btn"
+            onClick={(e) => handleNavClick('cart', e)}
+            aria-label={`Cart with ${totalItems} items`}
+          >
+            <span>🛒 Cart</span>
+            <span className="cart-count">{totalItems}</span>
+          </a>
         </nav>
 
         <button 

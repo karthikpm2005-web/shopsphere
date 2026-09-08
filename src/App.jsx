@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { CartProvider } from './context/CartContext';
+import { CartProvider, useCart } from './context/CartContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import LiveActivityToast from './components/LiveActivityToast';
 
 import Home from './pages/Home';
 import Products from './pages/Products';
@@ -10,11 +11,11 @@ import Cart from './pages/Cart';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
 
-export default function App() {
+function MainAppContent() {
   const [activePage, setActivePage] = useState('home');
   const [selectedProductId, setSelectedProductId] = useState(null);
+  const { toastMessage } = useCart();
 
-  // Sync hash routing if present
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace(/^#\/?/, '');
@@ -57,33 +58,49 @@ export default function App() {
   };
 
   return (
+    <div className="app-container">
+      {/* Real-time Global Notification Banner */}
+      {toastMessage && (
+        <div className="global-toast-banner" role="alert" aria-live="polite">
+          {toastMessage}
+        </div>
+      )}
+
+      {/* Real-time Activity Popup */}
+      <LiveActivityToast />
+
+      <Navbar activePage={activePage} onNavigate={navigateTo} />
+
+      <main className="main-content">
+        {activePage === 'home' && (
+          <Home onNavigate={navigateTo} onSelectProduct={handleSelectProduct} />
+        )}
+        {activePage === 'products' && (
+          <Products onSelectProduct={handleSelectProduct} />
+        )}
+        {activePage === 'product-details' && (
+          <ProductDetails productId={selectedProductId} onNavigate={navigateTo} />
+        )}
+        {activePage === 'cart' && (
+          <Cart onNavigate={navigateTo} />
+        )}
+        {activePage === 'about' && (
+          <About onNavigate={navigateTo} />
+        )}
+        {activePage === '404' && (
+          <NotFound onNavigate={navigateTo} />
+        )}
+      </main>
+
+      <Footer onNavigate={navigateTo} />
+    </div>
+  );
+}
+
+export default function App() {
+  return (
     <CartProvider>
-      <div className="app-container">
-        <Navbar activePage={activePage} onNavigate={navigateTo} />
-
-        <main className="main-content">
-          {activePage === 'home' && (
-            <Home onNavigate={navigateTo} onSelectProduct={handleSelectProduct} />
-          )}
-          {activePage === 'products' && (
-            <Products onSelectProduct={handleSelectProduct} />
-          )}
-          {activePage === 'product-details' && (
-            <ProductDetails productId={selectedProductId} onNavigate={navigateTo} />
-          )}
-          {activePage === 'cart' && (
-            <Cart onNavigate={navigateTo} />
-          )}
-          {activePage === 'about' && (
-            <About onNavigate={navigateTo} />
-          )}
-          {activePage === '404' && (
-            <NotFound onNavigate={navigateTo} />
-          )}
-        </main>
-
-        <Footer onNavigate={navigateTo} />
-      </div>
+      <MainAppContent />
     </CartProvider>
   );
 }

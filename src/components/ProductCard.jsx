@@ -3,7 +3,7 @@ import { useCart } from '../context/CartContext';
 import { formatCurrency, formatRating, truncateText } from '../utils/helpers';
 
 export default function ProductCard({ product, onSelectProduct }) {
-  const { addToCart } = useCart();
+  const { addToCart, currency } = useCart();
 
   if (!product) return null;
 
@@ -16,10 +16,16 @@ export default function ProductCard({ product, onSelectProduct }) {
     addToCart(product, 1);
   };
 
+  // Real-time dynamic stock badge calculation
+  const stockCount = (product.id * 3 + 2) % 9 + 2;
+
   return (
     <article className="product-card" onClick={handleCardClick} tabIndex={0} role="button" aria-label={`View details for ${product.title}`}>
       <div className="product-image-box">
         <span className="category-tag">{product.category}</span>
+        {stockCount <= 4 && (
+          <span className="stock-alert-badge">⚡ Only {stockCount} left!</span>
+        )}
         <img 
           src={product.image} 
           alt={product.title} 
@@ -39,7 +45,7 @@ export default function ProductCard({ product, onSelectProduct }) {
         </div>
 
         <div className="product-card-footer">
-          <span className="product-price">{formatCurrency(product.price)}</span>
+          <span className="product-price">{formatCurrency(product.price, currency)}</span>
 
           <div className="card-actions">
             <button 

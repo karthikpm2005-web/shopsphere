@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const CartContext = createContext();
 
 const CART_STORAGE_KEY = 'shopsphere_cart_v1';
+const CURRENCY_STORAGE_KEY = 'shopsphere_currency_v1';
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState(() => {
@@ -10,19 +11,38 @@ export function CartProvider({ children }) {
       const saved = localStorage.getItem(CART_STORAGE_KEY);
       return saved ? JSON.parse(saved) : [];
     } catch (e) {
-      console.error('Failed to load cart from localStorage:', e);
       return [];
     }
   });
 
-  // Sync to localStorage
+  const [currency, setCurrency] = useState(() => {
+    try {
+      return localStorage.getItem(CURRENCY_STORAGE_KEY) || 'USD';
+    } catch (e) {
+      return 'USD';
+    }
+  });
+
+  const [toastMessage, setToastMessage] = useState(null);
+
+  const showToast = (message) => {
+    setToastMessage(message);
+    setTimeout(() => {
+      setToastMessage(prev => (prev === message ? null : prev));
+    }, 3500);
+  };
+
   useEffect(() => {
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
-    } catch (e) {
-      console.error('Failed to save cart to localStorage:', e);
-    }
+    } catch (e) {}
   }, [cartItems]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(CURRENCY_STORAGE_KEY, currency);
+    } catch (e) {}
+  }, [currency]);
 
   const addToCart = (product, quantity = 1) => {
     setCartItems(prevItems => {
@@ -37,10 +57,12 @@ export function CartProvider({ children }) {
       }
       return [...prevItems, { ...product, quantity }];
     });
+    showToast(`🛒 Added ${quantity} × "${product.title.slice(0, 22)}..." to cart!`);
   };
 
   const removeFromCart = (productId) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+    showToast(`🗑️ Item removed from shopping cart.`);
   };
 
   const increaseQuantity = (productId) => {
@@ -66,11 +88,7 @@ export function CartProvider({ children }) {
   };
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
-  const subtotalPrice = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const subtotalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <CartContext.Provider
@@ -78,6 +96,10 @@ export function CartProvider({ children }) {
         cartItems,
         totalItems,
         subtotalPrice,
+        currency,
+        setCurrency,
+        toastMessage,
+        showToast,
         addToCart,
         removeFromCart,
         increaseQuantity,

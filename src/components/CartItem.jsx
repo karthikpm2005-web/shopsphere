@@ -3,7 +3,7 @@ import { useCart } from '../context/CartContext';
 import { formatCurrency } from '../utils/helpers';
 
 export default function CartItem({ item }) {
-  const { increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
+  const { increaseQuantity, decreaseQuantity, removeFromCart, currency } = useCart();
 
   if (!item) return null;
 
@@ -13,7 +13,7 @@ export default function CartItem({ item }) {
 
       <div className="cart-item-details">
         <h4 className="cart-item-title">{item.title}</h4>
-        <p className="cart-item-price">{formatCurrency(item.price)} each</p>
+        <p className="cart-item-price">{formatCurrency(item.price, currency)} each</p>
       </div>
 
       <div className="quantity-controls">
@@ -36,9 +36,9 @@ export default function CartItem({ item }) {
         </button>
       </div>
 
-      <div style={{ textAlign: 'right', minWidth: '90px' }}>
+      <div style={{ textAlign: 'right', minWidth: '95px' }}>
         <p style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-main)' }}>
-          {formatCurrency(item.price * item.quantity)}
+          {formatCurrency(item.price * item.quantity, currency)}
         </p>
         <button 
           type="button" 

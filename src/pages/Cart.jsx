@@ -4,7 +4,7 @@ import CartItem from '../components/CartItem';
 import { formatCurrency } from '../utils/helpers';
 
 export default function Cart({ onNavigate }) {
-  const { cartItems, totalItems, subtotalPrice, clearCart } = useCart();
+  const { cartItems, totalItems, subtotalPrice, clearCart, currency } = useCart();
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
 
   const shippingCost = subtotalPrice > 50 || subtotalPrice === 0 ? 0 : 9.99;
@@ -76,22 +76,22 @@ export default function Cart({ onNavigate }) {
 
           <div className="summary-row">
             <span>Subtotal ({totalItems} items)</span>
-            <span>{formatCurrency(subtotalPrice)}</span>
+            <span>{formatCurrency(subtotalPrice, currency)}</span>
           </div>
 
           <div className="summary-row">
             <span>Estimated Shipping</span>
-            <span>{shippingCost === 0 ? 'FREE' : formatCurrency(shippingCost)}</span>
+            <span>{shippingCost === 0 ? 'FREE' : formatCurrency(shippingCost, currency)}</span>
           </div>
 
           <div className="summary-row">
             <span>Estimated Tax (8%)</span>
-            <span>{formatCurrency(estimatedTax)}</span>
+            <span>{formatCurrency(estimatedTax, currency)}</span>
           </div>
 
           <div className="summary-row total">
             <span>Total</span>
-            <span>{formatCurrency(grandTotal)}</span>
+            <span>{formatCurrency(grandTotal, currency)}</span>
           </div>
 
           <button type="button" className="btn-checkout" onClick={handleCheckout}>

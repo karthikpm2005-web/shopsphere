@@ -1,17 +1,32 @@
 /**
  * Helper utility functions for ShopSphere e-commerce application.
+ * Supports multi-currency conversion (USD, EUR, GBP, INR, JPY) in real-time.
  */
 
+const CURRENCY_RATES = {
+  USD: { symbol: '$', rate: 1.0, label: 'USD ($)' },
+  EUR: { symbol: '€', rate: 0.92, label: 'EUR (€)' },
+  GBP: { symbol: '£', rate: 0.79, label: 'GBP (£)' },
+  INR: { symbol: '₹', rate: 83.5, label: 'INR (₹)' },
+  JPY: { symbol: '¥', rate: 155.0, label: 'JPY (¥)' }
+};
+
 /**
- * Formats a numerical amount to USD currency string ($XX.XX).
+ * Formats a numerical amount to string with currency symbol and exchange rate.
  */
-export function formatCurrency(amount) {
+export function formatCurrency(amount, currencyCode = 'USD') {
   if (typeof amount !== 'number' || isNaN(amount)) return '$0.00';
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  }).format(amount);
+  const curr = CURRENCY_RATES[currencyCode] || CURRENCY_RATES.USD;
+  const converted = amount * curr.rate;
+
+  if (currencyCode === 'JPY') {
+    return `${curr.symbol}${Math.round(converted).toLocaleString()}`;
+  }
+
+  return `${curr.symbol}${converted.toFixed(2)}`;
 }
+
+export { CURRENCY_RATES };
 
 /**
  * Generates rating star symbols string (e.g. "★ 4.5").

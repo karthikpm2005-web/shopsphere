@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProductGrid from '../components/ProductGrid';
 import Loading from '../components/Loading';
+import FlashSaleTimer from '../components/FlashSaleTimer';
 import { getProducts } from '../services/api';
 
 export default function Home({ onNavigate, onSelectProduct }) {
@@ -24,12 +25,15 @@ export default function Home({ onNavigate, onSelectProduct }) {
 
   return (
     <div>
+      {/* Real-time Flash Sale Countdown Banner */}
+      <FlashSaleTimer />
+
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="hero-badge">✨ Modern E-Commerce Platform</div>
+        <div className="hero-badge">✨ Live Interactive Shopping Platform</div>
         <h1 className="hero-title">Shop smarter. Live better.</h1>
         <p className="hero-subtitle">
-          Discover quality products at great prices. From high-tech electronics to fine jewelry and modern fashion trends.
+          Discover quality products at great prices. Real-time currency conversions, live stock updates, and instant global shipping.
         </p>
         <button type="button" className="hero-cta-btn" onClick={handleShopNow}>
           <span>Shop Now</span>
@@ -58,8 +62,8 @@ export default function Home({ onNavigate, onSelectProduct }) {
         <div className="benefit-card">
           <div className="benefit-icon">⚡</div>
           <div>
-            <h3 className="benefit-title">Live API Sync</h3>
-            <p className="benefit-desc">Real-time inventory and pricing updates</p>
+            <h3 className="benefit-title">Real-Time API Sync</h3>
+            <p className="benefit-desc">Live currency selector & inventory stock counters</p>
           </div>
         </div>
 

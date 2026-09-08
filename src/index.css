@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ShopSphere CSS Architecture - Modern Production Design System
+   ShopSphere CSS Architecture - Modern Real-Time Production Design System
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -9,8 +9,8 @@
   /* Color Palette */
   --bg-primary: #090d16;
   --bg-secondary: #0f172a;
-  --bg-card: rgba(30, 41, 59, 0.7);
-  --bg-card-hover: rgba(51, 65, 85, 0.8);
+  --bg-card: rgba(30, 41, 59, 0.75);
+  --bg-card-hover: rgba(51, 65, 85, 0.85);
   --bg-input: #1e293b;
   --bg-accent: rgba(99, 102, 241, 0.12);
   
@@ -99,7 +99,168 @@ img {
 }
 
 /* --------------------------------------------------------------------------
-   3. App Layout Container
+   3. Real-Time Global Notification Banner & Toasts
+   -------------------------------------------------------------------------- */
+.global-toast-banner {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  z-index: 1000;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.live-activity-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: var(--backdrop-blur);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  animation: bounceInUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-width: 340px;
+}
+
+@keyframes bounceInUp {
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.toast-avatar {
+  font-size: 1.6rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+}
+
+.toast-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.toast-title {
+  font-size: 0.825rem;
+  color: var(--text-main);
+}
+
+.toast-body {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.toast-time {
+  font-size: 0.7rem;
+  color: var(--primary-light);
+  font-weight: 700;
+  margin-top: 0.1rem;
+}
+
+.toast-close {
+  color: var(--text-subtle);
+  font-size: 0.9rem;
+  margin-left: auto;
+}
+
+/* Flash Sale Countdown Banner */
+.flash-sale-banner {
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.2), rgba(245, 158, 11, 0.2));
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1.5rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.flash-sale-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.flash-sale-badge {
+  background: #ef4444;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.775rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.flash-sale-desc {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.flash-sale-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.timer-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.timer-box {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-weight: 800;
+}
+
+.time-num {
+  color: var(--accent-amber);
+  font-size: 1.05rem;
+}
+
+.time-unit {
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+}
+
+.time-sep {
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   4. App Layout & Navbar Component
    -------------------------------------------------------------------------- */
 .app-container {
   display: flex;
@@ -115,9 +276,6 @@ img {
   padding: 2rem 1.5rem;
 }
 
-/* --------------------------------------------------------------------------
-   4. Navbar Component
-   -------------------------------------------------------------------------- */
 .navbar {
   position: sticky;
   top: 0;
@@ -157,7 +315,7 @@ img {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.75rem;
   list-style: none;
 }
 
@@ -184,6 +342,28 @@ img {
   height: 2px;
   background: var(--primary);
   border-radius: var(--radius-full);
+}
+
+/* Currency Selector */
+.currency-selector-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-md);
+}
+
+.currency-select {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
 }
 
 .cart-badge-btn {
@@ -218,6 +398,20 @@ img {
   display: none;
   font-size: 1.5rem;
   color: var(--text-main);
+}
+
+/* Stock Alert Badge */
+.stock-alert-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(239, 68, 68, 0.9);
+  color: #ffffff;
+  font-size: 0.725rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(4px);
 }
 
 /* --------------------------------------------------------------------------
@@ -798,7 +992,6 @@ img {
   color: var(--text-main);
   border-top: 1px solid var(--border-color);
   padding-top: 1rem;
-
 }
 
 .btn-checkout {

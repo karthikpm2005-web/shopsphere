@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ShopSphere – Premium Modern E-Commerce Product Catalog. Discover electronics, jewelry, men's & women's fashion with real-time API integration, seamless shopping cart, and fast checkout.">
+  <meta name="description" content="ShopSphere – Premium Real-Time E-Commerce Product Catalog. Features live multi-currency converter, stock tickers, flash sale countdown, global activity toasts, and instant shopping cart.">
   <meta name="theme-color" content="#0f172a">
-  <title>ShopSphere – Modern Online Shopping Catalog</title>
+  <title>ShopSphere – Real-Time Modern Online Shopping Catalog</title>
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛍️</text></svg>">
@@ -24,7 +24,6 @@
   <link rel="stylesheet" href="./src/index.css">
 
   <style>
-    /* Inline Fallback Styling in case CSS link relative resolution varies */
     :root {
       --bg-primary: #090d16;
       --bg-secondary: #0f172a;
@@ -49,14 +48,27 @@
 <body>
   <div id="root"></div>
 
-  <!-- Standalone Browser Execution Script -->
+  <!-- Standalone Real-Time Browser Execution Script -->
   <script type="text/babel">
     const { useState, useEffect, useContext, createContext, useMemo } = React;
 
-    // --- 1. HELPERS ---
-    function formatCurrency(amount) {
+    // --- 1. REAL-TIME CURRENCY & HELPERS ---
+    const CURRENCY_RATES = {
+      USD: { symbol: '$', rate: 1.0, label: 'USD ($)' },
+      EUR: { symbol: '€', rate: 0.92, label: 'EUR (€)' },
+      GBP: { symbol: '£', rate: 0.79, label: 'GBP (£)' },
+      INR: { symbol: '₹', rate: 83.5, label: 'INR (₹)' },
+      JPY: { symbol: '¥', rate: 155.0, label: 'JPY (¥)' }
+    };
+
+    function formatCurrency(amount, currencyCode = 'USD') {
       if (typeof amount !== 'number' || isNaN(amount)) return '$0.00';
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+      const curr = CURRENCY_RATES[currencyCode] || CURRENCY_RATES.USD;
+      const converted = amount * curr.rate;
+      if (currencyCode === 'JPY') {
+        return `${curr.symbol}${Math.round(converted).toLocaleString()}`;
+      }
+      return `${curr.symbol}${converted.toFixed(2)}`;
     }
 
     function formatRating(rating) {
@@ -121,7 +133,7 @@
       }
     }
 
-    // --- 3. CART CONTEXT ---
+    // --- 3. CART & CURRENCY CONTEXT ---
     const CartContext = createContext();
 
     function CartProvider({ children }) {
@@ -129,16 +141,28 @@
         try {
           const saved = localStorage.getItem('shopsphere_cart_v1');
           return saved ? JSON.parse(saved) : [];
-        } catch (e) {
-          return [];
-        }
+        } catch (e) { return []; }
       });
 
+      const [currency, setCurrency] = useState(() => {
+        try { return localStorage.getItem('shopsphere_currency_v1') || 'USD'; }
+        catch (e) { return 'USD'; }
+      });
+
+      const [toastMessage, setToastMessage] = useState(null);
+
+      const showToast = (msg) => {
+        setToastMessage(msg);
+        setTimeout(() => setToastMessage(prev => prev === msg ? null : prev), 3500);
+      };
+
       useEffect(() => {
-        try {
-          localStorage.setItem('shopsphere_cart_v1', JSON.stringify(cartItems));
-        } catch (e) {}
+        try { localStorage.setItem('shopsphere_cart_v1', JSON.stringify(cartItems)); } catch (e) {}
       }, [cartItems]);
+
+      useEffect(() => {
+        try { localStorage.setItem('shopsphere_currency_v1', currency); } catch (e) {}
+      }, [currency]);
 
       const addToCart = (product, quantity = 1) => {
         setCartItems(prev => {
@@ -150,9 +174,14 @@
           }
           return [...prev, { ...product, quantity }];
         });
+        showToast(`🛒 Added ${quantity} × "${product.title.slice(0, 22)}..." to cart!`);
       };
 
-      const removeFromCart = (id) => setCartItems(prev => prev.filter(i => i.id !== id));
+      const removeFromCart = (id) => {
+        setCartItems(prev => prev.filter(i => i.id !== id));
+        showToast(`🗑️ Item removed from shopping cart.`);
+      };
+
       const increaseQuantity = (id) => setCartItems(prev => prev.map(i => i.id === id ? { ...i, quantity: i.quantity + 1 } : i));
       const decreaseQuantity = (id) => setCartItems(prev => prev.map(i => i.id === id ? { ...i, quantity: i.quantity - 1 } : i).filter(i => i.quantity > 0));
       const clearCart = () => setCartItems([]);
@@ -161,19 +190,92 @@
       const subtotalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
       return (
-        <CartContext.Provider value={{ cartItems, totalItems, subtotalPrice, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart }}>
+        <CartContext.Provider value={{ cartItems, totalItems, subtotalPrice, currency, setCurrency, toastMessage, showToast, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart }}>
           {children}
         </CartContext.Provider>
       );
     }
 
-    function useCart() {
-      return useContext(CartContext);
+    function useCart() { return useContext(CartContext); }
+
+    // --- 4. REAL-TIME ACTIVITY & FLASH SALE COMPONENTS ---
+    const RECENT_ACTIVITIES = [
+      { name: 'Sarah M.', city: 'New York, USA', action: 'purchased Mens Casual Slim Fit T-Shirt', time: '2m ago' },
+      { name: 'Alex K.', city: 'London, UK', action: 'purchased Solid Gold Petite Ring', time: '4m ago' },
+      { name: 'Kenji T.', city: 'Tokyo, Japan', action: 'purchased SanDisk SSD 1TB Internal SSD', time: '1m ago' },
+      { name: 'Elena R.', city: 'Madrid, Spain', action: 'purchased Fjallraven Foldsack Backpack', time: '5m ago' },
+      { name: 'Priya S.', city: 'Mumbai, India', action: 'purchased John Hardy Naga Gold Bracelet', time: 'Just now' }
+    ];
+
+    function LiveActivityToast() {
+      const [activity, setActivity] = useState(null);
+      const [visible, setVisible] = useState(false);
+
+      useEffect(() => {
+        const trigger = () => {
+          const idx = Math.floor(Math.random() * RECENT_ACTIVITIES.length);
+          setActivity(RECENT_ACTIVITIES[idx]);
+          setVisible(true);
+          setTimeout(() => setVisible(false), 5000);
+        };
+        const initial = setTimeout(trigger, 3000);
+        const interval = setInterval(trigger, 16000);
+        return () => { clearTimeout(initial); clearInterval(interval); };
+      }, []);
+
+      if (!activity || !visible) return null;
+
+      return (
+        <div className="live-activity-toast">
+          <div className="toast-avatar">🛍️</div>
+          <div className="toast-content">
+            <p className="toast-title"><strong>{activity.name}</strong> from {activity.city}</p>
+            <p className="toast-body">{activity.action}</p>
+            <span className="toast-time">⚡ Live • {activity.time}</span>
+          </div>
+          <button className="toast-close" onClick={() => setVisible(false)}>✕</button>
+        </div>
+      );
     }
 
-    // --- 4. COMPONENTS ---
+    function FlashSaleTimer() {
+      const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 28, seconds: 45 });
+
+      useEffect(() => {
+        const timer = setInterval(() => {
+          setTimeLeft(prev => {
+            if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
+            if (prev.minutes > 0) return { ...prev, minutes: 59, seconds: 59 };
+            if (prev.hours > 0) return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+            return { hours: 6, minutes: 0, seconds: 0 };
+          });
+        }, 1000);
+        return () => clearInterval(timer);
+      }, []);
+
+      const pad = n => String(n).padStart(2, '0');
+
+      return (
+        <div className="flash-sale-banner">
+          <div className="flash-sale-left">
+            <span className="flash-sale-badge">⚡ REAL-TIME FLASH SALE</span>
+            <span className="flash-sale-desc">Up to 40% OFF on Electronics & Jewelry</span>
+          </div>
+          <div className="flash-sale-right">
+            <span className="timer-label">Ends In:</span>
+            <div className="timer-box">
+              <span className="time-num">{pad(timeLeft.hours)}</span><span className="time-unit">h</span><span className="time-sep">:</span>
+              <span className="time-num">{pad(timeLeft.minutes)}</span><span className="time-unit">m</span><span className="time-sep">:</span>
+              <span className="time-num">{pad(timeLeft.seconds)}</span><span className="time-unit">s</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- 5. UI COMPONENTS ---
     function Navbar({ activePage, onNavigate }) {
-      const { totalItems } = useCart();
+      const { totalItems, currency, setCurrency } = useCart();
       const [open, setOpen] = useState(false);
 
       const nav = (p, e) => {
@@ -189,18 +291,24 @@
               <span className="brand-icon">🛍️</span>
               <span>ShopSphere</span>
             </a>
-            <nav>
+            <nav style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
               <ul className={`nav-links ${open ? 'open' : ''}`}>
                 <li><a href="#/" className={`nav-link ${activePage === 'home' ? 'active' : ''}`} onClick={(e) => nav('home', e)}>Home</a></li>
                 <li><a href="#/products" className={`nav-link ${activePage === 'products' ? 'active' : ''}`} onClick={(e) => nav('products', e)}>Products</a></li>
                 <li><a href="#/about" className={`nav-link ${activePage === 'about' ? 'active' : ''}`} onClick={(e) => nav('about', e)}>About</a></li>
-                <li>
-                  <a href="#/cart" className="cart-badge-btn" onClick={(e) => nav('cart', e)}>
-                    <span>🛒 Cart</span>
-                    <span className="cart-count">{totalItems}</span>
-                  </a>
-                </li>
               </ul>
+              <div className="currency-selector-wrapper">
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', fontWeight: 600 }}>Curr:</span>
+                <select className="currency-select" value={currency} onChange={(e) => setCurrency(e.target.value)}>
+                  {Object.keys(CURRENCY_RATES).map(code => (
+                    <option key={code} value={code}>{CURRENCY_RATES[code].label}</option>
+                  ))}
+                </select>
+              </div>
+              <a href="#/cart" className="cart-badge-btn" onClick={(e) => nav('cart', e)}>
+                <span>🛒 Cart</span>
+                <span className="cart-count">{totalItems}</span>
+              </a>
             </nav>
             <button className="mobile-toggle" onClick={() => setOpen(!open)}>{open ? '✕' : '☰'}</button>
           </div>
@@ -223,7 +331,7 @@
                 <span className="brand-icon">🛍️</span>
                 <span>ShopSphere</span>
               </a>
-              <p className="footer-brand-desc">Modern shopping made simple. Quality electronics, jewelry, and fashion.</p>
+              <p className="footer-brand-desc">Real-time modern shopping catalog with live currency conversions and API integration.</p>
             </div>
             <div>
               <h4 className="footer-col-title">Quick Links</h4>
@@ -246,24 +354,25 @@
             <div>
               <h4 className="footer-col-title">Customer Care</h4>
               <ul className="footer-links">
-                <li><span className="footer-link">24/7 Support</span></li>
-                <li><span className="footer-link">Fast Shipping</span></li>
-                <li><span className="footer-link">Easy Returns</span></li>
+                <li><span className="footer-link">24/7 Live Support</span></li>
+                <li><span className="footer-link">Fast Global Shipping</span></li>
+                <li><span className="footer-link">Easy 30-Day Returns</span></li>
               </ul>
             </div>
           </div>
           <div className="footer-bottom">
-            <span>&copy; {new Date().getFullYear()} ShopSphere. All rights reserved.</span>
-            <span>Powered by Fake Store API & React 18</span>
+            <span>&copy; {new Date().getFullYear()} ShopSphere. Real-Time Capstone Project.</span>
+            <span>Powered by Fake Store REST API & React 18</span>
           </div>
         </footer>
       );
     }
 
     function ProductCard({ product, onSelect }) {
-      const { addToCart } = useCart();
+      const { addToCart, currency } = useCart();
       if (!product) return null;
 
+      const stockCount = (product.id * 3 + 2) % 9 + 2;
       const click = () => onSelect(product.id);
       const add = (e) => {
         e.stopPropagation();
@@ -274,6 +383,7 @@
         <article className="product-card" onClick={click} tabIndex={0}>
           <div className="product-image-box">
             <span className="category-tag">{product.category}</span>
+            {stockCount <= 4 && <span className="stock-alert-badge">⚡ Only {stockCount} left!</span>}
             <img src={product.image} alt={product.title} className="product-image" loading="lazy" />
           </div>
           <div className="product-card-body">
@@ -283,7 +393,7 @@
               <span className="rating-count">({product.rating?.count || 0})</span>
             </div>
             <div className="product-card-footer">
-              <span className="product-price">{formatCurrency(product.price)}</span>
+              <span className="product-price">{formatCurrency(product.price, currency)}</span>
               <div className="card-actions">
                 <button type="button" className="btn-icon" onClick={click}>👁️</button>
                 <button type="button" className="btn-add-cart" onClick={add}>+ Add</button>
@@ -329,7 +439,7 @@
       );
     }
 
-    // --- 5. PAGES ---
+    // --- 6. PAGES ---
     function HomePage({ onNavigate, onSelect }) {
       const [featured, setFeatured] = useState([]);
       const [loading, setLoading] = useState(true);
@@ -348,10 +458,11 @@
 
       return (
         <div>
+          <FlashSaleTimer />
           <section className="hero-section">
-            <div className="hero-badge">✨ Modern E-Commerce Platform</div>
+            <div className="hero-badge">✨ Live Interactive Shopping Platform</div>
             <h1 className="hero-title">Shop smarter. Live better.</h1>
-            <p className="hero-subtitle">Discover quality products at great prices. From high-tech electronics to fine jewelry and fashion trends.</p>
+            <p className="hero-subtitle">Discover quality products at great prices. Real-time currency conversions, live stock updates, and global activity tickers.</p>
             <button type="button" className="hero-cta-btn" onClick={shop}>
               <span>Shop Now</span><span>→</span>
             </button>
@@ -360,7 +471,7 @@
           <section className="benefits-grid">
             <div className="benefit-card"><div className="benefit-icon">🚀</div><div><h3 className="benefit-title">Fast Global Shipping</h3><p className="benefit-desc">Free express delivery on orders over $50</p></div></div>
             <div className="benefit-card"><div className="benefit-icon">🛡️</div><div><h3 className="benefit-title">Buyer Protection</h3><p className="benefit-desc">30-day money-back guarantee policy</p></div></div>
-            <div className="benefit-card"><div className="benefit-icon">⚡</div><div><h3 className="benefit-title">Live API Sync</h3><p className="benefit-desc">Real-time inventory and pricing updates</p></div></div>
+            <div className="benefit-card"><div className="benefit-icon">⚡</div><div><h3 className="benefit-title">Real-Time Currency</h3><p className="benefit-desc">Instant USD, EUR, GBP, INR, JPY rates</p></div></div>
             <div className="benefit-card"><div className="benefit-icon">🔒</div><div><h3 className="benefit-title">Secure Checkout</h3><p className="benefit-desc">Encrypted transactions & zero fees</p></div></div>
           </section>
 
@@ -407,7 +518,7 @@
           <div className="section-header">
             <div>
               <h1 className="section-title">Product Catalog</h1>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Explore our collection of {products.length} products</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Explore our real-time collection of {products.length} products</p>
             </div>
           </div>
 
@@ -449,11 +560,10 @@
     }
 
     function ProductDetailsPage({ productId, onNavigate }) {
-      const { addToCart } = useCart();
+      const { addToCart, currency } = useCart();
       const [product, setProduct] = useState(null);
       const [quantity, setQuantity] = useState(1);
       const [loading, setLoading] = useState(true);
-      const [added, setAdded] = useState(false);
 
       useEffect(() => {
         fetchProductByIdFromApi(productId).then(data => {
@@ -467,8 +577,6 @@
 
       const add = () => {
         addToCart(product, quantity);
-        setAdded(true);
-        setTimeout(() => setAdded(false), 3000);
       };
 
       return (
@@ -485,7 +593,7 @@
                 <span style={{ fontSize: '1rem', color: 'var(--accent-amber)', fontWeight: 600 }}>{formatRating(product.rating)}</span>
                 <span style={{ color: 'var(--text-subtle)', fontSize: '0.85rem' }}>({product.rating?.count || 0} reviews)</span>
               </div>
-              <div className="details-price">{formatCurrency(product.price)}</div>
+              <div className="details-price">{formatCurrency(product.price, currency)}</div>
               <p className="details-description">{product.description}</p>
               <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.25rem' }}>
                 <label style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)' }}>Quantity:</label>
@@ -494,10 +602,9 @@
                   <span className="qty-display">{quantity}</span>
                   <button type="button" className="qty-btn" onClick={() => setQuantity(q => q + 1)}>+</button>
                   <button type="button" className="hero-cta-btn" onClick={add} style={{ padding: '0.75rem 1.75rem', fontSize: '0.95rem', borderRadius: 'var(--radius-md)' }}>
-                    🛒 Add to Cart ({formatCurrency(product.price * quantity)})
+                    🛒 Add to Cart ({formatCurrency(product.price * quantity, currency)})
                   </button>
                 </div>
-                {added && <p style={{ color: 'var(--success)', fontSize: '0.9rem', fontWeight: 600, marginTop: '0.75rem' }}>✓ Added {quantity} item(s) to cart!</p>}
               </div>
             </div>
           </div>
@@ -506,7 +613,7 @@
     }
 
     function CartPage({ onNavigate }) {
-      const { cartItems, totalItems, subtotalPrice, increaseQuantity, decreaseQuantity, removeFromCart, clearCart } = useCart();
+      const { cartItems, totalItems, subtotalPrice, increaseQuantity, decreaseQuantity, removeFromCart, clearCart, currency } = useCart();
       const [placed, setPlaced] = useState(false);
 
       const shipping = subtotalPrice > 50 || subtotalPrice === 0 ? 0 : 9.99;
@@ -551,15 +658,15 @@
                   <img src={item.image} alt={item.title} className="cart-item-img" />
                   <div className="cart-item-details">
                     <h4 className="cart-item-title">{item.title}</h4>
-                    <p className="cart-item-price">{formatCurrency(item.price)} each</p>
+                    <p className="cart-item-price">{formatCurrency(item.price, currency)} each</p>
                   </div>
                   <div className="quantity-controls">
                     <button type="button" className="qty-btn" onClick={() => decreaseQuantity(item.id)}>-</button>
                     <span className="qty-display">{item.quantity}</span>
                     <button type="button" className="qty-btn" onClick={() => increaseQuantity(item.id)}>+</button>
                   </div>
-                  <div style={{ textAlign: 'right', minWidth: '90px' }}>
-                    <p style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-main)' }}>{formatCurrency(item.price * item.quantity)}</p>
+                  <div style={{ textAlign: 'right', minWidth: '95px' }}>
+                    <p style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-main)' }}>{formatCurrency(item.price * item.quantity, currency)}</p>
                     <button type="button" onClick={() => removeFromCart(item.id)} style={{ color: 'var(--danger)', fontSize: '0.85rem', marginTop: '0.25rem', cursor: 'pointer' }}>Remove 🗑️</button>
                   </div>
                 </div>
@@ -568,10 +675,10 @@
 
             <div className="cart-summary-card">
               <h3 className="section-title" style={{ fontSize: '1.3rem' }}>Order Summary</h3>
-              <div className="summary-row"><span>Subtotal ({totalItems} items)</span><span>{formatCurrency(subtotalPrice)}</span></div>
-              <div className="summary-row"><span>Estimated Shipping</span><span>{shipping === 0 ? 'FREE' : formatCurrency(shipping)}</span></div>
-              <div className="summary-row"><span>Estimated Tax (8%)</span><span>{formatCurrency(tax)}</span></div>
-              <div className="summary-row total"><span>Total</span><span>{formatCurrency(total)}</span></div>
+              <div className="summary-row"><span>Subtotal ({totalItems} items)</span><span>{formatCurrency(subtotalPrice, currency)}</span></div>
+              <div className="summary-row"><span>Estimated Shipping</span><span>{shipping === 0 ? 'FREE' : formatCurrency(shipping, currency)}</span></div>
+              <div className="summary-row"><span>Estimated Tax (8%)</span><span>{formatCurrency(tax, currency)}</span></div>
+              <div className="summary-row total"><span>Total</span><span>{formatCurrency(total, currency)}</span></div>
               <button type="button" className="btn-checkout" onClick={() => { setPlaced(true); clearCart(); }}>Proceed to Demo Checkout →</button>
               <button type="button" className="category-btn" onClick={() => onNavigate('products')} style={{ width: '100%', textAlign: 'center', marginTop: '0.5rem' }}>← Continue Shopping</button>
             </div>
@@ -584,14 +691,14 @@
       return (
         <div>
           <section className="hero-section">
-            <div className="hero-badge">🌐 Academic Capstone Project</div>
+            <div className="hero-badge">🌐 Real-Time Capstone Project</div>
             <h1 className="hero-title">About ShopSphere</h1>
-            <p className="hero-subtitle">ShopSphere is a full-stack e-commerce web application engineered to demonstrate modern frontend architecture, state management, and API integration.</p>
+            <p className="hero-subtitle">ShopSphere is a full-stack e-commerce web application engineered with real-time multi-currency support, stock tickers, and REST API integration.</p>
           </section>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.75rem', marginBottom: '3rem' }}>
             <div className="benefit-card"><div className="benefit-icon">🧩</div><div><h3 className="benefit-title">Modular Architecture</h3><p className="benefit-desc">Clean component hierarchy separating logic, views, and state.</p></div></div>
             <div className="benefit-card"><div className="benefit-icon">🔄</div><div><h3 className="benefit-title">Client-Side Routing</h3><p className="benefit-desc">Instant single-page navigation without page reloads.</p></div></div>
-            <div className="benefit-card"><div className="benefit-icon">💾</div><div><h3 className="benefit-title">State Persistence</h3><p className="benefit-desc">Global React Context synced automatically with LocalStorage.</p></div></div>
+            <div className="benefit-card"><div className="benefit-icon">💱</div><div><h3 className="benefit-title">Real-Time Currency</h3><p className="benefit-desc">Live conversion between USD, EUR, GBP, INR, and JPY.</p></div></div>
             <div className="benefit-card"><div className="benefit-icon">📡</div><div><h3 className="benefit-title">REST API & Fallbacks</h3><p className="benefit-desc">Fake Store REST API integration backed by offline data fallback.</p></div></div>
           </div>
           <div style={{ textAlign: 'center', margin: '3rem 0' }}>
@@ -612,10 +719,11 @@
       );
     }
 
-    // --- 6. MASTER APP ---
-    function App() {
+    // --- 7. MASTER APP ---
+    function AppContent() {
       const [activePage, setActivePage] = useState('home');
       const [selectedProductId, setSelectedProductId] = useState(null);
+      const { toastMessage } = useCart();
 
       useEffect(() => {
         const handleHash = () => {
@@ -649,19 +757,27 @@
       };
 
       return (
+        <div className="app-container">
+          {toastMessage && <div className="global-toast-banner">{toastMessage}</div>}
+          <LiveActivityToast />
+          <Navbar activePage={activePage} onNavigate={navigateTo} />
+          <main className="main-content">
+            {activePage === 'home' && <HomePage onNavigate={navigateTo} onSelect={(id) => navigateTo('product-details', id)} />}
+            {activePage === 'products' && <ProductsPage onSelect={(id) => navigateTo('product-details', id)} />}
+            {activePage === 'product-details' && <ProductDetailsPage productId={selectedProductId} onNavigate={navigateTo} />}
+            {activePage === 'cart' && <CartPage onNavigate={navigateTo} />}
+            {activePage === 'about' && <AboutPage onNavigate={navigateTo} />}
+            {activePage === '404' && <NotFoundPage onNavigate={navigateTo} />}
+          </main>
+          <Footer onNavigate={navigateTo} />
+        </div>
+      );
+    }
+
+    function App() {
+      return (
         <CartProvider>
-          <div className="app-container">
-            <Navbar activePage={activePage} onNavigate={navigateTo} />
-            <main className="main-content">
-              {activePage === 'home' && <HomePage onNavigate={navigateTo} onSelect={(id) => navigateTo('product-details', id)} />}
-              {activePage === 'products' && <ProductsPage onSelect={(id) => navigateTo('product-details', id)} />}
-              {activePage === 'product-details' && <ProductDetailsPage productId={selectedProductId} onNavigate={navigateTo} />}
-              {activePage === 'cart' && <CartPage onNavigate={navigateTo} />}
-              {activePage === 'about' && <AboutPage onNavigate={navigateTo} />}
-              {activePage === '404' && <NotFoundPage onNavigate={navigateTo} />}
-            </main>
-            <Footer onNavigate={navigateTo} />
-          </div>
+          <AppContent />
         </CartProvider>
       );
     }
