@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ShopSphere – India's Premier Online Shopping Marketplace. Explore smartphones, electronics, fashion, home appliances & groceries with deals, bank offers, and free express delivery.">
+  <meta name="description" content="ShopSphere – India's Premier Online Shopping Marketplace with Indian Payment Methods, Live Tracking & Instant Notifications.">
   <meta name="theme-color" content="#2874f0">
   <title>ShopSphere – India's Online Shopping Marketplace</title>
   
@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- Multi-CDN Fallback Script Loader for React 18 & ReactDOM 18 -->
+  <!-- Multi-CDN Script Loader for React 18 & ReactDOM 18 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script>
@@ -27,9 +27,6 @@
 
   <!-- Complete Embedded Design System & Marketplace Styles -->
   <style>
-    /* ==========================================================================
-       ShopSphere Indian Marketplace - Embedded CSS Architecture
-       ========================================================================== */
     :root {
       --brand-blue: #2874f0;
       --brand-blue-dark: #1c52b7;
@@ -38,16 +35,9 @@
       --brand-green: #388e3c;
       --bg-primary: #f1f3f6;
       --bg-white: #ffffff;
-      --bg-card: #ffffff;
-      --bg-subtle: #f8fafc;
-      --bg-header: #2874f0;
       --border-color: #e0e0e0;
-      --border-focus: #2874f0;
       --text-main: #212121;
       --text-sub: #878787;
-      --text-muted: #565656;
-      --text-green: #388e3c;
-      --text-orange: #fb641b;
       --font-heading: 'Outfit', -apple-system, sans-serif;
       --font-body: 'Inter', -apple-system, sans-serif;
       --radius-sm: 4px;
@@ -57,13 +47,11 @@
       --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
       --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
       --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
-      --transition-fast: 0.15s ease;
-      --transition-normal: 0.25s ease;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-family: var(--font-body); font-size: 15px; color-scheme: light; scroll-behavior: smooth; }
-    body { min-height: 100vh; background-color: var(--bg-primary); color: var(--text-main); line-height: 1.5; overflow-x: hidden; }
+    html { font-family: var(--font-body); font-size: 15px; background-color: var(--bg-primary); color: var(--text-main); }
+    body { min-height: 100vh; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
     button { cursor: pointer; font-family: inherit; border: none; background: none; }
     img { max-width: 100%; height: auto; display: block; }
@@ -71,115 +59,95 @@
     .app-container { display: flex; flex-direction: column; min-height: 100vh; }
     .main-content { flex: 1; width: 100%; max-width: 1380px; margin: 0 auto; padding: 1rem 1rem 3rem 1rem; }
 
-    /* Toast Notification Banner */
-    .global-toast-banner {
-      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
-      background: #1e293b; color: #ffffff; padding: 0.9rem 1.4rem;
-      border-radius: var(--radius-md); font-weight: 700; font-size: 0.95rem;
-      box-shadow: var(--shadow-lg); border-left: 5px solid var(--brand-yellow);
-      animation: slideInRight 0.3s ease;
-    }
-    @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    /* Toast Notification Banners */
+    .toast-container-stack { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
+    .notification-toast-card { background: #0f172a; color: #ffffff; padding: 1rem 1.25rem; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); border-left: 5px solid var(--brand-yellow); min-width: 320px; max-width: 420px; animation: slideIn 0.3s ease; }
+    .notification-toast-card.email-toast { background: #1e293b; border-left-color: var(--brand-blue); }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    .toast-header { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 800; color: var(--brand-yellow); margin-bottom: 0.35rem; }
+    .toast-body { font-size: 0.85rem; line-height: 1.4; font-family: monospace; }
 
     /* Header */
-    .marketplace-header { position: sticky; top: 0; z-index: 1000; background-color: var(--bg-header); color: #ffffff; padding: 0.65rem 1.5rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
+    .marketplace-header { position: sticky; top: 0; z-index: 1000; background-color: var(--brand-blue); color: #ffffff; padding: 0.65rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
     .header-top-container { max-width: 1380px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; }
-    .header-brand { display: flex; flex-direction: column; min-width: 130px; }
     .brand-logo-text { display: flex; align-items: center; gap: 0.35rem; font-family: var(--font-heading); font-size: 1.45rem; font-weight: 800; font-style: italic; color: #ffffff; }
-    .brand-icon { font-size: 1.5rem; font-style: normal; }
     .brand-tagline { font-size: 0.725rem; color: var(--brand-yellow); font-weight: 700; font-style: italic; margin-top: -0.2rem; }
 
     .header-search-wrapper { flex: 1; position: relative; max-width: 680px; }
-    .header-search-form { display: flex; width: 100%; background: #ffffff; border-radius: var(--radius-sm); overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .header-search-form { display: flex; width: 100%; background: #ffffff; border-radius: var(--radius-sm); overflow: hidden; }
     .header-search-input { flex: 1; border: none; padding: 0.65rem 1rem; font-family: inherit; font-size: 0.95rem; color: var(--text-main); outline: none; }
-    .header-search-btn { background: #ffffff; color: var(--brand-blue); padding: 0 1.15rem; font-size: 1.1rem; transition: background var(--transition-fast); }
-    .header-search-btn:hover { background: #f1f3f6; }
+    .header-search-btn { background: #ffffff; color: var(--brand-blue); padding: 0 1.15rem; font-size: 1.1rem; }
 
-    .header-actions { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; }
-    .header-action-btn { color: #ffffff; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.85rem; border-radius: var(--radius-sm); transition: background var(--transition-fast); }
+    .header-actions { display: flex; align-items: center; gap: 1.25rem; margin-left: auto; }
+    .header-action-btn { color: #ffffff; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: var(--radius-sm); }
     .header-action-btn:hover, .header-action-btn.active { background: rgba(255, 255, 255, 0.15); }
-    .badge-btn { position: relative; }
     .action-badge { font-size: 0.725rem; font-weight: 800; padding: 0.1rem 0.45rem; border-radius: var(--radius-full); }
     .action-badge.yellow { background: var(--brand-yellow); color: var(--text-main); }
     .action-badge.red { background: #ef4444; color: #ffffff; }
 
-    /* Category Bar */
+    /* Category Navigation Bar */
     .category-bar-wrapper { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0.75rem 1rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); }
     .category-bar-inner { max-width: 1380px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; overflow-x: auto; scrollbar-width: none; }
-    .category-bar-inner::-webkit-scrollbar { display: none; }
-    .category-item-btn { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; min-width: 72px; color: var(--text-main); transition: transform var(--transition-fast); }
-    .category-item-btn:hover { transform: translateY(-2px); }
+    .category-item-btn { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; min-width: 72px; color: var(--text-main); }
     .category-item-icon { font-size: 1.6rem; }
     .category-item-name { font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
     .category-item-btn.active .category-item-name { color: var(--brand-blue); font-weight: 800; }
 
-    /* Hero Carousel */
-    .hero-carousel-container { position: relative; border-radius: var(--radius-md); padding: 3rem 2.5rem; margin-bottom: 1.25rem; color: #ffffff; display: flex; align-items: center; justify-content: space-between; min-height: 280px; overflow: hidden; box-shadow: var(--shadow-md); }
+    /* Hero Banner */
+    .hero-carousel-container { position: relative; border-radius: var(--radius-md); padding: 2.5rem 2rem; margin-bottom: 1.25rem; color: #ffffff; display: flex; align-items: center; justify-content: space-between; overflow: hidden; box-shadow: var(--shadow-md); }
     .hero-carousel-content { max-width: 520px; z-index: 2; }
     .carousel-tag { background: rgba(255, 255, 255, 0.2); color: var(--brand-yellow); font-size: 0.8rem; font-weight: 800; padding: 0.3rem 0.85rem; border-radius: var(--radius-full); display: inline-block; margin-bottom: 0.85rem; }
     .carousel-title { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.6rem; }
-    .carousel-subtitle { font-size: 1.05rem; opacity: 0.9; margin-bottom: 1.25rem; }
-    .carousel-cta-btn { background: var(--brand-yellow); color: var(--text-main); font-weight: 800; font-size: 0.95rem; padding: 0.75rem 1.75rem; border-radius: var(--radius-sm); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform var(--transition-fast); }
-    .carousel-cta-btn:hover { transform: translateY(-2px); }
-    .hero-carousel-image-box { width: 320px; height: 220px; display: flex; align-items: center; justify-content: center; z-index: 2; }
-    .carousel-img { max-height: 100%; object-fit: contain; border-radius: var(--radius-md); }
+    .carousel-cta-btn { background: var(--brand-yellow); color: var(--text-main); font-weight: 800; font-size: 0.95rem; padding: 0.75rem 1.75rem; border-radius: var(--radius-sm); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .hero-carousel-image-box { width: 300px; height: 200px; display: flex; align-items: center; justify-content: center; }
 
     /* Bank Offers */
     .bank-offers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
-    .bank-offer-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; display: flex; flex-direction: column; gap: 0.25rem; box-shadow: var(--shadow-sm); border-left: 4px solid var(--brand-blue); }
-    .bank-offer-card h4 { font-size: 0.95rem; font-weight: 700; }
-    .bank-offer-card p { font-size: 0.8rem; color: var(--text-sub); }
+    .bank-offer-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; border-left: 4px solid var(--brand-blue); box-shadow: var(--shadow-sm); }
 
-    /* Product Cards */
+    /* Product Section & Grid */
     .marketplace-section { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: var(--shadow-sm); }
-    .section-header-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.15rem; padding-bottom: 0.75rem; border-bottom: 1px solid #f0f0f0; }
-    .marketplace-section-title { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: var(--text-main); }
+    .marketplace-section-title { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; }
     .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
     @media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
 
-    .marketplace-card { background: #ffffff; border: 1px solid #f0f0f0; border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; padding: 1rem; position: relative; transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
-    .marketplace-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: #e0e0e0; }
+    .marketplace-card { background: #ffffff; border: 1px solid #f0f0f0; border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; padding: 1rem; position: relative; transition: transform 0.15s ease; }
+    .marketplace-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
     .card-top-image-box { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 0.85rem; }
     .card-main-img { max-height: 100%; max-width: 100%; object-fit: contain; }
     .discount-badge-pill { position: absolute; top: 0; left: 0; background: var(--brand-green); color: #ffffff; font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); }
     .wishlist-heart-btn { position: absolute; top: 0; right: 0; font-size: 1.25rem; background: #ffffff; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); z-index: 2; }
 
     .card-content-body { display: flex; flex-direction: column; flex: 1; }
-    .brand-category-row { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.25rem; }
-    .brand-label { font-weight: 700; color: var(--text-sub); }
-    .delivery-tag { color: var(--brand-green); font-weight: 600; }
-    .card-title { font-size: 0.95rem; font-weight: 600; line-height: 1.35; color: var(--text-main); margin-bottom: 0.4rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.7em; }
-    .card-rating-row { display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.6rem; }
-    .rating-pill { background: var(--brand-green); color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.1rem 0.45rem; border-radius: var(--radius-sm); }
-    .card-price-row { display: flex; align-items: baseline; gap: 0.5rem; margin-top: auto; }
+    .brand-label { font-weight: 700; color: var(--text-sub); font-size: 0.75rem; }
+    .card-title { font-size: 0.95rem; font-weight: 600; line-height: 1.35; margin-bottom: 0.4rem; height: 2.7em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
     .current-price { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
-    .original-price { font-size: 0.85rem; color: var(--text-sub); text-decoration: line-through; }
-    .card-actions-row { display: flex; gap: 0.4rem; margin-top: 0.75rem; }
-    .btn-card-details { flex: 1; background: #f1f3f6; color: var(--text-main); font-weight: 600; font-size: 0.8rem; padding: 0.45rem; border-radius: var(--radius-sm); }
-    .btn-card-add { flex: 1.2; background: var(--brand-orange); color: #ffffff; font-weight: 700; font-size: 0.8rem; padding: 0.45rem; border-radius: var(--radius-sm); }
+    .btn-card-add { background: var(--brand-orange); color: #ffffff; font-weight: 700; font-size: 0.8rem; padding: 0.45rem; border-radius: var(--radius-sm); margin-top: 0.5rem; }
 
-    /* Cart & Price Details */
-    .cart-page-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.25rem; }
+    /* Cart & Checkout Layout */
+    .cart-page-layout { display: grid; grid-template-columns: 1fr 360px; gap: 1.25rem; }
     @media (max-width: 868px) { .cart-page-layout { grid-template-columns: 1fr; } }
     .cart-items-column { display: flex; flex-direction: column; gap: 1rem; }
     .cart-item-row { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; display: flex; gap: 1.25rem; }
     .cart-row-img { width: 90px; height: 90px; object-fit: contain; }
     .cart-row-info { flex: 1; display: flex; flex-direction: column; }
     .cart-row-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
-    .cart-row-price-box { display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.75rem; }
     .row-price { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; }
-    .cart-row-actions { display: flex; align-items: center; gap: 1.25rem; }
     .qty-control-box { display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); }
-    .btn-row-action { font-size: 0.85rem; font-weight: 700; color: var(--brand-blue); }
-    .btn-row-action.remove { color: #ef4444; }
+    .btn-row-action.remove { color: #ef4444; font-weight: 700; font-size: 0.85rem; }
+
     .cart-price-details-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; height: fit-content; }
     .price-details-title { font-size: 0.95rem; font-weight: 800; color: var(--text-sub); border-bottom: 1px solid #f0f0f0; padding-bottom: 0.75rem; }
     .price-detail-row { display: flex; justify-content: space-between; font-size: 0.95rem; }
     .total-amount-row { font-size: 1.25rem; font-weight: 800; border-top: 1px dashed var(--border-color); border-bottom: 1px dashed var(--border-color); padding: 0.85rem 0; }
-    .btn-place-order { background: var(--brand-orange); color: #ffffff; font-weight: 800; font-size: 1rem; padding: 0.85rem; border-radius: var(--radius-sm); text-align: center; box-shadow: var(--shadow-sm); width: 100%; }
+    .btn-place-order { background: var(--brand-orange); color: #ffffff; font-weight: 800; font-size: 1.05rem; padding: 0.95rem; border-radius: var(--radius-sm); text-align: center; box-shadow: var(--shadow-sm); width: 100%; }
 
-    /* Orders Page & Live Tracking */
+    /* Profile Contact Box Badge in Checkout */
+    .profile-contact-badge { background: #e8f0fe; border: 1px solid #bfdbfe; border-radius: var(--radius-md); padding: 0.85rem; margin-bottom: 1rem; font-size: 0.85rem; }
+    .profile-contact-badge strong { color: var(--brand-blue-dark); }
+
+    /* Orders Page & Tracking */
     .orders-list { display: flex; flex-direction: column; gap: 1rem; }
     .order-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
     .order-card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 0.75rem; }
@@ -191,40 +159,30 @@
     .order-item-img { width: 50px; height: 50px; object-fit: contain; }
     .order-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 0.75rem; }
     .btn-track-order { background: var(--brand-blue); color: #ffffff; font-weight: 700; font-size: 0.85rem; padding: 0.45rem 1rem; border-radius: var(--radius-sm); }
-    .order-meta-info-bar { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; background: #f8fafc; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid #f0f0f0; color: var(--text-muted); }
+    .order-meta-info-bar { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; background: #f8fafc; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid #f0f0f0; color: var(--text-sub); }
 
-    /* Modal Backdrop & Payment Gateway */
+    /* Modal Backdrop & Payment Options */
     .modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
-    .checkout-modal-container, .tracking-modal-container { background: #ffffff; border-radius: var(--radius-lg); width: 100%; max-width: 820px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: modalPopUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-    @keyframes modalPopUp { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .checkout-modal-container, .tracking-modal-container { background: #ffffff; border-radius: var(--radius-lg); width: 100%; max-width: 820px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: modalPop 0.25s ease; }
+    @keyframes modalPop { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .modal-header { padding: 1.25rem 1.75rem; background: #f8fafc; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
     .modal-header h3 { font-size: 1.2rem; font-weight: 800; color: var(--brand-blue); }
     .modal-close-btn { font-size: 1.25rem; font-weight: 800; color: var(--text-sub); }
     .modal-body { padding: 1.75rem; }
 
-    .checkout-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
-    .form-group.full-width { grid-column: 1 / -1; }
-    .form-group label { font-size: 0.825rem; font-weight: 700; color: var(--text-sub); }
-    .form-control { padding: 0.65rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.9rem; outline: none; }
-
-    .payment-options-layout { display: grid; grid-template-columns: 220px 1fr; gap: 1.25rem; margin-top: 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; }
+    .payment-options-layout { display: grid; grid-template-columns: 240px 1fr; gap: 1.25rem; margin-top: 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; }
     .payment-tabs-sidebar { background: #f8fafc; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; }
-    .pay-tab-btn { padding: 0.85rem 1rem; text-align: left; font-size: 0.875rem; font-weight: 700; color: var(--text-main); border-bottom: 1px solid #f0f0f0; }
+    .pay-tab-btn { padding: 0.95rem 1rem; text-align: left; font-size: 0.875rem; font-weight: 700; color: var(--text-main); border-bottom: 1px solid #f0f0f0; }
     .pay-tab-btn.active { background: #ffffff; color: var(--brand-blue); border-left: 4px solid var(--brand-blue); }
     .payment-tab-content { padding: 1.25rem; }
 
-    .qr-box { background: #e8f0fe; border: 2px dashed var(--brand-blue); padding: 1.25rem; text-align: center; border-radius: var(--radius-md); margin-top: 0.5rem; }
+    .qr-box { background: #e8f0fe; border: 2px dashed var(--brand-blue); padding: 1.25rem; text-align: center; border-radius: var(--radius-md); }
+    .qr-amt { font-size: 1.25rem; color: var(--brand-blue); display: block; margin-top: 0.5rem; }
     .modal-actions-bar { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem; }
     .btn-primary { background: var(--brand-blue); color: #ffffff; font-weight: 800; font-size: 0.95rem; padding: 0.75rem 1.5rem; border-radius: var(--radius-sm); }
     .btn-primary.success-btn { background: var(--brand-orange); }
-    .btn-secondary { background: #f1f3f6; color: var(--text-main); font-weight: 700; font-size: 0.9rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-sm); }
 
-    /* Notifications & Tracking Timeline */
-    .sms-alert-card { background: #1e293b; color: #ffffff; padding: 1rem; border-radius: var(--radius-md); border-left: 4px solid var(--brand-yellow); margin-top: 0.5rem; }
-    .sms-header { display: flex; justify-content: space-between; font-size: 0.775rem; font-weight: 800; color: var(--brand-yellow); margin-bottom: 0.4rem; }
-    .email-alert-card { background: #ffffff; border: 1px solid #e2e8f0; color: #1e293b; padding: 1rem; border-radius: var(--radius-md); border-left: 4px solid var(--brand-blue); margin-top: 0.5rem; }
-
+    /* Live Tracking 5-Stage Timeline */
     .tracking-timeline-box { position: relative; margin: 1.5rem 0 2rem 0; }
     .timeline-progress-bar { height: 6px; background: #e2e8f0; border-radius: 3px; position: absolute; top: 22px; left: 10%; right: 10%; z-index: 1; }
     .timeline-progress-fill { height: 100%; background: var(--brand-green); border-radius: 3px; transition: width 0.4s ease; }
@@ -239,34 +197,37 @@
     .agent-info { flex: 1; }
     .agent-info h4 { font-size: 0.95rem; font-weight: 800; color: var(--brand-blue-dark); }
     .btn-call-agent { background: var(--brand-blue); color: #ffffff; font-weight: 800; font-size: 0.85rem; padding: 0.5rem 1rem; border-radius: var(--radius-sm); }
-    .btn-simulate-next { background: linear-gradient(135deg, #fb641b, #d97706); color: #ffffff; font-weight: 800; font-size: 0.95rem; padding: 0.85rem 1.75rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); width: 100%; margin-bottom: 1rem; }
+    .btn-simulate-next { background: linear-gradient(135deg, #fb641b, #d97706); color: #ffffff; font-weight: 800; font-size: 0.95rem; padding: 0.85rem 1.75rem; border-radius: var(--radius-md); width: 100%; margin-bottom: 1rem; box-shadow: var(--shadow-md); }
+
+    .log-entry-card { padding: 0.75rem 1rem; border-radius: var(--radius-sm); font-size: 0.825rem; border-left: 4px solid var(--brand-blue); margin-bottom: 0.5rem; }
+    .log-entry-card.sms-log { background: #f8fafc; border-left-color: var(--brand-yellow); }
+    .log-entry-card.email-log { background: #f1f5f9; border-left-color: var(--brand-blue); }
+
+    /* Account Page Form */
+    .account-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .info-input { width: 100%; padding: 0.6rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.9rem; }
 
     /* Footer */
-    .marketplace-footer { background: #172337; color: #ffffff; padding: 3rem 1.5rem 1rem 1.5rem; margin-top: 3rem; }
-    .footer-top-columns { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr) 1.5fr; gap: 2rem; margin-bottom: 2rem; }
-    .footer-title { font-size: 0.775rem; font-weight: 800; color: #878787; margin-bottom: 0.85rem; }
-    .footer-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.825rem; }
-    .footer-bottom-trust-bar { max-width: 1380px; margin: 0 auto; border-top: 1px solid #454d5e; border-bottom: 1px solid #454d5e; padding: 1rem 0; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; font-weight: 700; color: var(--brand-yellow); }
-    .footer-copyright-bar { max-width: 1380px; margin: 1rem auto 0 auto; text-align: center; font-size: 0.8rem; color: #878787; }
+    .marketplace-footer { background: #172337; color: #ffffff; padding: 2.5rem 1.5rem 1rem 1.5rem; margin-top: 3rem; text-align: center; font-size: 0.825rem; }
   </style>
 </head>
 <body>
   <div id="root"></div>
 
-  <!-- Native JavaScript Application Script (Runs natively in Chrome without Babel transpilation) -->
+  <!-- Native JavaScript Application Script (Runs natively in Chrome without Babel) -->
   <script>
     (function() {
       // --- 1. DATASET ---
       const INDIAN_PRODUCTS = [
-        { id: 101, title: "Samsung Galaxy S24 Ultra 5G (Titanium Gray, 12GB RAM, 256GB Storage)", brand: "Samsung", category: "Mobiles", price: 129999, originalPrice: 144999, discount: 10, rating: { rate: 4.6, count: 3420 }, image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["200MP Camera with AI Zoom", "Snapdragon 8 Gen 3", "S-Pen Included"], specifications: { "Brand": "Samsung", "Model": "Galaxy S24 Ultra", "Display": "6.8 QHD+ 120Hz" }, description: "Ultimate flagship with Galaxy AI, 200MP Pro-visual camera, and Titanium body." },
-        { id: 102, title: "Apple iPhone 15 Pro Max (256 GB) - Natural Titanium", brand: "Apple", category: "Mobiles", price: 148900, originalPrice: 159900, discount: 7, rating: { rate: 4.7, count: 4890 }, image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery in 2 Days", isFeatured: true, highlights: ["A17 Pro Chip", "Titanium Design", "48MP Main Camera"], specifications: { "Brand": "Apple", "Model": "iPhone 15 Pro Max" }, description: "Forged in titanium with groundbreaking A17 Pro chip and 5x Telephoto camera." },
-        { id: 103, title: "OnePlus 12 5G (Silky Black, 16GB RAM, 512GB Storage)", brand: "OnePlus", category: "Mobiles", price: 69999, originalPrice: 74999, discount: 7, rating: { rate: 4.5, count: 2150 }, image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["Hasselblad Camera", "100W SUPERVOOC"], specifications: { "Brand": "OnePlus", "RAM": "16 GB" }, description: "Smooth Beyond Belief with Snapdragon 8 Gen 3 and 100W fast charging." },
-        { id: 104, title: "Redmi Note 13 Pro+ 5G (Fusion Purple, 12GB RAM, 256GB Storage)", brand: "Xiaomi", category: "Mobiles", price: 31999, originalPrice: 35999, discount: 11, rating: { rate: 4.3, count: 5410 }, image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", highlights: ["200MP OIS Camera", "120W HyperCharge"], specifications: { "Brand": "Xiaomi", "RAM": "12 GB" }, description: "SuperNote with 200MP OIS camera, 120W charging, and 3D Curved AMOLED screen." },
-        { id: 105, title: "Apple MacBook Air M3 (13.6-inch, 8GB RAM, 256GB SSD) - Space Grey", brand: "Apple", category: "Laptops", price: 104900, originalPrice: 114900, discount: 8, rating: { rate: 4.8, count: 1820 }, image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["Apple M3 Chip", "18 Hours Battery"], specifications: { "Brand": "Apple", "Model": "MacBook Air M3" }, description: "Lean. Mean. M3 machine. Ultra-portable laptop with blazing M3 speed." },
-        { id: 106, title: "ASUS ROG Strix G16 Gaming Laptop (i7 13th Gen, RTX 4060, 16GB)", brand: "ASUS", category: "Laptops", price: 124990, originalPrice: 149990, discount: 16, rating: { rate: 4.6, count: 940 }, image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery in 2 Days", highlights: ["NVIDIA RTX 4060", "165Hz FHD+ Display"], specifications: { "Brand": "ASUS", "GPU": "RTX 4060" }, description: "Dominate gaming with 13th Gen i7 processor and NVIDIA RTX 4060 GPU." },
-        { id: 107, title: "Sony WH-1000XM5 Wireless Noise Canceling Headphones", brand: "Sony", category: "Electronics", price: 26990, originalPrice: 34990, discount: 22, rating: { rate: 4.7, count: 3210 }, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["Auto NC Optimizer", "30-Hour Battery"], specifications: { "Brand": "Sony", "Battery": "30 Hours" }, description: "Industry-leading Noise Cancellation powered by 8 microphones." },
-        { id: 108, title: "LG 55 inches 4K Ultra HD Smart OLED TV", brand: "LG", category: "TVs", price: 119990, originalPrice: 169990, discount: 29, rating: { rate: 4.8, count: 870 }, image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=80", delivery: "Free Scheduled Installation", isFeatured: true, highlights: ["Self-lighting OLED", "Dolby Vision & Atmos"], specifications: { "Brand": "LG", "Screen Size": "55 Inches" }, description: "Self-lit OLED pixels delivering infinite contrast and Dolby Vision sound." },
-        { id: 109, title: "Men's Premium Slim Fit Casual Cotton Shirt - Olive", brand: "Roadster", category: "Men's Fashion", price: 899, originalPrice: 1999, discount: 55, rating: { rate: 4.2, count: 6820 }, image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", highlights: ["100% Cotton", "Slim Fit"], specifications: { "Brand": "Roadster", "Fit": "Slim Fit" }, description: "100% pure breathable cotton fabric, perfect for casual smart styling." }
+        { id: 101, title: "Samsung Galaxy S24 Ultra 5G (Titanium Gray, 12GB RAM, 256GB Storage)", brand: "Samsung", category: "Mobiles", price: 129999, originalPrice: 144999, discount: 10, rating: { rate: 4.6, count: 3420 }, image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["200MP Camera", "Snapdragon 8 Gen 3"], description: "Ultimate flagship with Galaxy AI, 200MP Pro-visual camera, and Titanium body." },
+        { id: 102, title: "Apple iPhone 15 Pro Max (256 GB) - Natural Titanium", brand: "Apple", category: "Mobiles", price: 148900, originalPrice: 159900, discount: 7, rating: { rate: 4.7, count: 4890 }, image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery in 2 Days", isFeatured: true, highlights: ["A17 Pro Chip", "Titanium Design"], description: "Forged in titanium with groundbreaking A17 Pro chip and 5x Telephoto camera." },
+        { id: 103, title: "OnePlus 12 5G (Silky Black, 16GB RAM, 512GB Storage)", brand: "OnePlus", category: "Mobiles", price: 69999, originalPrice: 74999, discount: 7, rating: { rate: 4.5, count: 2150 }, image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", highlights: ["Hasselblad Camera", "100W SUPERVOOC"], description: "Smooth Beyond Belief with Snapdragon 8 Gen 3 and 100W fast charging." },
+        { id: 104, title: "Apple MacBook Air M3 (13.6-inch, 8GB RAM, 256GB SSD) - Space Grey", brand: "Apple", category: "Laptops", price: 104900, originalPrice: 114900, discount: 8, rating: { rate: 4.8, count: 1820 }, image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["Apple M3 Chip", "18 Hours Battery"], description: "Lean. Mean. M3 machine. Ultra-portable laptop with blazing M3 speed." },
+        { id: 105, title: "ASUS ROG Strix G16 Gaming Laptop (i7 13th Gen, RTX 4060, 16GB)", brand: "ASUS", category: "Laptops", price: 124990, originalPrice: 149990, discount: 16, rating: { rate: 4.6, count: 940 }, image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery in 2 Days", highlights: ["NVIDIA RTX 4060", "165Hz FHD+ Display"], description: "Dominate gaming with 13th Gen i7 processor and NVIDIA RTX 4060 GPU." },
+        { id: 106, title: "Sony WH-1000XM5 Wireless Noise Canceling Headphones", brand: "Sony", category: "Electronics", price: 26990, originalPrice: 34990, discount: 22, rating: { rate: 4.7, count: 3210 }, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["Auto NC Optimizer", "30-Hour Battery"], description: "Industry-leading Noise Cancellation powered by 8 microphones." },
+        { id: 107, title: "LG 55 inches 4K Ultra HD Smart OLED TV", brand: "LG", category: "TVs", price: 119990, originalPrice: 169990, discount: 29, rating: { rate: 4.8, count: 870 }, image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=80", delivery: "Free Scheduled Installation", isFeatured: true, highlights: ["Self-lighting OLED", "Dolby Vision"], description: "Self-lit OLED pixels delivering infinite contrast and Dolby Vision sound." },
+        { id: 108, title: "Men's Premium Slim Fit Casual Cotton Shirt - Olive", brand: "Roadster", category: "Men's Fashion", price: 899, originalPrice: 1999, discount: 55, rating: { rate: 4.2, count: 6820 }, image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", highlights: ["100% Cotton", "Slim Fit"], description: "100% pure breathable cotton fabric, perfect for casual smart styling." }
       ];
 
       const CATEGORIES = [
@@ -279,7 +240,6 @@
       ];
 
       function fmtRs(amt) { return '₹' + Math.round(amt || 0).toLocaleString('en-IN'); }
-      function fmtRating(r) { return '★ ' + (r && r.rate ? r.rate : '4.5') + ' (' + (r && r.count ? r.count : '120') + ')'; }
 
       if (window.React && window.ReactDOM) {
         const { useState, useEffect, createContext, useContext, useMemo } = React;
@@ -292,19 +252,27 @@
           const [cart, setCart] = useState(() => {
             try { return JSON.parse(localStorage.getItem('ss_cart')) || []; } catch(e) { return []; }
           });
-          const [toast, setToast] = useState(null);
+          const [toastStack, setToastStack] = useState([]);
 
           useEffect(() => { try { localStorage.setItem('ss_cart', JSON.stringify(cart)); } catch(e){} }, [cart]);
 
-          const showToast = (m) => { setToast(m); setTimeout(() => setToast(null), 3000); };
+          const pushNotification = (title, msg, type = 'SMS') => {
+            const newToast = { id: Date.now() + Math.random(), title, msg, type };
+            setToastStack(prev => [newToast, ...prev].slice(0, 3));
+            setTimeout(() => {
+              setToastStack(prev => prev.filter(t => t.id !== newToast.id));
+            }, 5000);
+          };
+
           const addToCart = (p) => {
             setCart(prev => {
               const idx = prev.findIndex(i => i.id === p.id);
               if (idx > -1) { const copy = [...prev]; copy[idx].qty += 1; return copy; }
               return [...prev, { ...p, qty: 1 }];
             });
-            showToast('🛒 Added "' + p.title.slice(0, 22) + '..." to cart!');
+            pushNotification('🛒 ITEM ADDED TO CART', `Added "${p.title.slice(0, 25)}..." to your cart.`, 'SMS');
           };
+
           const removeCart = (id) => setCart(prev => prev.filter(i => i.id !== id));
           const updateQty = (id, delta) => setCart(prev => prev.map(i => i.id === id ? { ...i, qty: Math.max(1, i.qty + delta) } : i));
           const clearCart = () => setCart([]);
@@ -312,13 +280,22 @@
           const totalQty = cart.reduce((s, i) => s + i.qty, 0);
           const totalAmt = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
-          return h(CartCtx.Provider, { value: { cart, totalQty, totalAmt, toast, addToCart, removeCart, updateQty, clearCart } }, props.children);
+          return h(CartCtx.Provider, { value: { cart, totalQty, totalAmt, toastStack, pushNotification, addToCart, removeCart, updateQty, clearCart } }, props.children);
         }
 
         function WishProvider(props) {
           const [wish, setWish] = useState(() => {
             try { return JSON.parse(localStorage.getItem('ss_wish')) || []; } catch(e) { return []; }
           });
+
+          // User Profile state with Profile Mobile Number & Email ID
+          const [userProfile, setUserProfile] = useState({
+            name: 'Karthik PM',
+            phone: '+91 98765 43210',
+            email: 'karthikpm2005@gmail.com',
+            address: 'Flat 402, Royal Palms, Indiranagar, Bengaluru, KA - 560038'
+          });
+
           const [orders, setOrders] = useState(() => [
             {
               id: 'SS84920',
@@ -328,11 +305,11 @@
               total: 129999,
               items: [{ title: 'Samsung Galaxy S24 Ultra 5G', price: 129999, qty: 1, image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80' }],
               customer: { name: 'Karthik PM', phone: '+91 98765 43210', email: 'karthikpm2005@gmail.com', address: 'Flat 402, Royal Palms, Indiranagar, Bengaluru, KA - 560038' },
-              payment: { method: 'UPI Instant (GPay)', status: 'Paid' },
+              payment: { method: 'UPI Instant (GPay / PhonePe)', status: 'Paid' },
               tracking: { courier: 'ExpressLogistics India', trackingId: 'EX-849201', agentName: 'Rajesh Kumar', agentPhone: '+91 98123 45678', estimatedDelivery: 'Tomorrow by 5:00 PM' },
               notifications: [
-                { type: 'SMS', recipient: '+91 98765 43210', message: '💬 SMS to +91 98765 43210: Hi Karthik PM, your Order #SS84920 of ₹1,29,999 is CONFIRMED via UPI Instant (GPay)!', time: '06 Sep, 10:15 AM' },
-                { type: 'EMAIL', recipient: 'karthikpm2005@gmail.com', message: '✉️ Email to karthikpm2005@gmail.com: Subject: Order Confirmation #SS84920 - ShopSphere India.', time: '06 Sep, 10:15 AM' }
+                { type: 'SMS', recipient: '+91 98765 43210', message: '💬 SMS to +91 98765 43210: Hi Karthik PM, your Order #SS84920 of ₹1,29,999 is CONFIRMED via UPI Instant (GPay)! Track live at shopsphere.in/track/SS84920', time: '06 Sep, 10:15 AM' },
+                { type: 'EMAIL', recipient: 'karthikpm2005@gmail.com', message: '✉️ Email to karthikpm2005@gmail.com: Subject: Order Confirmation #SS84920 - ShopSphere India. Receipt for 1 item(s).', time: '06 Sep, 10:15 AM' }
               ]
             }
           ]);
@@ -345,9 +322,14 @@
           const placeOrder = (items, total, cust, pay) => {
             const orderId = 'SS' + Math.floor(10000 + Math.random()*90000);
             const now = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
-            const phone = cust.phone || '+91 98765 43210';
-            const email = cust.email || 'karthikpm2005@gmail.com';
-            const name = cust.name || 'Karthik PM';
+            
+            // Automatically use Customer Profile phone and email
+            const phone = cust.phone || userProfile.phone;
+            const email = cust.email || userProfile.email;
+            const name = cust.name || userProfile.name;
+
+            const smsMsg = `💬 SMS to ${phone}: Hi ${name}, your ShopSphere Order #${orderId} of ₹${Math.round(total).toLocaleString('en-IN')} is CONFIRMED via ${pay.method}! Track live at shopsphere.in/track/${orderId}`;
+            const emailMsg = `✉️ Email to ${email}: Subject: Order Confirmation #${orderId} - ShopSphere India. Dear ${name}, thank you for your purchase of ${items.length} item(s). Total Paid: ₹${Math.round(total).toLocaleString('en-IN')}`;
 
             const newOrd = {
               id: orderId,
@@ -356,12 +338,12 @@
               trackingStage: 1,
               total,
               items,
-              customer: { name, phone, email, address: cust.address || 'Bengaluru, KA' },
-              payment: { method: pay.method || 'UPI', status: 'Paid' },
+              customer: { name, phone, email, address: cust.address || userProfile.address },
+              payment: { method: pay.method || 'UPI Instant', status: pay.method.includes('COD') ? 'Pending COD' : 'Paid' },
               tracking: { courier: 'ExpressLogistics India', trackingId: 'EX-' + Math.floor(100000 + Math.random()*900000), agentName: 'Rajesh Kumar', agentPhone: '+91 98123 45678', estimatedDelivery: 'Tomorrow by 5:00 PM' },
               notifications: [
-                { type: 'SMS', recipient: phone, message: `💬 SMS to ${phone}: Hi ${name}, your Order #${orderId} of ₹${Math.round(total).toLocaleString('en-IN')} is CONFIRMED!`, time: now },
-                { type: 'EMAIL', recipient: email, message: `✉️ Email to ${email}: Subject: Order Confirmation #${orderId} - ShopSphere India.`, time: now }
+                { type: 'SMS', recipient: phone, message: smsMsg, time: now },
+                { type: 'EMAIL', recipient: email, message: emailMsg, time: now }
               ]
             };
             setOrders(prev => [newOrd, ...prev]);
@@ -376,8 +358,8 @@
               const stageName = stages[nextStage - 1];
               const now = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
 
-              const newSMS = `💬 SMS to ${o.customer.phone}: Order #${o.id} Update: Status is now "${stageName}". Agent: ${o.tracking.agentName}.`;
-              const newEmail = `✉️ Email to ${o.customer.email}: Order #${o.id} Update: Package status changed to "${stageName}".`;
+              const newSMS = `💬 SMS to ${o.customer.phone}: Update on Order #${o.id}: Status is now "${stageName}". Agent: ${o.tracking.agentName} (${o.tracking.agentPhone}).`;
+              const newEmail = `✉️ Email to ${o.customer.email}: Order #${o.id} Update: Your package status has changed to "${stageName}".`;
 
               return {
                 ...o,
@@ -392,7 +374,7 @@
             }));
           };
 
-          return h(WishCtx.Provider, { value: { wish, orders, toggleWish, isWish, placeOrder, updateOrderStatus } }, props.children);
+          return h(WishCtx.Provider, { value: { wish, orders, userProfile, setUserProfile, toggleWish, isWish, placeOrder, updateOrderStatus } }, props.children);
         }
 
         function AppMain() {
@@ -401,44 +383,50 @@
           const [selId, setSelId] = useState(null);
           const [search, setSearch] = useState('');
           const [showCheckout, setShowCheckout] = useState(false);
-          const [checkoutStep, setCheckoutStep] = useState(1);
           const [payMethod, setPayMethod] = useState('upi');
+          const [upiVpa, setUpiVpa] = useState('karthik@okaxis');
+          const [cardNo, setCardNo] = useState('4532 •••• •••• 8920');
+          const [selectedBank, setSelectedBank] = useState('HDFC Bank');
+          const [codOtp, setCodOtp] = useState('');
           const [activeTrackOrd, setActiveTrackOrd] = useState(null);
 
-          const [custInfo, setCustInfo] = useState({
-            name: 'Karthik PM',
-            phone: '+91 98765 43210',
-            email: 'karthikpm2005@gmail.com',
-            address: 'Flat 402, Royal Palms, Indiranagar, Bengaluru, KA - 560038'
-          });
-
-          const [placedOrd, setPlacedOrd] = useState(null);
-
-          const { cart, totalQty, totalAmt, toast, addToCart, removeCart, updateQty, clearCart } = useContext(CartCtx);
-          const { wish, orders, toggleWish, isWish, placeOrder, updateOrderStatus } = useContext(WishCtx);
+          const { cart, totalQty, totalAmt, toastStack, pushNotification, addToCart, removeCart, updateQty, clearCart } = useContext(CartCtx);
+          const { wish, orders, userProfile, setUserProfile, toggleWish, isWish, placeOrder, updateOrderStatus } = useContext(WishCtx);
 
           const filtered = useMemo(() => {
             return INDIAN_PRODUCTS.filter(p => (cat === 'all' || p.category === cat) && (!search || p.title.toLowerCase().includes(search.toLowerCase())));
           }, [cat, search]);
 
-          const selectedProd = INDIAN_PRODUCTS.find(p => p.id === selId) || INDIAN_PRODUCTS[0];
           const trackModalOrd = activeTrackOrd ? orders.find(o => o.id === activeTrackOrd.id) || activeTrackOrd : null;
 
-          const handlePayConfirm = () => {
-            let mName = 'UPI Instant (GPay / PhonePe)';
-            if (payMethod === 'card') mName = 'Credit / Debit Card (Visa/RuPay)';
-            if (payMethod === 'netbanking') mName = 'Net Banking (HDFC)';
-            if (payMethod === 'cod') mName = 'Cash on Delivery (COD OTP Verified)';
+          const handleConfirmPayment = () => {
+            let mName = 'UPI Instant (GPay / PhonePe / Paytm)';
+            if (payMethod === 'card') mName = 'Credit / Debit Card (Visa / RuPay)';
+            if (payMethod === 'netbanking') mName = `Net Banking (${selectedBank})`;
+            if (payMethod === 'cod') mName = 'Cash on Delivery (COD Verified)';
             if (payMethod === 'wallet') mName = 'ShopSphere Pay Balance';
 
-            const ord = placeOrder(cart, totalAmt, custInfo, { method: mName });
-            setPlacedOrd(ord);
-            setCheckoutStep(3);
+            const newOrd = placeOrder(cart, totalAmt, userProfile, { method: mName });
+            
+            // Push Real-time Visual SMS & Email Notification Alerts
+            pushNotification(`💬 SMS SENT TO ${userProfile.phone}`, `Hi ${userProfile.name}, your Order #${newOrd.id} of ₹${Math.round(totalAmt).toLocaleString('en-IN')} is CONFIRMED via ${mName}!`, 'SMS');
+            pushNotification(`✉️ EMAIL SENT TO ${userProfile.email}`, `Order Confirmation #${newOrd.id} - Receipt sent to ${userProfile.email}.`, 'EMAIL');
+
+            setShowCheckout(false);
             clearCart();
+            setActiveTrackOrd(newOrd);
+            setPage('orders');
           };
 
           return h('div', { className: 'app-container' },
-            toast && h('div', { className: 'global-toast-banner' }, toast),
+            
+            /* Floating Notification Toast Banners Stack */
+            h('div', { className: 'toast-container-stack' },
+              toastStack.map(t => h('div', { key: t.id, className: `notification-toast-card ${t.type === 'EMAIL' ? 'email-toast' : ''}` },
+                h('div', { className: 'toast-header' }, h('span', null, t.title), h('span', null, 'JUST NOW')),
+                h('div', { className: 'toast-body' }, t.msg)
+              ))
+            ),
             
             /* Header */
             h('header', { className: 'marketplace-header' },
@@ -454,6 +442,7 @@
                   )
                 ),
                 h('div', { className: 'header-actions' },
+                  h('a', { href: '#', className: 'header-action-btn', onClick: (e) => { e.preventDefault(); setPage('account'); } }, '👤 Profile'),
                   h('a', { href: '#', className: 'header-action-btn', onClick: (e) => { e.preventDefault(); setPage('orders'); } }, '📦 Orders'),
                   h('a', { href: '#', className: 'header-action-btn badge-btn', onClick: (e) => { e.preventDefault(); setPage('wishlist'); } }, '❤️ Wishlist ', wish.length > 0 && h('span', { className: 'action-badge red' }, wish.length)),
                   h('a', { href: '#', className: 'header-action-btn badge-btn cart-btn-highlight', onClick: (e) => { e.preventDefault(); setPage('cart'); } }, '🛒 Cart ', h('span', { className: 'action-badge yellow' }, totalQty))
@@ -461,7 +450,7 @@
               )
             ),
 
-            /* Main Navigation & Body */
+            /* Main Section */
             h('main', { className: 'main-content' },
               h('div', { className: 'category-bar-wrapper' },
                 h('div', { className: 'category-bar-inner' },
@@ -478,7 +467,7 @@
                 h('div', { className: 'hero-carousel-container', style: { background: 'linear-gradient(135deg, #1e1b4b, #311b92, #4a148c)' } },
                   h('div', { className: 'hero-carousel-content' },
                     h('span', { className: 'carousel-tag' }, '⚡ BIG SHOPPING DAYS SALE • ENDS IN 24 HOURS'),
-                    h('h1', { className: 'carousel-title' }, 'Up to 70% OFF on Electronics & Smartphones'),
+                    h('h1', { className: 'carousel-title' }, 'Up to 70% OFF on Top Tech & Fashion'),
                     h('button', { className: 'carousel-cta-btn', onClick: () => setPage('products') }, 'Explore Deals →')
                   ),
                   h('div', { className: 'hero-carousel-image-box' }, h('img', { src: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80', className: 'carousel-img' }))
@@ -488,9 +477,9 @@
                   h('div', { className: 'bank-offer-card' }, h('h4', null, 'ICICI BANK'), h('p', null, 'Up to ₹3,000 Off on No Cost EMI'))
                 ),
                 h('section', { className: 'marketplace-section' },
-                  h('h2', { className: 'marketplace-section-title' }, '🔥 Recommended Deals'),
+                  h('h2', { className: 'marketplace-section-title' }, '🔥 Top Deals'),
                   h('div', { className: 'product-grid', style: { marginTop: '1rem' } },
-                    filtered.map(p => h('article', { key: p.id, className: 'marketplace-card', onClick: () => { setSelId(p.id); setPage('details'); } },
+                    filtered.map(p => h('article', { key: p.id, className: 'marketplace-card' },
                       h('div', { className: 'card-top-image-box' },
                         h('button', { className: 'wishlist-heart-btn', onClick: (e) => { e.stopPropagation(); toggleWish(p); } }, isWish(p.id) ? '❤️' : '🤍'),
                         h('img', { src: p.image, className: 'card-main-img' })
@@ -498,9 +487,7 @@
                       h('div', { className: 'card-content-body' },
                         h('h3', { className: 'card-title' }, p.title),
                         h('div', { className: 'card-price-row' }, h('span', { className: 'current-price' }, fmtRs(p.price))),
-                        h('div', { className: 'card-actions-row' },
-                          h('button', { className: 'btn-card-add', onClick: (e) => { e.stopPropagation(); addToCart(p); } }, '+ Add')
-                        )
+                        h('button', { className: 'btn-card-add', onClick: () => addToCart(p) }, '+ Add to Cart')
                       )
                     ))
                   )
@@ -510,11 +497,11 @@
               page === 'products' && h('div', null,
                 h('h2', null, 'Catalog (' + filtered.length + ')'),
                 h('div', { className: 'product-grid', style: { marginTop: '1rem' } },
-                  filtered.map(p => h('article', { key: p.id, className: 'marketplace-card', onClick: () => { setSelId(p.id); setPage('details'); } },
+                  filtered.map(p => h('article', { key: p.id, className: 'marketplace-card' },
                     h('img', { src: p.image, className: 'card-main-img' }),
                     h('h3', { className: 'card-title' }, p.title),
                     h('div', { className: 'card-price-row' }, h('span', { className: 'current-price' }, fmtRs(p.price))),
-                    h('button', { className: 'btn-card-add', onClick: (e) => { e.stopPropagation(); addToCart(p); } }, '+ Add to Cart')
+                    h('button', { className: 'btn-card-add', onClick: () => addToCart(p) }, '+ Add to Cart')
                   ))
                 )
               ),
@@ -545,21 +532,21 @@
                   h('div', { className: 'price-detail-row' }, h('span', null, 'Total Price'), h('span', null, fmtRs(totalAmt))),
                   h('div', { className: 'price-detail-row' }, h('span', null, 'Delivery'), h('span', null, 'FREE')),
                   h('div', { className: 'total-amount-row' }, h('span', null, 'Amount Payable'), h('span', null, fmtRs(totalAmt))),
-                  h('button', { className: 'btn-place-order', onClick: () => { setCheckoutStep(1); setShowCheckout(true); } }, 'PROCEED TO CHECKOUT 🔒')
+                  h('button', { className: 'btn-place-order', onClick: () => setShowCheckout(true) }, 'PROCEED TO CHECKOUT & SELECT PAYMENT 🔒')
                 )
               ),
 
               page === 'orders' && h('div', { className: 'orders-list' },
-                h('h2', null, '📦 My Orders & Live Tracking'),
+                h('h2', null, '📦 My Orders & Live Shipment Tracking'),
                 orders.map(o => h('div', { key: o.id, className: 'order-card' },
                   h('div', { className: 'order-card-header' },
-                    h('span', { className: 'order-id' }, 'Order #' + o.id + ' • ' + o.date),
+                    h('span', { className: 'order-id' }, 'Order #' + o.id + ' • Placed ' + o.date),
                     h('span', { className: 'order-status-badge ' + (o.status === 'Delivered' ? 'delivered' : 'transit') }, '● ' + o.status)
                   ),
                   h('div', { className: 'order-meta-info-bar' },
-                    h('span', null, '💳 Payment: ', h('strong', null, o.payment?.method || 'UPI')),
-                    h('span', null, '📱 SMS Alert: ', h('strong', null, o.customer?.phone || '+91 98765 43210')),
-                    h('span', null, '✉️ Email Alert: ', h('strong', null, o.customer?.email || 'karthikpm2005@gmail.com'))
+                    h('span', null, '💳 Method: ', h('strong', null, o.payment?.method || 'UPI')),
+                    h('span', null, '📱 SMS Alert Sent To: ', h('strong', null, o.customer?.phone || userProfile.phone)),
+                    h('span', null, '✉️ Email Sent To: ', h('strong', null, o.customer?.email || userProfile.email))
                   ),
                   h('div', { className: 'order-items-list' },
                     o.items.map((it, idx) => h('div', { key: idx, className: 'order-item-row' },
@@ -572,71 +559,102 @@
                     h('button', { className: 'btn-track-order', onClick: () => setActiveTrackOrd(o) }, 'Live Order Tracking 🚚')
                   )
                 ))
+              ),
+
+              page === 'account' && h('div', { className: 'account-card' },
+                h('h2', { style: { marginBottom: '1rem' } }, '👤 My Profile & Contact Settings'),
+                h('p', { style: { color: 'var(--text-sub)', marginBottom: '1.5rem' } }, 'All SMS & Email notifications for your orders will automatically be dispatched to the mobile number and email ID specified below:'),
+                h('div', { className: 'info-grid' },
+                  h('div', null, h('label', { style: { fontWeight: 700, fontSize: '0.85rem' } }, 'Full Name'), h('input', { className: 'info-input', value: userProfile.name, onChange: e => setUserProfile({...userProfile, name: e.target.value}) })),
+                  h('div', null, h('label', { style: { fontWeight: 700, fontSize: '0.85rem' } }, 'Mobile Phone Number (SMS Alerts)'), h('input', { className: 'info-input', value: userProfile.phone, onChange: e => setUserProfile({...userProfile, phone: e.target.value}) })),
+                  h('div', null, h('label', { style: { fontWeight: 700, fontSize: '0.85rem' } }, 'Email Address (Digital Receipts)'), h('input', { className: 'info-input', value: userProfile.email, onChange: e => setUserProfile({...userProfile, email: e.target.value}) })),
+                  h('div', null, h('label', { style: { fontWeight: 700, fontSize: '0.85rem' } }, 'Default Shipping Address'), h('input', { className: 'info-input', value: userProfile.address, onChange: e => setUserProfile({...userProfile, address: e.target.value}) }))
+                )
               )
             ),
 
-            /* CHECKOUT MODAL */
+            /* MULTI-OPTION PAYMENT GATEWAY MODAL */
             showCheckout && h('div', { className: 'modal-backdrop' },
               h('div', { className: 'checkout-modal-container' },
                 h('div', { className: 'modal-header' },
-                  h('h3', null, checkoutStep === 1 ? '📍 1. Delivery & Contact Info' : (checkoutStep === 2 ? '💳 2. Select Payment Method' : '🎉 Order Confirmed!')),
+                  h('h3', null, '💳 Select Payment Method & Confirm Order'),
                   h('button', { className: 'modal-close-btn', onClick: () => setShowCheckout(false) }, '✕')
                 ),
                 h('div', { className: 'modal-body' },
-                  checkoutStep === 1 && h('div', null,
-                    h('p', null, 'Enter your phone number & email address for instant SMS & email tracking alerts:'),
-                    h('div', { className: 'checkout-form-grid' },
-                      h('div', { className: 'form-group' }, h('label', null, 'Full Name'), h('input', { className: 'form-control', value: custInfo.name, onChange: e => setCustInfo({...custInfo, name: e.target.value}) })),
-                      h('div', { className: 'form-group' }, h('label', null, 'Phone Number (SMS)'), h('input', { className: 'form-control', value: custInfo.phone, onChange: e => setCustInfo({...custInfo, phone: e.target.value}) })),
-                      h('div', { className: 'form-group' }, h('label', null, 'Email Address (Receipt)'), h('input', { className: 'form-control', value: custInfo.email, onChange: e => setCustInfo({...custInfo, email: e.target.value}) })),
-                      h('div', { className: 'form-group full-width' }, h('label', null, 'Shipping Address'), h('textarea', { className: 'form-control', value: custInfo.address, onChange: e => setCustInfo({...custInfo, address: e.target.value}) }))
-                    ),
-                    h('div', { className: 'modal-actions-bar' },
-                      h('button', { className: 'btn-primary', onClick: () => setCheckoutStep(2) }, 'Continue to Payment →')
-                    )
+                  h('div', { className: 'profile-contact-badge' },
+                    '📲 SMS alerts will be sent to: ', h('strong', null, userProfile.phone), ' • Receipts to: ', h('strong', null, userProfile.email)
                   ),
-
-                  checkoutStep === 2 && h('div', null,
-                    h('div', { className: 'payment-options-layout' },
-                      h('div', { className: 'payment-tabs-sidebar' },
-                        h('button', { className: 'pay-tab-btn ' + (payMethod === 'upi' ? 'active' : ''), onClick: () => setPayMethod('upi') }, '📱 UPI (GPay/Paytm)'),
-                        h('button', { className: 'pay-tab-btn ' + (payMethod === 'card' ? 'active' : ''), onClick: () => setPayMethod('card') }, '💳 Credit/Debit Card'),
-                        h('button', { className: 'pay-tab-btn ' + (payMethod === 'netbanking' ? 'active' : ''), onClick: () => setPayMethod('netbanking') }, '🏦 Net Banking'),
-                        h('button', { className: 'pay-tab-btn ' + (payMethod === 'cod' ? 'active' : ''), onClick: () => setPayMethod('cod') }, '💵 Cash on Delivery')
+                  h('div', { className: 'payment-options-layout' },
+                    h('div', { className: 'payment-tabs-sidebar' },
+                      h('button', { className: 'pay-tab-btn ' + (payMethod === 'upi' ? 'active' : ''), onClick: () => setPayMethod('upi') }, '📱 UPI (GPay/PhonePe)'),
+                      h('button', { className: 'pay-tab-btn ' + (payMethod === 'card' ? 'active' : ''), onClick: () => setPayMethod('card') }, '💳 Credit / Debit Card'),
+                      h('button', { className: 'pay-tab-btn ' + (payMethod === 'netbanking' ? 'active' : ''), onClick: () => setPayMethod('netbanking') }, '🏦 Net Banking'),
+                      h('button', { className: 'pay-tab-btn ' + (payMethod === 'cod' ? 'active' : ''), onClick: () => setPayMethod('cod') }, '💵 Cash on Delivery (COD)'),
+                      h('button', { className: 'pay-tab-btn ' + (payMethod === 'wallet' ? 'active' : ''), onClick: () => setPayMethod('wallet') }, '👛 ShopSphere Pay Balance')
+                    ),
+                    h('div', { className: 'payment-tab-content' },
+                      payMethod === 'upi' && h('div', null,
+                        h('h4', null, 'Pay via UPI Instant'),
+                        h('p', { style: { fontSize: '0.85rem', color: 'var(--text-sub)' } }, 'Scan QR code using GPay, PhonePe, or Paytm:'),
+                        h('div', { className: 'qr-box' },
+                          h('span', null, '📷 Dynamic QR Code Generator'),
+                          h('strong', { className: 'qr-amt' }, 'Pay ' + fmtRs(totalAmt))
+                        ),
+                        h('div', { style: { marginTop: '1rem' } },
+                          h('label', { style: { fontSize: '0.8rem', fontWeight: 700 } }, 'Enter UPI ID / VPA:'),
+                          h('input', { className: 'info-input', value: upiVpa, onChange: e => setUpiVpa(e.target.value) })
+                        )
                       ),
-                      h('div', { className: 'payment-tab-content' },
-                        payMethod === 'upi' && h('div', { className: 'qr-box' }, h('p', null, 'Scan QR Code with Google Pay or PhonePe'), h('strong', { className: 'qr-amt' }, 'Pay ' + fmtRs(totalAmt))),
-                        payMethod === 'card' && h('div', null, h('p', null, 'Enter Card Number:'), h('input', { className: 'form-control', defaultValue: '4532 •••• •••• 8920' })),
-                        payMethod === 'netbanking' && h('div', null, h('p', null, 'Select Bank:'), h('select', { className: 'form-control' }, h('option', null, 'HDFC Bank'), h('option', null, 'ICICI Bank'), h('option', null, 'State Bank of India (SBI)'))),
-                        payMethod === 'cod' && h('div', null, h('p', null, 'Pay cash upon delivery. OTP sent to ' + custInfo.phone))
+
+                      payMethod === 'card' && h('div', null,
+                        h('h4', null, 'Credit / Debit Card'),
+                        h('label', { style: { fontSize: '0.8rem', fontWeight: 700 } }, 'Card Number'),
+                        h('input', { className: 'info-input', value: cardNo, onChange: e => setCardNo(e.target.value) }),
+                        h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: '0.5rem' } },
+                          h('input', { className: 'info-input', defaultValue: '08/29', placeholder: 'MM/YY' }),
+                          h('input', { className: 'info-input', type: 'password', defaultValue: '•••', placeholder: 'CVV' })
+                        )
+                      ),
+
+                      payMethod === 'netbanking' && h('div', null,
+                        h('h4', null, 'Net Banking'),
+                        h('select', { className: 'info-input', value: selectedBank, onChange: e => setSelectedBank(e.target.value) },
+                          h('option', null, 'HDFC Bank'),
+                          h('option', null, 'ICICI Bank'),
+                          h('option', null, 'State Bank of India (SBI)'),
+                          h('option', null, 'Axis Bank'),
+                          h('option', null, 'Kotak Mahindra Bank')
+                        )
+                      ),
+
+                      payMethod === 'cod' && h('div', null,
+                        h('h4', null, 'Cash on Delivery (COD)'),
+                        h('p', { style: { fontSize: '0.85rem', color: 'var(--text-sub)' } }, 'Enter 4-digit confirmation OTP sent to ' + userProfile.phone + ':'),
+                        h('input', { className: 'info-input', value: codOtp, onChange: e => setCodOtp(e.target.value), placeholder: 'Enter OTP (e.g. 8492)' })
+                      ),
+
+                      payMethod === 'wallet' && h('div', null,
+                        h('h4', null, 'ShopSphere Pay Balance'),
+                        h('p', { style: { color: '#388e3c', fontWeight: 800 } }, 'Available Balance: ₹1,50,000')
                       )
-                    ),
-                    h('div', { className: 'modal-actions-bar' },
-                      h('button', { className: 'btn-secondary', onClick: () => setCheckoutStep(1) }, '← Back'),
-                      h('button', { className: 'btn-primary success-btn', onClick: handlePayConfirm }, 'PAY ' + fmtRs(totalAmt) + ' & CONFIRM ORDER →')
                     )
                   ),
-
-                  checkoutStep === 3 && placedOrd && h('div', { style: { textAlign: 'center' } },
-                    h('h2', { style: { color: '#388e3c', margin: '1rem 0' } }, '🎉 Order Confirmed!'),
-                    h('p', null, 'Order ID: ', h('strong', null, '#' + placedOrd.id)),
-                    h('div', { style: { textAlign: 'left', marginTop: '1.5rem' } },
-                      h('div', { className: 'sms-alert-card' }, h('div', { className: 'sms-header' }, '💬 SMS SENT TO ' + placedOrd.customer.phone), h('p', null, placedOrd.notifications[0]?.message)),
-                      h('div', { className: 'email-alert-card' }, h('div', { className: 'sms-header', style: { color: '#2874f0' } }, '✉️ EMAIL SENT TO ' + placedOrd.customer.email), h('p', null, placedOrd.notifications[1]?.message))
-                    ),
-                    h('div', { className: 'modal-actions-bar', style: { justifyContent: 'center', marginTop: '1.5rem' } },
-                      h('button', { className: 'btn-primary', onClick: () => { setShowCheckout(false); setPage('orders'); } }, 'View Order & Live Tracking 🚚')
-                    )
+                  h('div', { className: 'modal-actions-bar' },
+                    h('button', { className: 'btn-secondary', onClick: () => setShowCheckout(false) }, 'Cancel'),
+                    h('button', { className: 'btn-primary success-btn', onClick: handleConfirmPayment }, 'PAY ' + fmtRs(totalAmt) + ' & CONFIRM ORDER →')
                   )
                 )
               )
             ),
 
-            /* TRACKING MODAL */
+            /* 5-STAGE LIVE TRACKING MODAL */
             trackModalOrd && h('div', { className: 'modal-backdrop' },
               h('div', { className: 'tracking-modal-container' },
                 h('div', { className: 'modal-header' },
-                  h('h3', null, '🚚 Live Order Shipment Tracking'),
+                  h('div', null,
+                    h('h3', null, '🚚 Live Order Shipment Tracking'),
+                    h('p', { style: { fontSize: '0.8rem', color: 'var(--text-sub)' } }, 'Order #' + trackModalOrd.id + ' • Waybill ID: EX-849201')
+                  ),
                   h('button', { className: 'modal-close-btn', onClick: () => setActiveTrackOrd(null) }, '✕')
                 ),
                 h('div', { className: 'modal-body' },
@@ -658,18 +676,25 @@
 
                   h('div', { className: 'courier-agent-card' },
                     h('div', { className: 'agent-info' },
-                      h('h4', null, 'Executive: ' + (trackModalOrd.tracking?.agentName || 'Rajesh Kumar')),
+                      h('h4', null, 'Delivery Executive: ' + (trackModalOrd.tracking?.agentName || 'Rajesh Kumar')),
                       h('p', null, 'Partner: ExpressLogistics India • Phone: ' + (trackModalOrd.tracking?.agentPhone || '+91 98123 45678'))
                     ),
-                    h('button', { className: 'btn-call-agent', onClick: () => alert('Calling agent...') }, '📞 Call Agent')
+                    h('button', { className: 'btn-call-agent', onClick: () => alert('Calling delivery executive at ' + (trackModalOrd.tracking?.agentPhone || '+91 98123 45678') + '...') }, '📞 Call Agent')
                   ),
 
-                  (trackModalOrd.trackingStage || 1) < 5 && h('button', { className: 'btn-simulate-next', onClick: () => updateOrderStatus(trackModalOrd.id) }, '⚡ Advance Delivery Stage & Send SMS/Email Alert →'),
+                  (trackModalOrd.trackingStage || 1) < 5 && h('button', { className: 'btn-simulate-next', onClick: () => {
+                    updateOrderStatus(trackModalOrd.id);
+                    pushNotification(`💬 SMS UPDATE SENT TO ${trackModalOrd.customer.phone}`, `Order #${trackModalOrd.id} status updated live!`, 'SMS');
+                    pushNotification(`✉️ EMAIL UPDATE SENT TO ${trackModalOrd.customer.email}`, `Order #${trackModalOrd.id} status updated live!`, 'EMAIL');
+                  } }, '⚡ Advance Shipment Stage & Send SMS/Email Alert →'),
 
                   h('h4', { style: { marginTop: '1.5rem', marginBottom: '0.5rem' } }, '📲 Customer Notification Logs'),
                   h('div', { style: { display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '200px', overflowY: 'auto' } },
                     (trackModalOrd.notifications || []).map((n, idx) => h('div', { key: idx, className: 'log-entry-card ' + (n.type === 'SMS' ? 'sms-log' : 'email-log') },
-                      h('div', { className: 'log-entry-header' }, h('span', null, n.type + ' to ' + n.recipient), h('span', null, n.time)),
+                      h('div', { style: { display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '0.75rem' } },
+                        h('span', null, n.type + ' to ' + n.recipient),
+                        h('span', null, n.time)
+                      ),
                       h('p', null, n.message)
                     ))
                   )
@@ -679,7 +704,7 @@
 
             /* Footer */
             h('footer', { className: 'marketplace-footer' },
-              h('div', { className: 'footer-copyright-bar' }, '© 2026 ShopSphere Internet Private Limited. All rights reserved.')
+              h('p', null, '© 2026 ShopSphere Internet Private Limited. All rights reserved.')
             )
           );
         }
