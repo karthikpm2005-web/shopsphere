@@ -15,653 +15,632 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- React 18 & Babel Standalone CDNs -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Multi-CDN Fallback Script Loader for React 18 & ReactDOM 18 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script>
+    if (!window.React) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"><\/script>');
+      document.write('<script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"><\/script>');
+    }
+  </script>
 
-  <!-- Relative CSS Link -->
-  <link rel="stylesheet" href="./src/index.css">
+  <!-- Complete Embedded Design System & Marketplace Styles -->
+  <style>
+    /* ==========================================================================
+       ShopSphere Indian Marketplace - Embedded CSS Architecture
+       ========================================================================== */
+    :root {
+      --brand-blue: #2874f0;
+      --brand-blue-dark: #1c52b7;
+      --brand-yellow: #ffe500;
+      --brand-orange: #fb641b;
+      --brand-green: #388e3c;
+      --bg-primary: #f1f3f6;
+      --bg-white: #ffffff;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8fafc;
+      --bg-header: #2874f0;
+      --border-color: #e0e0e0;
+      --border-focus: #2874f0;
+      --text-main: #212121;
+      --text-sub: #878787;
+      --text-muted: #565656;
+      --text-green: #388e3c;
+      --text-orange: #fb641b;
+      --font-heading: 'Outfit', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.25s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-family: var(--font-body); font-size: 15px; color-scheme: light; scroll-behavior: smooth; }
+    body { min-height: 100vh; background-color: var(--bg-primary); color: var(--text-main); line-height: 1.5; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    .app-container { display: flex; flex-direction: column; min-height: 100vh; }
+    .main-content { flex: 1; width: 100%; max-width: 1380px; margin: 0 auto; padding: 1rem 1rem 3rem 1rem; }
+
+    /* Toast Notification Banner */
+    .global-toast-banner {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: #1e293b; color: #ffffff; padding: 0.9rem 1.4rem;
+      border-radius: var(--radius-md); font-weight: 700; font-size: 0.95rem;
+      box-shadow: var(--shadow-lg); border-left: 5px solid var(--brand-yellow);
+      animation: slideInRight 0.3s ease;
+    }
+    @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+    /* Header */
+    .marketplace-header { position: sticky; top: 0; z-index: 1000; background-color: var(--bg-header); color: #ffffff; padding: 0.65rem 1.5rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
+    .header-top-container { max-width: 1380px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; }
+    .header-brand { display: flex; flex-direction: column; min-width: 130px; }
+    .brand-logo-text { display: flex; align-items: center; gap: 0.35rem; font-family: var(--font-heading); font-size: 1.45rem; font-weight: 800; font-style: italic; color: #ffffff; }
+    .brand-icon { font-size: 1.5rem; font-style: normal; }
+    .brand-tagline { font-size: 0.725rem; color: var(--brand-yellow); font-weight: 700; font-style: italic; margin-top: -0.2rem; }
+
+    .header-search-wrapper { flex: 1; position: relative; max-width: 680px; }
+    .header-search-form { display: flex; width: 100%; background: #ffffff; border-radius: var(--radius-sm); overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .header-search-input { flex: 1; border: none; padding: 0.65rem 1rem; font-family: inherit; font-size: 0.95rem; color: var(--text-main); outline: none; }
+    .header-search-btn { background: #ffffff; color: var(--brand-blue); padding: 0 1.15rem; font-size: 1.1rem; transition: background var(--transition-fast); }
+    .header-search-btn:hover { background: #f1f3f6; }
+
+    .search-suggestions-dropdown { position: absolute; top: 100%; left: 0; width: 100%; background: #ffffff; border-radius: 0 0 var(--radius-md) var(--radius-md); box-shadow: var(--shadow-lg); list-style: none; margin-top: 4px; z-index: 1001; max-height: 380px; overflow-y: auto; }
+    .suggestion-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background var(--transition-fast); }
+    .suggestion-item:hover { background: #f8fafc; }
+    .suggestion-img { width: 40px; height: 40px; object-fit: contain; }
+    .suggestion-info { display: flex; flex-direction: column; }
+    .suggestion-title { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+    .suggestion-meta { font-size: 0.775rem; color: var(--text-sub); }
+
+    .header-actions { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; }
+    .header-action-btn { color: #ffffff; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.85rem; border-radius: var(--radius-sm); transition: background var(--transition-fast); }
+    .header-action-btn:hover, .header-action-btn.active { background: rgba(255, 255, 255, 0.15); }
+    .badge-btn { position: relative; }
+    .action-badge { font-size: 0.725rem; font-weight: 800; padding: 0.1rem 0.45rem; border-radius: var(--radius-full); }
+    .action-badge.yellow { background: var(--brand-yellow); color: var(--text-main); }
+    .action-badge.red { background: #ef4444; color: #ffffff; }
+    .mobile-menu-toggle { display: none; color: #ffffff; font-size: 1.5rem; }
+
+    /* Category Bar */
+    .category-bar-wrapper { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0.75rem 1rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); }
+    .category-bar-inner { max-width: 1380px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; overflow-x: auto; scrollbar-width: none; }
+    .category-bar-inner::-webkit-scrollbar { display: none; }
+    .category-item-btn { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; min-width: 72px; color: var(--text-main); transition: transform var(--transition-fast); }
+    .category-item-btn:hover { transform: translateY(-2px); }
+    .category-item-icon { font-size: 1.6rem; }
+    .category-item-name { font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+    .category-item-btn.active .category-item-name { color: var(--brand-blue); font-weight: 800; }
+
+    /* Hero Carousel */
+    .hero-carousel-container { position: relative; border-radius: var(--radius-md); padding: 3rem 2.5rem; margin-bottom: 1.25rem; color: #ffffff; display: flex; align-items: center; justify-content: space-between; min-height: 280px; overflow: hidden; box-shadow: var(--shadow-md); }
+    .hero-carousel-content { max-width: 520px; z-index: 2; }
+    .carousel-tag { background: rgba(255, 255, 255, 0.2); color: var(--brand-yellow); font-size: 0.8rem; font-weight: 800; padding: 0.3rem 0.85rem; border-radius: var(--radius-full); display: inline-block; margin-bottom: 0.85rem; }
+    .carousel-title { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.6rem; }
+    .carousel-subtitle { font-size: 1.05rem; opacity: 0.9; margin-bottom: 1.25rem; }
+    .carousel-cta-btn { background: var(--brand-yellow); color: var(--text-main); font-weight: 800; font-size: 0.95rem; padding: 0.75rem 1.75rem; border-radius: var(--radius-sm); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform var(--transition-fast); }
+    .carousel-cta-btn:hover { transform: translateY(-2px); }
+    .hero-carousel-image-box { width: 320px; height: 220px; display: flex; align-items: center; justify-content: center; z-index: 2; }
+    .carousel-img { max-height: 100%; object-fit: contain; border-radius: var(--radius-md); }
+    .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.25); color: #ffffff; width: 40px; height: 60px; font-size: 1.75rem; display: flex; align-items: center; justify-content: center; z-index: 3; transition: background var(--transition-fast); }
+    .carousel-arrow:hover { background: rgba(255, 255, 255, 0.45); }
+    .carousel-arrow.prev { left: 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+    .carousel-arrow.next { right: 0; border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+
+    /* Bank Offers */
+    .bank-offers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
+    .bank-offer-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; display: flex; flex-direction: column; gap: 0.25rem; box-shadow: var(--shadow-sm); border-left: 4px solid var(--brand-blue); }
+    .bank-offer-card h4 { font-size: 0.95rem; font-weight: 700; }
+    .bank-offer-card p { font-size: 0.8rem; color: var(--text-sub); }
+
+    /* Product Section & Cards */
+    .marketplace-section { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: var(--shadow-sm); }
+    .section-header-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.15rem; padding-bottom: 0.75rem; border-bottom: 1px solid #f0f0f0; }
+    .marketplace-section-title { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: var(--text-main); }
+    .marketplace-section-sub { font-size: 0.85rem; color: var(--text-sub); }
+    .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    @media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .marketplace-card { background: #ffffff; border: 1px solid #f0f0f0; border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; padding: 1rem; position: relative; transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
+    .marketplace-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: #e0e0e0; }
+    .card-top-image-box { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 0.85rem; }
+    .card-main-img { max-height: 100%; max-width: 100%; object-fit: contain; transition: transform var(--transition-fast); }
+    .marketplace-card:hover .card-main-img { transform: scale(1.06); }
+    .discount-badge-pill { position: absolute; top: 0; left: 0; background: var(--brand-green); color: #ffffff; font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); }
+    .wishlist-heart-btn { position: absolute; top: 0; right: 0; font-size: 1.25rem; background: #ffffff; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); z-index: 2; }
+
+    .card-content-body { display: flex; flex-direction: column; flex: 1; }
+    .brand-category-row { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.25rem; }
+    .brand-label { font-weight: 700; color: var(--text-sub); }
+    .delivery-tag { color: var(--brand-green); font-weight: 600; }
+    .card-title { font-size: 0.95rem; font-weight: 600; line-height: 1.35; color: var(--text-main); margin-bottom: 0.4rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.7em; }
+    .card-rating-row { display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.6rem; }
+    .rating-pill { background: var(--brand-green); color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.1rem 0.45rem; border-radius: var(--radius-sm); }
+    .card-price-row { display: flex; align-items: baseline; gap: 0.5rem; margin-top: auto; }
+    .current-price { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
+    .original-price { font-size: 0.85rem; color: var(--text-sub); text-decoration: line-through; }
+    .card-actions-row { display: flex; gap: 0.4rem; margin-top: 0.75rem; }
+    .btn-card-details { flex: 1; background: #f1f3f6; color: var(--text-main); font-weight: 600; font-size: 0.8rem; padding: 0.45rem; border-radius: var(--radius-sm); }
+    .btn-card-add { flex: 1.2; background: var(--brand-orange); color: #ffffff; font-weight: 700; font-size: 0.8rem; padding: 0.45rem; border-radius: var(--radius-sm); }
+
+    /* Catalog Page Layout & Filters */
+    .catalog-layout { display: grid; grid-template-columns: 260px 1fr; gap: 1rem; }
+    @media (max-width: 868px) { .catalog-layout { grid-template-columns: 1fr; } }
+    .filter-sidebar { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.15rem; height: fit-content; }
+    .filter-sidebar-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid #f0f0f0; margin-bottom: 1rem; }
+    .filter-title { font-size: 1.1rem; font-weight: 800; }
+    .btn-clear-filters { font-size: 0.8rem; color: var(--brand-blue); font-weight: 700; }
+    .filter-group { margin-bottom: 1.25rem; }
+    .filter-group-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase; color: var(--text-sub); }
+    .filter-select { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.85rem; }
+    .radio-list { display: flex; flex-direction: column; gap: 0.4rem; }
+    .radio-label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer; }
+
+    .catalog-header-bar { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .catalog-title { font-size: 1.35rem; font-weight: 800; }
+    .catalog-subtitle { font-size: 0.85rem; color: var(--text-sub); }
+    .sort-box { display: flex; align-items: center; gap: 0.5rem; }
+    .sort-label { font-size: 0.85rem; font-weight: 700; color: var(--text-sub); }
+    .sort-dropdown-select { padding: 0.45rem 0.85rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.85rem; }
+
+    /* Details Page Layout */
+    .product-details-page { display: flex; flex-direction: column; gap: 1rem; }
+    .btn-back-link { align-self: flex-start; font-size: 0.85rem; font-weight: 700; color: var(--brand-blue); margin-bottom: 0.5rem; }
+    .details-main-layout { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; display: grid; grid-template-columns: 1fr 1.2fr; gap: 2.5rem; }
+    @media (max-width: 868px) { .details-main-layout { grid-template-columns: 1fr; padding: 1.25rem; } }
+    .details-gallery-box { display: flex; flex-direction: column; gap: 1rem; }
+    .details-primary-image-wrapper { background: #ffffff; border: 1px solid #f0f0f0; border-radius: var(--radius-md); padding: 2rem; display: flex; align-items: center; justify-content: center; min-height: 380px; position: relative; }
+    .details-primary-img { max-height: 340px; object-fit: contain; }
+    .details-info-box { display: flex; flex-direction: column; gap: 1rem; }
+    .details-brand-pill { font-size: 0.8rem; font-weight: 800; color: var(--brand-blue); text-transform: uppercase; }
+    .details-product-title { font-size: 1.6rem; font-weight: 800; line-height: 1.25; }
+    .details-rating-row { display: flex; align-items: center; gap: 0.6rem; }
+    .details-rating-pill { background: var(--brand-green); color: #ffffff; font-weight: 700; font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: var(--radius-sm); }
+    .details-reviews-count { font-size: 0.85rem; color: var(--text-sub); }
+    .details-price-card { background: #f8fafc; border: 1px solid #f0f0f0; border-radius: var(--radius-md); padding: 1rem; }
+    .price-tag-row { display: flex; align-items: baseline; gap: 0.85rem; }
+    .details-final-price { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: var(--text-main); }
+    .details-original-price { font-size: 1.1rem; color: var(--text-sub); text-decoration: line-through; }
+    .details-discount-tag { color: var(--brand-green); font-size: 1.1rem; font-weight: 800; }
+    .details-offers-box { background: #fffbe6; border: 1px solid #ffe58f; border-radius: var(--radius-md); padding: 1rem; }
+    .offers-title { font-size: 0.9rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .offers-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; }
+    .details-buttons-row { display: flex; gap: 1rem; }
+    .btn-add-to-cart { flex: 1; background: var(--brand-yellow); color: var(--text-main); font-weight: 800; font-size: 1rem; padding: 0.85rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); }
+    .btn-buy-now { flex: 1; background: var(--brand-orange); color: #ffffff; font-weight: 800; font-size: 1rem; padding: 0.85rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); }
+
+    /* Cart Layout */
+    .cart-page-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.25rem; }
+    @media (max-width: 868px) { .cart-page-layout { grid-template-columns: 1fr; } }
+    .cart-items-column { display: flex; flex-direction: column; gap: 1rem; }
+    .cart-item-row { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; display: flex; gap: 1.25rem; }
+    .cart-row-img { width: 90px; height: 90px; object-fit: contain; }
+    .cart-row-info { flex: 1; display: flex; flex-direction: column; }
+    .cart-row-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .cart-row-price-box { display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .row-price { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; }
+    .row-orig-price { font-size: 0.85rem; color: var(--text-sub); text-decoration: line-through; }
+    .cart-row-actions { display: flex; align-items: center; gap: 1.25rem; }
+    .qty-control-box { display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); }
+    .btn-row-action { font-size: 0.85rem; font-weight: 700; color: var(--brand-blue); }
+    .btn-row-action.remove { color: #ef4444; }
+    .cart-price-details-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; height: fit-content; }
+    .price-details-title { font-size: 0.95rem; font-weight: 800; color: var(--text-sub); border-bottom: 1px solid #f0f0f0; padding-bottom: 0.75rem; }
+    .price-detail-row { display: flex; justify-content: space-between; font-size: 0.95rem; }
+    .total-amount-row { font-size: 1.25rem; font-weight: 800; border-top: 1px dashed var(--border-color); border-bottom: 1px dashed var(--border-color); padding: 0.85rem 0; }
+    .btn-place-order { background: var(--brand-orange); color: #ffffff; font-weight: 800; font-size: 1rem; padding: 0.85rem; border-radius: var(--radius-sm); text-align: center; box-shadow: var(--shadow-sm); }
+
+    /* Orders & Account */
+    .orders-list { display: flex; flex-direction: column; gap: 1rem; }
+    .order-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+    .order-card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 0.75rem; }
+    .order-id { font-weight: 800; font-size: 1rem; }
+    .order-status-badge { font-weight: 800; font-size: 0.85rem; }
+    .order-status-badge.delivered { color: var(--brand-green); }
+    .order-status-badge.transit { color: var(--brand-orange); }
+    .order-item-row { display: flex; align-items: center; gap: 1rem; }
+    .order-item-img { width: 50px; height: 50px; object-fit: contain; }
+
+    .account-layout { display: grid; grid-template-columns: 260px 1fr; gap: 1.25rem; }
+    @media (max-width: 768px) { .account-layout { grid-template-columns: 1fr; } }
+    .account-sidebar { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; height: fit-content; }
+    .account-main-content { display: flex; flex-direction: column; gap: 1.25rem; }
+    .account-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .info-input { width: 100%; padding: 0.55rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.9rem; background: #f8fafc; }
+
+    /* Footer */
+    .marketplace-footer { background: #172337; color: #ffffff; padding: 3rem 1.5rem 1rem 1.5rem; margin-top: 3rem; }
+    .footer-top-columns { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr) 1.5fr; gap: 2rem; margin-bottom: 2rem; }
+    @media (max-width: 868px) { .footer-top-columns { grid-template-columns: repeat(2, 1fr); } }
+    .footer-title { font-size: 0.775rem; font-weight: 800; color: #878787; margin-bottom: 0.85rem; letter-spacing: 0.05em; }
+    .footer-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.825rem; }
+    .footer-bottom-trust-bar { max-width: 1380px; margin: 0 auto; border-top: 1px solid #454d5e; border-bottom: 1px solid #454d5e; padding: 1rem 0; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; font-weight: 700; color: var(--brand-yellow); }
+    .footer-copyright-bar { max-width: 1380px; margin: 1rem auto 0 auto; text-align: center; font-size: 0.8rem; color: #878787; }
+  </style>
 </head>
 <body>
   <div id="root"></div>
 
-  <!-- Standalone Indian Marketplace Browser Execution Script -->
-  <script type="text/babel">
-    const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
-
-    // --- 1. HELPERS ---
-    function formatCurrency(amount) {
-      if (typeof amount !== 'number' || isNaN(amount)) return '₹0';
-      return '₹' + Math.round(amount).toLocaleString('en-IN');
-    }
-
-    function formatRating(rating) {
-      if (!rating) return '★ 4.5';
-      const rateVal = typeof rating.rate === 'number' ? rating.rate.toFixed(1) : '4.5';
-      const countVal = typeof rating.count === 'number' ? rating.count.toLocaleString('en-IN') : '120';
-      return `★ ${rateVal} (${countVal})`;
-    }
-
-    function calculateDiscount(price, originalPrice) {
-      if (!originalPrice || originalPrice <= price) return null;
-      const pct = Math.round(((originalPrice - price) / originalPrice) * 100);
-      return `${pct}% off`;
-    }
-
-    function truncateText(text, maxLength = 55) {
-      if (!text) return '';
-      if (text.length <= maxLength) return text;
-      return text.slice(0, maxLength).trim() + '...';
-    }
-
-    function sortProducts(products, sortBy) {
-      if (!Array.isArray(products)) return [];
-      const list = [...products];
-      switch (sortBy) {
-        case 'price-low-high': return list.sort((a, b) => a.price - b.price);
-        case 'price-high-low': return list.sort((a, b) => b.price - a.price);
-        case 'rating-high': return list.sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0));
-        case 'discount': return list.sort((a, b) => (b.discount || 0) - (a.discount || 0));
-        case 'name-asc': return list.sort((a, b) => a.title.localeCompare(b.title));
-        default: return list;
-      }
-    }
-
-    // --- 2. INDIAN MARKETPLACE DATASET ---
-    const INDIAN_PRODUCTS = [
-      { id: 101, title: "Samsung Galaxy S24 Ultra 5G (Titanium Gray, 12GB RAM, 256GB Storage)", brand: "Samsung", category: "Mobiles", price: 129999, originalPrice: 144999, discount: 10, rating: { rate: 4.6, count: 3420 }, image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80"], stock: 12, delivery: "Free delivery by Tomorrow", isFeatured: true, isBestSeller: true, highlights: ["200MP Camera with AI Zoom", "Snapdragon 8 Gen 3", "S-Pen Included", "5000 mAh Battery"], specifications: { "Brand": "Samsung", "Model": "Galaxy S24 Ultra", "Display": "6.8 QHD+ 120Hz", "RAM": "12 GB" }, description: "Ultimate flagship with Galaxy AI, 200MP Pro-visual camera, and Titanium body." },
-      { id: 102, title: "Apple iPhone 15 Pro Max (256 GB) - Natural Titanium", brand: "Apple", category: "Mobiles", price: 148900, originalPrice: 159900, discount: 7, rating: { rate: 4.7, count: 4890 }, image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80"], stock: 8, delivery: "Free delivery in 2 Days", isFeatured: true, isBestSeller: true, highlights: ["A17 Pro Chip", "Titanium Design", "48MP Main Camera", "Action Button"], specifications: { "Brand": "Apple", "Model": "iPhone 15 Pro Max", "Display": "6.7 OLED", "Storage": "256 GB" }, description: "Forged in titanium with groundbreaking A17 Pro chip and 5x Telephoto camera." },
-      { id: 103, title: "OnePlus 12 5G (Silky Black, 16GB RAM, 512GB Storage)", brand: "OnePlus", category: "Mobiles", price: 69999, originalPrice: 74999, discount: 7, rating: { rate: 4.5, count: 2150 }, image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80"], stock: 15, delivery: "Free delivery by Tomorrow", isFeatured: true, isBestSeller: false, highlights: ["4th Gen Hasselblad Camera", "100W SUPERVOOC", "2K 120Hz ProXDR Display"], specifications: { "Brand": "OnePlus", "RAM": "16 GB", "Storage": "512 GB" }, description: "Smooth Beyond Belief with Snapdragon 8 Gen 3 and 100W fast charging." },
-      { id: 104, title: "Redmi Note 13 Pro+ 5G (Fusion Purple, 12GB RAM, 256GB Storage)", brand: "Xiaomi", category: "Mobiles", price: 31999, originalPrice: 35999, discount: 11, rating: { rate: 4.3, count: 5410 }, image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80"], stock: 25, delivery: "Free delivery by Tomorrow", isFeatured: false, isBestSeller: true, highlights: ["200MP OIS 3D Curved AMOLED", "120W HyperCharge", "IP68 Water Resistance"], specifications: { "Brand": "Xiaomi", "RAM": "12 GB", "Storage": "256 GB" }, description: "SuperNote with 200MP OIS camera, 120W charging, and 3D Curved AMOLED screen." },
-      { id: 105, title: "Apple MacBook Air M3 (13.6-inch, 8GB RAM, 256GB SSD) - Space Grey", brand: "Apple", category: "Laptops", price: 104900, originalPrice: 114900, discount: 8, rating: { rate: 4.8, count: 1820 }, image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80"], stock: 10, delivery: "Free delivery by Tomorrow", isFeatured: true, isBestSeller: true, highlights: ["Apple M3 Chip", "18 Hours Battery Life", "Liquid Retina Display"], specifications: { "Brand": "Apple", "Model": "MacBook Air M3", "RAM": "8 GB" }, description: "Lean. Mean. M3 machine. Ultra-portable laptop with blazing M3 speed." },
-      { id: 106, title: "ASUS ROG Strix G16 Gaming Laptop (i7 13th Gen, RTX 4060, 16GB, 1TB SSD)", brand: "ASUS", category: "Laptops", price: 124990, originalPrice: 149990, discount: 16, rating: { rate: 4.6, count: 940 }, image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=80"], stock: 6, delivery: "Free delivery in 2 Days", isFeatured: true, isBestSeller: false, highlights: ["NVIDIA RTX 4060 8GB", "165Hz FHD+ Display", "ROG Intelligent Cooling"], specifications: { "Brand": "ASUS", "GPU": "RTX 4060" }, description: "Dominate gaming with 13th Gen i7 processor and NVIDIA RTX 4060 GPU." },
-      { id: 107, title: "Sony WH-1000XM5 Wireless Noise Canceling Headphones", brand: "Sony", category: "Electronics", price: 26990, originalPrice: 34990, discount: 22, rating: { rate: 4.7, count: 3210 }, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80"], stock: 20, delivery: "Free delivery by Tomorrow", isFeatured: true, isBestSeller: true, highlights: ["Auto NC Optimizer", "30-Hour Battery Life", "Speak-to-Chat"], specifications: { "Brand": "Sony", "Battery": "30 Hours" }, description: "Industry-leading Noise Cancellation powered by 8 microphones." },
-      { id: 108, title: "Apple Watch Series 9 GPS 45mm Midnight Aluminum", brand: "Apple", category: "Electronics", price: 41900, originalPrice: 44900, discount: 6, rating: { rate: 4.6, count: 1450 }, image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80"], stock: 14, delivery: "Free delivery by Tomorrow", isFeatured: false, isBestSeller: true, highlights: ["S9 Chip Double Tap", "Always-On Display", "ECG App"], specifications: { "Brand": "Apple", "Size": "45mm" }, description: "Smarter, brighter watch with Double Tap gesture control." },
-      { id: 109, title: "LG 55 inches 4K Ultra HD Smart OLED TV", brand: "LG", category: "TVs", price: 119990, originalPrice: 169990, discount: 29, rating: { rate: 4.8, count: 870 }, image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=80"], stock: 5, delivery: "Free Scheduled Installation", isFeatured: true, isBestSeller: true, highlights: ["α9 AI Processor 4K", "Self-lighting OLED", "Dolby Vision & Atmos"], specifications: { "Brand": "LG", "Screen Size": "55 Inches" }, description: "Self-lit OLED pixels delivering infinite contrast and Dolby Vision sound." },
-      { id: 110, title: "LG 8 Kg 5 Star Inverter AI Front Load Washing Machine", brand: "LG", category: "Appliances", price: 36990, originalPrice: 48990, discount: 24, rating: { rate: 4.5, count: 2310 }, image: "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=600&q=80"], stock: 12, delivery: "Free Installation", isFeatured: false, isBestSeller: true, highlights: ["AI DD Technology", "6 Motion Direct Drive", "5 Star Energy Rating"], specifications: { "Brand": "LG", "Capacity": "8 Kg" }, description: "AI DD technology optimizes fabric motion sensing for 18% fabric care." },
-      { id: 111, title: "Samsung 324 L 3 Star Frost Free Double Door Refrigerator", brand: "Samsung", category: "Appliances", price: 34990, originalPrice: 44990, discount: 22, rating: { rate: 4.4, count: 1890 }, image: "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?auto=format&fit=crop&w=600&q=80"], stock: 9, delivery: "Free Scheduled Delivery", isFeatured: false, isBestSeller: false, highlights: ["Convertible 5in1 Modes", "Digital Inverter Compressor"], specifications: { "Brand": "Samsung", "Capacity": "324 Liters" }, description: "Convertible 5-in-1 modes to convert freezer into fridge for fresh food." },
-      { id: 112, title: "Men's Premium Slim Fit Casual Cotton Shirt - Olive", brand: "Roadster", category: "Men's Fashion", price: 899, originalPrice: 1999, discount: 55, rating: { rate: 4.2, count: 6820 }, image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80"], stock: 50, delivery: "Free delivery by Tomorrow", isFeatured: true, isBestSeller: true, highlights: ["100% Breathable Cotton", "Slim Fit Curved Hem"], specifications: { "Brand": "Roadster", "Fit": "Slim Fit" }, description: "100% pure breathable cotton fabric, perfect for casual smart styling." },
-      { id: 113, title: "Women's Printed Anarkali Kurta Set with Dupatta", brand: "BIBA", category: "Women's Fashion", price: 2499, originalPrice: 5999, discount: 58, rating: { rate: 4.5, count: 4210 }, image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80"], stock: 35, delivery: "Free delivery by Tomorrow", isFeatured: true, isBestSeller: true, highlights: ["Rayon Fabric", "Foil Print", "Palazzo & Dupatta Included"], specifications: { "Brand": "BIBA", "Style": "Anarkali" }, description: "Graceful floral foil printed Anarkali suit set for festive celebrations." },
-      { id: 114, title: "Nike Air Max Solo Men's Running Sneakers - Black", brand: "Nike", category: "Sports", price: 6495, originalPrice: 8295, discount: 21, rating: { rate: 4.6, count: 1290 }, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"], stock: 18, delivery: "Free delivery in 2 Days", isFeatured: true, isBestSeller: true, highlights: ["Max Air Cushioning", "Breathable Mesh Upper"], specifications: { "Brand": "Nike", "Sole": "Rubber" }, description: "Running sneakers with Max Air heel cushioning and mesh ventilation." },
-      { id: 115, title: "Minimalist 10% Vitamin C Face Serum (30 ml)", brand: "Minimalist", category: "Beauty", price: 649, originalPrice: 699, discount: 7, rating: { rate: 4.4, count: 9120 }, image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80"], stock: 60, delivery: "Free delivery by Tomorrow", isFeatured: false, isBestSeller: true, highlights: ["10% Vitamin C", "Glowing Skin Formula"], specifications: { "Brand": "Minimalist", "Volume": "30 ml" }, description: "Serum formulated with Centella Asiatica water for glowing skin." },
-      { id: 116, title: "Fortune Sunlite Refined Sunflower Oil (5 L Can)", brand: "Fortune", category: "Grocery", price: 645, originalPrice: 799, discount: 19, rating: { rate: 4.6, count: 12450 }, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80"], stock: 100, delivery: "Express Delivery Available", isFeatured: false, isBestSeller: true, highlights: ["Enriched with Vitamin A & D", "Light Cooking Oil"], specifications: { "Brand": "Fortune", "Quantity": "5 Liters" }, description: "Refined sunflower oil enriched with vitamins for healthy cooking." },
-      { id: 117, title: "Wakefit Orthopedic Memory Foam Queen Mattress", brand: "Wakefit", category: "Furniture", price: 11499, originalPrice: 15499, discount: 25, rating: { rate: 4.6, count: 18450 }, image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80", images: ["https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80"], stock: 15, delivery: "Free Doorstep Delivery", isFeatured: true, isBestSeller: true, highlights: ["10 Years Warranty", "Memory Foam Spinal Support"], specifications: { "Brand": "Wakefit", "Size": "Queen" }, description: "Designed for spinal alignment and adaptive body contouring." }
-    ];
-
-    const CATEGORIES_LIST = [
-      { id: "all", name: "All Categories", icon: "🏬" },
-      { id: "Mobiles", name: "Mobiles", icon: "📱" },
-      { id: "Laptops", name: "Laptops", icon: "💻" },
-      { id: "Electronics", name: "Electronics", icon: "🎧" },
-      { id: "TVs", name: "TVs", icon: "📺" },
-      { id: "Appliances", name: "Appliances", icon: "🧺" },
-      { id: "Men's Fashion", name: "Men's Fashion", icon: "👔" },
-      { id: "Women's Fashion", name: "Women's Fashion", icon: "👗" },
-      { id: "Beauty", name: "Beauty", icon: "💄" },
-      { id: "Grocery", name: "Grocery", icon: "🛒" },
-      { id: "Sports", name: "Sports", icon: "⚽" },
-      { id: "Furniture", name: "Furniture", icon: "🛋️" }
-    ];
-
-    // --- 3. CONTEXTS ---
-    const CartContext = createContext();
-    const WishlistContext = createContext();
-
-    function CartProvider({ children }) {
-      const [cartItems, setCartItems] = useState(() => {
-        try {
-          const saved = localStorage.getItem('shopsphere_cart_v1');
-          return saved ? JSON.parse(saved) : [];
-        } catch (e) { return []; }
-      });
-      const [toastMsg, setToastMsg] = useState(null);
-
-      const showToast = (msg) => {
-        setToastMsg(msg);
-        setTimeout(() => setToastMsg(prev => prev === msg ? null : prev), 3500);
-      };
-
-      useEffect(() => {
-        try { localStorage.setItem('shopsphere_cart_v1', JSON.stringify(cartItems)); } catch (e) {}
-      }, [cartItems]);
-
-      const addToCart = (p, qty = 1) => {
-        setCartItems(prev => {
-          const idx = prev.findIndex(i => i.id === p.id);
-          if (idx > -1) {
-            const updated = [...prev];
-            updated[idx] = { ...updated[idx], quantity: updated[idx].quantity + qty };
-            return updated;
-          }
-          return [...prev, { ...p, quantity: qty }];
-        });
-        showToast(`🛒 Added ${qty} × "${p.title.slice(0, 25)}..." to cart!`);
-      };
-
-      const removeFromCart = id => {
-        setCartItems(prev => prev.filter(i => i.id !== id));
-        showToast(`🗑️ Item removed from cart.`);
-      };
-
-      const increaseQuantity = id => setCartItems(prev => prev.map(i => i.id === id ? { ...i, quantity: i.quantity + 1 } : i));
-      const decreaseQuantity = id => setCartItems(prev => prev.map(i => i.id === id ? { ...i, quantity: i.quantity - 1 } : i).filter(i => i.quantity > 0));
-      const clearCart = () => setCartItems([]);
-
-      const totalItems = cartItems.reduce((s, i) => s + i.quantity, 0);
-      const subtotalPrice = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
-
-      return (
-        <CartContext.Provider value={{ cartItems, totalItems, subtotalPrice, toastMsg, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart }}>
-          {children}
-        </CartContext.Provider>
-      );
-    }
-
-    function WishlistProvider({ children }) {
-      const [wishlistItems, setWishlistItems] = useState(() => {
-        try { return JSON.parse(localStorage.getItem('shopsphere_wishlist_v1')) || []; } catch (e) { return []; }
-      });
-      const [recentlyViewed, setRecentlyViewed] = useState(() => {
-        try { return JSON.parse(localStorage.getItem('shopsphere_recent_v1')) || []; } catch (e) { return []; }
-      });
-      const [orders, setOrders] = useState(() => {
-        try {
-          return JSON.parse(localStorage.getItem('shopsphere_orders_v1')) || [
-            { id: 'SS10001', date: '05 Sep 2026', status: 'Delivered', items: [{ title: 'Samsung Galaxy S24 Ultra 5G', price: 129999, quantity: 1, image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80' }], total: 129999 }
-          ];
-        } catch (e) { return []; }
-      });
-
-      useEffect(() => { try { localStorage.setItem('shopsphere_wishlist_v1', JSON.stringify(wishlistItems)); } catch (e) {} }, [wishlistItems]);
-      useEffect(() => { try { localStorage.setItem('shopsphere_recent_v1', JSON.stringify(recentlyViewed)); } catch (e) {} }, [recentlyViewed]);
-      useEffect(() => { try { localStorage.setItem('shopsphere_orders_v1', JSON.stringify(orders)); } catch (e) {} }, [orders]);
-
-      const addToWishlist = p => setWishlistItems(prev => prev.some(i => i.id === p.id) ? prev : [...prev, p]);
-      const removeFromWishlist = id => setWishlistItems(prev => prev.filter(i => i.id !== id));
-      const isInWishlist = id => wishlistItems.some(i => i.id === id);
-
-      const addRecentlyViewed = p => {
-        if (!p || !p.id) return;
-        setRecentlyViewed(prev => [p, ...prev.filter(i => i.id !== p.id)].slice(0, 10));
-      };
-
-      const addOrder = (items, total) => {
-        const o = { id: `SS${Math.floor(10000 + Math.random() * 90000)}`, date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }), status: 'In Transit', items, total };
-        setOrders(prev => [o, ...prev]);
-        return o;
-      };
-
-      return (
-        <WishlistContext.Provider value={{ wishlistItems, recentlyViewed, orders, addToWishlist, removeFromWishlist, isInWishlist, addRecentlyViewed, addOrder }}>
-          {children}
-        </WishlistContext.Provider>
-      );
-    }
-
-    function useCart() { return useContext(CartContext); }
-    function useWishlist() { return useContext(WishlistContext); }
-
-    // --- 4. MARKETPLACE HEADER & COMPONENTS ---
-    function Navbar({ activePage, onNavigate, onSearch }) {
-      const { totalItems } = useCart();
-      const { wishlistItems } = useWishlist();
-      const [term, setTerm] = useState('');
-      const [suggestions, setSuggestions] = useState([]);
-      const [showSug, setShowSug] = useState(false);
-      const [open, setOpen] = useState(false);
-      const searchRef = useRef(null);
-
-      useEffect(() => {
-        const q = term.trim().toLowerCase();
-        if (q.length < 2) { setSuggestions([]); setShowSug(false); return; }
-        const matches = INDIAN_PRODUCTS.filter(p => p.title.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)).slice(0, 5);
-        setSuggestions(matches);
-        setShowSug(matches.length > 0);
-      }, [term]);
-
-      const submitSearch = e => {
-        if (e) e.preventDefault();
-        if (onSearch) onSearch(term);
-        setShowSug(false);
-      };
-
-      const clickSug = p => {
-        onNavigate('product-details', p.id);
-        setTerm('');
-        setShowSug(false);
-      };
-
-      const nav = (p, e) => {
-        if (e) e.preventDefault();
-        onNavigate(p);
-        setOpen(false);
-      };
-
-      return (
-        <header className="marketplace-header">
-          <div className="header-top-container">
-            <a href="#/" className="header-brand" onClick={(e) => nav('home', e)}>
-              <div className="brand-logo-text"><span className="brand-icon">🛍️</span><span>ShopSphere</span></div>
-              <span className="brand-tagline">Explore Plus ✦</span>
-            </a>
-            <div className="header-search-wrapper" ref={searchRef}>
-              <form className="header-search-form" onSubmit={submitSearch}>
-                <input type="text" className="header-search-input" placeholder="Search for products, brands and categories..." value={term} onChange={e => setTerm(e.target.value)} onFocus={() => suggestions.length > 0 && setShowSug(true)} />
-                <button type="submit" className="header-search-btn">🔍</button>
-              </form>
-              {showSug && (
-                <ul className="search-suggestions-dropdown">
-                  {suggestions.map(p => (
-                    <li key={p.id} className="suggestion-item" onClick={() => clickSug(p)}>
-                      <img src={p.image} alt={p.title} className="suggestion-img" />
-                      <div className="suggestion-info">
-                        <span className="suggestion-title">{p.title}</span>
-                        <span className="suggestion-meta">{p.brand} • in {p.category}</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-            <div className={`header-actions ${open ? 'open' : ''}`}>
-              <a href="#/account" className={`header-action-btn ${activePage === 'account' ? 'active' : ''}`} onClick={e => nav('account', e)}>👤 Profile</a>
-              <a href="#/orders" className={`header-action-btn ${activePage === 'orders' ? 'active' : ''}`} onClick={e => nav('orders', e)}>📦 Orders</a>
-              <a href="#/wishlist" className="header-action-btn badge-btn" onClick={e => nav('wishlist', e)}>
-                ❤️ Wishlist {wishlistItems.length > 0 && <span className="action-badge red">{wishlistItems.length}</span>}
-              </a>
-              <a href="#/cart" className="header-action-btn badge-btn cart-btn-highlight" onClick={e => nav('cart', e)}>
-                🛒 Cart <span className="action-badge yellow">{totalItems}</span>
-              </a>
-            </div>
-            <button className="mobile-menu-toggle" onClick={() => setOpen(!open)}>{open ? '✕' : '☰'}</button>
-          </div>
-        </header>
-      );
-    }
-
-    function CategoryBar({ selectedCategory, onSelectCategory }) {
-      return (
-        <div className="category-bar-wrapper">
-          <div className="category-bar-inner">
-            {CATEGORIES_LIST.map(cat => (
-              <button key={cat.id} type="button" className={`category-item-btn ${selectedCategory === cat.name ? 'active' : ''}`} onClick={() => onSelectCategory(cat.name === 'All Categories' ? 'all' : cat.name)}>
-                <span className="category-item-icon">{cat.icon}</span>
-                <span className="category-item-name">{cat.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      );
-    }
-
-    function HeroCarousel({ onNavigateCategory }) {
-      const [slideIdx, setSlideIdx] = useState(0);
-      const slides = [
-        { title: "BIG SHOPPING DAYS SALE", subtitle: "Up to 70% OFF on Electronics & Gadgets", tag: "⚡ LIVE NOW • ENDS IN 24 HOURS", bg: "linear-gradient(135deg, #1e1b4b, #311b92, #4a148c)", image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80", target: "Electronics" },
-        { title: "NEXT-GEN SMARTPHONES LAUNCH", subtitle: "Galaxy S24 Ultra & iPhone 15 Pro Max", tag: "🔥 EXTRA 10% BANK DISCOUNT", bg: "linear-gradient(135deg, #0f172a, #1e293b, #0369a1)", image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80", target: "Mobiles" },
-        { title: "FASHION FESTIVAL 2026", subtitle: "Kurtas, Shirts & Sneakers Min 50% OFF", tag: "🏷️ FREE EXPRESS DELIVERY", bg: "linear-gradient(135deg, #831843, #9d174d, #be185d)", image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80", target: "Men's Fashion" }
+  <!-- Native JavaScript Application Script (Runs natively in Chrome without Babel transpilation) -->
+  <script>
+    (function() {
+      // --- 1. DATASET ---
+      const INDIAN_PRODUCTS = [
+        { id: 101, title: "Samsung Galaxy S24 Ultra 5G (Titanium Gray, 12GB RAM, 256GB Storage)", brand: "Samsung", category: "Mobiles", price: 129999, originalPrice: 144999, discount: 10, rating: { rate: 4.6, count: 3420 }, image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["200MP Camera with AI Zoom", "Snapdragon 8 Gen 3", "S-Pen Included"], specifications: { "Brand": "Samsung", "Model": "Galaxy S24 Ultra", "Display": "6.8 QHD+ 120Hz" }, description: "Ultimate flagship with Galaxy AI, 200MP Pro-visual camera, and Titanium body." },
+        { id: 102, title: "Apple iPhone 15 Pro Max (256 GB) - Natural Titanium", brand: "Apple", category: "Mobiles", price: 148900, originalPrice: 159900, discount: 7, rating: { rate: 4.7, count: 4890 }, image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery in 2 Days", isFeatured: true, highlights: ["A17 Pro Chip", "Titanium Design", "48MP Main Camera"], specifications: { "Brand": "Apple", "Model": "iPhone 15 Pro Max" }, description: "Forged in titanium with groundbreaking A17 Pro chip and 5x Telephoto camera." },
+        { id: 103, title: "OnePlus 12 5G (Silky Black, 16GB RAM, 512GB Storage)", brand: "OnePlus", category: "Mobiles", price: 69999, originalPrice: 74999, discount: 7, rating: { rate: 4.5, count: 2150 }, image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["Hasselblad Camera", "100W SUPERVOOC"], specifications: { "Brand": "OnePlus", "RAM": "16 GB" }, description: "Smooth Beyond Belief with Snapdragon 8 Gen 3 and 100W fast charging." },
+        { id: 104, title: "Redmi Note 13 Pro+ 5G (Fusion Purple, 12GB RAM, 256GB Storage)", brand: "Xiaomi", category: "Mobiles", price: 31999, originalPrice: 35999, discount: 11, rating: { rate: 4.3, count: 5410 }, image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", highlights: ["200MP OIS Camera", "120W HyperCharge"], specifications: { "Brand": "Xiaomi", "RAM": "12 GB" }, description: "SuperNote with 200MP OIS camera, 120W charging, and 3D Curved AMOLED screen." },
+        { id: 105, title: "Apple MacBook Air M3 (13.6-inch, 8GB RAM, 256GB SSD) - Space Grey", brand: "Apple", category: "Laptops", price: 104900, originalPrice: 114900, discount: 8, rating: { rate: 4.8, count: 1820 }, image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["Apple M3 Chip", "18 Hours Battery"], specifications: { "Brand": "Apple", "Model": "MacBook Air M3" }, description: "Lean. Mean. M3 machine. Ultra-portable laptop with blazing M3 speed." },
+        { id: 106, title: "ASUS ROG Strix G16 Gaming Laptop (i7 13th Gen, RTX 4060, 16GB)", brand: "ASUS", category: "Laptops", price: 124990, originalPrice: 149990, discount: 16, rating: { rate: 4.6, count: 940 }, image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery in 2 Days", highlights: ["NVIDIA RTX 4060", "165Hz FHD+ Display"], specifications: { "Brand": "ASUS", "GPU": "RTX 4060" }, description: "Dominate gaming with 13th Gen i7 processor and NVIDIA RTX 4060 GPU." },
+        { id: 107, title: "Sony WH-1000XM5 Wireless Noise Canceling Headphones", brand: "Sony", category: "Electronics", price: 26990, originalPrice: 34990, discount: 22, rating: { rate: 4.7, count: 3210 }, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["Auto NC Optimizer", "30-Hour Battery"], specifications: { "Brand": "Sony", "Battery": "30 Hours" }, description: "Industry-leading Noise Cancellation powered by 8 microphones." },
+        { id: 108, title: "LG 55 inches 4K Ultra HD Smart OLED TV", brand: "LG", category: "TVs", price: 119990, originalPrice: 169990, discount: 29, rating: { rate: 4.8, count: 870 }, image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=80", delivery: "Free Scheduled Installation", isFeatured: true, highlights: ["Self-lighting OLED", "Dolby Vision & Atmos"], specifications: { "Brand": "LG", "Screen Size": "55 Inches" }, description: "Self-lit OLED pixels delivering infinite contrast and Dolby Vision sound." },
+        { id: 109, title: "Men's Premium Slim Fit Casual Cotton Shirt - Olive", brand: "Roadster", category: "Men's Fashion", price: 899, originalPrice: 1999, discount: 55, rating: { rate: 4.2, count: 6820 }, image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", highlights: ["100% Cotton", "Slim Fit"], specifications: { "Brand": "Roadster", "Fit": "Slim Fit" }, description: "100% pure breathable cotton fabric, perfect for casual smart styling." },
+        { id: 110, title: "Women's Printed Anarkali Kurta Set with Dupatta", brand: "BIBA", category: "Women's Fashion", price: 2499, originalPrice: 5999, discount: 58, rating: { rate: 4.5, count: 4210 }, image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", highlights: ["Rayon Fabric", "Palazzo Included"], specifications: { "Brand": "BIBA", "Style": "Anarkali" }, description: "Graceful floral foil printed Anarkali suit set for festive celebrations." },
+        { id: 111, title: "Nike Air Max Solo Men's Running Sneakers - Black", brand: "Nike", category: "Sports", price: 6495, originalPrice: 8295, discount: 21, rating: { rate: 4.6, count: 1290 }, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery in 2 Days", highlights: ["Max Air Cushioning", "Breathable Mesh"], specifications: { "Brand": "Nike", "Sole": "Rubber" }, description: "Running sneakers with Max Air heel cushioning and mesh ventilation." },
+        { id: 112, title: "LG 8 Kg 5 Star Inverter AI Front Load Washing Machine", brand: "LG", category: "Appliances", price: 36990, originalPrice: 48990, discount: 24, rating: { rate: 4.5, count: 2310 }, image: "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=600&q=80", delivery: "Free Installation", highlights: ["AI DD Tech", "5 Star Rating"], specifications: { "Brand": "LG", "Capacity": "8 Kg" }, description: "AI DD technology optimizes fabric motion sensing for 18% fabric care." }
       ];
 
-      useEffect(() => {
-        const timer = setInterval(() => setSlideIdx(prev => (prev + 1) % slides.length), 5000);
-        return () => clearInterval(timer);
-      }, []);
+      const CATEGORIES = [
+        { id: "all", name: "All Categories", icon: "🏬" },
+        { id: "Mobiles", name: "Mobiles", icon: "📱" },
+        { id: "Laptops", name: "Laptops", icon: "💻" },
+        { id: "Electronics", name: "Electronics", icon: "🎧" },
+        { id: "TVs", name: "TVs", icon: "📺" },
+        { id: "Appliances", name: "Appliances", icon: "🧺" },
+        { id: "Men's Fashion", name: "Men's Fashion", icon: "👔" },
+        { id: "Women's Fashion", name: "Women's Fashion", icon: "👗" },
+        { id: "Sports", name: "Sports", icon: "⚽" }
+      ];
 
-      const s = slides[slideIdx];
-      return (
-        <div className="hero-carousel-container" style={{ background: s.bg }}>
-          <div className="hero-carousel-content">
-            <span className="carousel-tag">{s.tag}</span>
-            <h1 className="carousel-title">{s.title}</h1>
-            <p className="carousel-subtitle">{s.subtitle}</p>
-            <button className="carousel-cta-btn" onClick={() => onNavigateCategory(s.target)}>Explore Now →</button>
-          </div>
-          <div className="hero-carousel-image-box"><img src={s.image} alt={s.title} className="carousel-img" /></div>
-          <button className="carousel-arrow prev" onClick={() => setSlideIdx(p => (p - 1 + slides.length) % slides.length)}>‹</button>
-          <button className="carousel-arrow next" onClick={() => setSlideIdx(p => (p + 1) % slides.length)}>›</button>
-        </div>
-      );
-    }
+      // --- 2. HELPERS ---
+      function fmtRs(amt) { return '₹' + Math.round(amt || 0).toLocaleString('en-IN'); }
+      function fmtRating(r) { return '★ ' + (r && r.rate ? r.rate : '4.5') + ' (' + (r && r.count ? r.count : '120') + ')'; }
 
-    function ProductCard({ product, onSelect }) {
-      const { addToCart } = useCart();
-      const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
-      if (!product) return null;
+      // --- 3. REACT APPLICATION RENDERER ---
+      if (window.React && window.ReactDOM) {
+        const { useState, useEffect, createContext, useContext, useMemo } = React;
+        const h = React.createElement;
 
-      const isWish = isInWishlist(product.id);
-      const discountText = calculateDiscount(product.price, product.originalPrice) || (product.discount ? `${product.discount}% off` : null);
+        const CartCtx = createContext();
+        const WishCtx = createContext();
 
-      return (
-        <article className="marketplace-card" onClick={() => onSelect(product.id)}>
-          <div className="card-top-image-box">
-            {discountText && <span className="discount-badge-pill">{discountText}</span>}
-            <button className={`wishlist-heart-btn ${isWish ? 'active' : ''}`} onClick={e => { e.stopPropagation(); isWish ? removeFromWishlist(product.id) : addToWishlist(product); }}>
-              {isWish ? '❤️' : '🤍'}
-            </button>
-            <img src={product.image} alt={product.title} className="card-main-img" loading="lazy" />
-          </div>
-          <div className="card-content-body">
-            <div className="brand-category-row"><span className="brand-label">{product.brand || 'ShopSphere'}</span><span className="delivery-tag">Free Delivery</span></div>
-            <h3 className="card-title">{truncateText(product.title, 55)}</h3>
-            <div className="card-rating-row"><span className="rating-pill">{formatRating(product.rating)}</span></div>
-            <div className="card-price-row">
-              <span className="current-price">{formatCurrency(product.price)}</span>
-              {product.originalPrice && product.originalPrice > product.price && <span className="original-price">{formatCurrency(product.originalPrice)}</span>}
+        function CartProvider(props) {
+          const [cart, setCart] = useState(() => {
+            try { return JSON.parse(localStorage.getItem('ss_cart')) || []; } catch(e) { return []; }
+          });
+          const [toast, setToast] = useState(null);
+
+          useEffect(() => { try { localStorage.setItem('ss_cart', JSON.stringify(cart)); } catch(e){} }, [cart]);
+
+          const showToast = (m) => { setToast(m); setTimeout(() => setToast(null), 3000); };
+          const addToCart = (p) => {
+            setCart(prev => {
+              const idx = prev.findIndex(i => i.id === p.id);
+              if (idx > -1) { const copy = [...prev]; copy[idx].qty += 1; return copy; }
+              return [...prev, { ...p, qty: 1 }];
+            });
+            showToast('🛒 Added "' + p.title.slice(0, 22) + '..." to cart!');
+          };
+          const removeCart = (id) => setCart(prev => prev.filter(i => i.id !== id));
+          const updateQty = (id, delta) => setCart(prev => prev.map(i => i.id === id ? { ...i, qty: Math.max(1, i.qty + delta) } : i));
+
+          const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+          const totalAmt = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+          return h(CartCtx.Provider, { value: { cart, totalQty, totalAmt, toast, addToCart, removeCart, updateQty } }, props.children);
+        }
+
+        function WishProvider(props) {
+          const [wish, setWish] = useState(() => {
+            try { return JSON.parse(localStorage.getItem('ss_wish')) || []; } catch(e) { return []; }
+          });
+          const [orders, setOrders] = useState(() => [
+            { id: 'SS84920', date: '06 Sep 2026', status: 'Delivered', total: 129999, item: 'Samsung Galaxy S24 Ultra 5G' }
+          ]);
+
+          useEffect(() => { try { localStorage.setItem('ss_wish', JSON.stringify(wish)); } catch(e){} }, [wish]);
+
+          const toggleWish = (p) => setWish(prev => prev.some(i => i.id === p.id) ? prev.filter(i => i.id !== p.id) : [...prev, p]);
+          const isWish = (id) => wish.some(i => i.id === id);
+          const placeOrder = (items, total) => setOrders(prev => [{ id: 'SS' + Math.floor(10000 + Math.random()*90000), date: 'Today', status: 'In Transit', total, item: items[0]?.title || 'Products' }, ...prev]);
+
+          return h(WishCtx.Provider, { value: { wish, orders, toggleWish, isWish, placeOrder } }, props.children);
+        }
+
+        function AppMain() {
+          const [page, setPage] = useState('home');
+          const [cat, setCat] = useState('all');
+          const [selId, setSelId] = useState(null);
+          const [search, setSearch] = useState('');
+          const { cart, totalQty, totalAmt, toast, addToCart, removeCart, updateQty } = useContext(CartCtx);
+          const { wish, orders, toggleWish, isWish, placeOrder } = useContext(WishCtx);
+
+          const filtered = useMemo(() => {
+            return INDIAN_PRODUCTS.filter(p => {
+              const matchCat = cat === 'all' || p.category === cat;
+              const matchSearch = !search || p.title.toLowerCase().includes(search.toLowerCase()) || p.brand.toLowerCase().includes(search.toLowerCase());
+              return matchCat && matchSearch;
+            });
+          }, [cat, search]);
+
+          const selectedProd = INDIAN_PRODUCTS.find(p => p.id === selId) || INDIAN_PRODUCTS[0];
+
+          return h('div', { className: 'app-container' },
+            toast && h('div', { className: 'global-toast-banner' }, toast),
+            
+            /* Header */
+            h('header', { className: 'marketplace-header' },
+              h('div', { className: 'header-top-container' },
+                h('a', { href: '#', className: 'header-brand', onClick: (e) => { e.preventDefault(); setPage('home'); } },
+                  h('div', { className: 'brand-logo-text' }, h('span', { className: 'brand-icon' }, '🛍️'), h('span', null, 'ShopSphere')),
+                  h('span', { className: 'brand-tagline' }, 'Explore Plus ✦')
+                ),
+                h('div', { className: 'header-search-wrapper' },
+                  h('form', { className: 'header-search-form', onSubmit: (e) => { e.preventDefault(); setPage('products'); } },
+                    h('input', { type: 'text', className: 'header-search-input', placeholder: 'Search for products, brands and categories...', value: search, onChange: (e) => setSearch(e.target.value) }),
+                    h('button', { type: 'submit', className: 'header-search-btn' }, '🔍')
+                  )
+                ),
+                h('div', { className: 'header-actions' },
+                  h('a', { href: '#', className: 'header-action-btn', onClick: (e) => { e.preventDefault(); setPage('account'); } }, '👤 Profile'),
+                  h('a', { href: '#', className: 'header-action-btn', onClick: (e) => { e.preventDefault(); setPage('orders'); } }, '📦 Orders'),
+                  h('a', { href: '#', className: 'header-action-btn badge-btn', onClick: (e) => { e.preventDefault(); setPage('wishlist'); } },
+                    '❤️ Wishlist ', wish.length > 0 && h('span', { className: 'action-badge red' }, wish.length)
+                  ),
+                  h('a', { href: '#', className: 'header-action-btn badge-btn cart-btn-highlight', onClick: (e) => { e.preventDefault(); setPage('cart'); } },
+                    '🛒 Cart ', h('span', { className: 'action-badge yellow' }, totalQty)
+                  )
+                )
+              )
+            ),
+
+            /* Main Content Router */
+            h('main', { className: 'main-content' },
+              
+              /* Category Bar */
+              h('div', { className: 'category-bar-wrapper' },
+                h('div', { className: 'category-bar-inner' },
+                  CATEGORIES.map(c => 
+                    h('button', { key: c.id, className: 'category-item-btn ' + (cat === c.id ? 'active' : ''), onClick: () => { setCat(c.id); setPage('products'); } },
+                      h('span', { className: 'category-item-icon' }, c.icon),
+                      h('span', { className: 'category-item-name' }, c.name)
+                    )
+                  )
+                )
+              ),
+
+              page === 'home' && h('div', null,
+                /* Hero Carousel */
+                h('div', { className: 'hero-carousel-container', style: { background: 'linear-gradient(135deg, #1e1b4b, #311b92, #4a148c)' } },
+                  h('div', { className: 'hero-carousel-content' },
+                    h('span', { className: 'carousel-tag' }, '⚡ BIG SHOPPING DAYS SALE • ENDS IN 24 HOURS'),
+                    h('h1', { className: 'carousel-title' }, 'Up to 70% OFF on Top Indian Tech & Fashion'),
+                    h('p', { className: 'carousel-subtitle' }, 'Smartphones, MacBooks, Sony Headphones & Designer Wear'),
+                    h('button', { className: 'carousel-cta-btn', onClick: () => setPage('products') }, 'Explore All Deals →')
+                  ),
+                  h('div', { className: 'hero-carousel-image-box' },
+                    h('img', { src: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80', className: 'carousel-img' })
+                  )
+                ),
+
+                /* Bank Offers */
+                h('div', { className: 'bank-offers-grid' },
+                  h('div', { className: 'bank-offer-card' }, h('h4', null, 'HDFC BANK'), h('p', null, '10% Instant Discount on Credit Cards')),
+                  h('div', { className: 'bank-offer-card' }, h('h4', null, 'ICICI BANK'), h('p', null, 'Up to ₹3,000 Off on No Cost EMI')),
+                  h('div', { className: 'bank-offer-card' }, h('h4', null, 'FREE SHIPPING'), h('p', null, 'Zero Delivery Charges on Orders Over ₹500'))
+                ),
+
+                /* Product Grid Section */
+                h('section', { className: 'marketplace-section' },
+                  h('div', { className: 'section-header-bar' },
+                    h('h2', { className: 'marketplace-section-title' }, '🔥 Top Deals & Recommendations')
+                  ),
+                  h('div', { className: 'product-grid' },
+                    filtered.map(p => h('article', { key: p.id, className: 'marketplace-card', onClick: () => { setSelId(p.id); setPage('details'); } },
+                      h('div', { className: 'card-top-image-box' },
+                        p.discount && h('span', { className: 'discount-badge-pill' }, p.discount + '% off'),
+                        h('button', { className: 'wishlist-heart-btn', onClick: (e) => { e.stopPropagation(); toggleWish(p); } }, isWish(p.id) ? '❤️' : '🤍'),
+                        h('img', { src: p.image, className: 'card-main-img', alt: p.title })
+                      ),
+                      h('div', { className: 'card-content-body' },
+                        h('div', { className: 'brand-category-row' }, h('span', { className: 'brand-label' }, p.brand), h('span', { className: 'delivery-tag' }, p.delivery)),
+                        h('h3', { className: 'card-title' }, p.title),
+                        h('div', { className: 'card-rating-row' }, h('span', { className: 'rating-pill' }, fmtRating(p.rating))),
+                        h('div', { className: 'card-price-row' },
+                          h('span', { className: 'current-price' }, fmtRs(p.price)),
+                          p.originalPrice && h('span', { className: 'original-price' }, fmtRs(p.originalPrice))
+                        ),
+                        h('div', { className: 'card-actions-row' },
+                          h('button', { className: 'btn-card-details', onClick: () => { setSelId(p.id); setPage('details'); } }, 'Details'),
+                          h('button', { className: 'btn-card-add', onClick: (e) => { e.stopPropagation(); addToCart(p); } }, '+ Add')
+                        )
+                      )
+                    ))
+                  )
+                )
+              ),
+
+              page === 'products' && h('div', { className: 'catalog-layout' },
+                h('aside', { className: 'filter-sidebar' },
+                  h('div', { className: 'filter-sidebar-header' }, h('h3', { className: 'filter-title' }, 'Filters')),
+                  h('div', { className: 'filter-group' },
+                    h('h4', { className: 'filter-group-title' }, 'Category'),
+                    h('select', { className: 'filter-select', value: cat, onChange: (e) => setCat(e.target.value) },
+                      CATEGORIES.map(c => h('option', { key: c.id, value: c.id }, c.name))
+                    )
+                  )
+                ),
+                h('section', null,
+                  h('div', { className: 'catalog-header-bar' },
+                    h('h2', { className: 'catalog-title' }, 'Marketplace Products (' + filtered.length + ')')
+                  ),
+                  h('div', { className: 'product-grid' },
+                    filtered.map(p => h('article', { key: p.id, className: 'marketplace-card', onClick: () => { setSelId(p.id); setPage('details'); } },
+                      h('div', { className: 'card-top-image-box' },
+                        h('img', { src: p.image, className: 'card-main-img' })
+                      ),
+                      h('div', { className: 'card-content-body' },
+                        h('h3', { className: 'card-title' }, p.title),
+                        h('div', { className: 'card-price-row' }, h('span', { className: 'current-price' }, fmtRs(p.price))),
+                        h('div', { className: 'card-actions-row' },
+                          h('button', { className: 'btn-card-add', onClick: (e) => { e.stopPropagation(); addToCart(p); } }, '+ Add to Cart')
+                        )
+                      )
+                    ))
+                  )
+                )
+              ),
+
+              page === 'details' && h('div', { className: 'product-details-page' },
+                h('button', { className: 'btn-back-link', onClick: () => setPage('home') }, '← Back to Products'),
+                h('div', { className: 'details-main-layout' },
+                  h('div', { className: 'details-primary-image-wrapper' },
+                    h('img', { src: selectedProd.image, className: 'details-primary-img' })
+                  ),
+                  h('div', { className: 'details-info-box' },
+                    h('span', { className: 'details-brand-pill' }, selectedProd.brand),
+                    h('h1', { className: 'details-product-title' }, selectedProd.title),
+                    h('div', { className: 'details-price-card' },
+                      h('span', { className: 'details-final-price' }, fmtRs(selectedProd.price)),
+                      selectedProd.originalPrice && h('span', { className: 'details-original-price', style: { marginLeft: '1rem' } }, fmtRs(selectedProd.originalPrice))
+                    ),
+                    h('p', null, selectedProd.description),
+                    h('div', { className: 'details-buttons-row' },
+                      h('button', { className: 'btn-add-to-cart', onClick: () => addToCart(selectedProd) }, '🛒 Add to Cart'),
+                      h('button', { className: 'btn-buy-now', onClick: () => { addToCart(selectedProd); setPage('cart'); } }, '⚡ Buy Now')
+                    )
+                  )
+                )
+              ),
+
+              page === 'cart' && h('div', { className: 'cart-page-layout' },
+                h('div', { className: 'cart-items-column' },
+                  h('h2', null, 'Shopping Cart (' + totalQty + ' items)'),
+                  cart.length === 0 ? h('p', null, 'Your cart is empty.') : cart.map(item =>
+                    h('div', { key: item.id, className: 'cart-item-row' },
+                      h('img', { src: item.image, className: 'cart-row-img' }),
+                      h('div', { className: 'cart-row-info' },
+                        h('h4', { className: 'cart-row-title' }, item.title),
+                        h('div', { className: 'row-price' }, fmtRs(item.price * item.qty)),
+                        h('div', { className: 'cart-row-actions' },
+                          h('div', { className: 'qty-control-box' },
+                            h('button', { onClick: () => updateQty(item.id, -1) }, '-'),
+                            h('span', null, item.qty),
+                            h('button', { onClick: () => updateQty(item.id, 1) }, '+')
+                          ),
+                          h('button', { className: 'btn-row-action remove', onClick: () => removeCart(item.id) }, 'Remove')
+                        )
+                      )
+                    )
+                  )
+                ),
+                cart.length > 0 && h('div', { className: 'cart-price-details-card' },
+                  h('h3', { className: 'price-details-title' }, 'PRICE DETAILS'),
+                  h('div', { className: 'price-detail-row' }, h('span', null, 'Total Price'), h('span', null, fmtRs(totalAmt))),
+                  h('div', { className: 'price-detail-row' }, h('span', null, 'Delivery Charges'), h('span', { className: 'free-delivery-tag' }, 'FREE')),
+                  h('div', { className: 'total-amount-row' }, h('span', null, 'Amount Payable'), h('span', null, fmtRs(totalAmt))),
+                  h('button', { className: 'btn-place-order', onClick: () => { placeOrder(cart, totalAmt); alert('🎉 Order placed successfully!'); setPage('orders'); } }, 'PLACE ORDER')
+                )
+              ),
+
+              page === 'wishlist' && h('div', null,
+                h('h2', null, '❤️ My Wishlist (' + wish.length + ')'),
+                h('div', { className: 'product-grid', style: { marginTop: '1rem' } },
+                  wish.length === 0 ? h('p', null, 'No items saved in wishlist.') : wish.map(p =>
+                    h('article', { key: p.id, className: 'marketplace-card' },
+                      h('img', { src: p.image, className: 'card-main-img' }),
+                      h('h3', { className: 'card-title' }, p.title),
+                      h('div', { className: 'card-price-row' }, h('span', { className: 'current-price' }, fmtRs(p.price))),
+                      h('button', { className: 'btn-card-add', onClick: () => addToCart(p) }, '+ Move to Cart')
+                    )
+                  )
+                )
+              ),
+
+              page === 'orders' && h('div', { className: 'orders-list' },
+                h('h2', null, '📦 My Orders'),
+                orders.map(o => h('div', { key: o.id, className: 'order-card' },
+                  h('div', { className: 'order-card-header' },
+                    h('span', { className: 'order-id' }, 'Order #' + o.id),
+                    h('span', { className: 'order-status-badge ' + (o.status === 'Delivered' ? 'delivered' : 'transit') }, o.status)
+                  ),
+                  h('div', null, h('p', { className: 'order-item-title' }, o.item), h('strong', null, fmtRs(o.total)))
+                ))
+              ),
+
+              page === 'account' && h('div', { className: 'account-layout' },
+                h('div', { className: 'account-sidebar' },
+                  h('div', { className: 'user-profile-summary' },
+                    h('span', { className: 'profile-avatar' }, '👤'),
+                    h('div', null, h('h4', { className: 'profile-name' }, 'Karthik PM'), h('p', { className: 'profile-email' }, 'karthikpm2005@gmail.com'))
+                  )
+                ),
+                h('div', { className: 'account-main-content' },
+                  h('div', { className: 'account-card' },
+                    h('h3', { className: 'account-card-title' }, 'Personal Information'),
+                    h('div', { className: 'info-grid' },
+                      h('div', null, h('label', { className: 'info-label' }, 'First Name'), h('input', { className: 'info-input', defaultValue: 'Karthik' })),
+                      h('div', null, h('label', { className: 'info-label' }, 'Last Name'), h('input', { className: 'info-input', defaultValue: 'PM' })),
+                      h('div', null, h('label', { className: 'info-label' }, 'Email Address'), h('input', { className: 'info-input', defaultValue: 'karthikpm2005@gmail.com' })),
+                      h('div', null, h('label', { className: 'info-label' }, 'Mobile Number'), h('input', { className: 'info-input', defaultValue: '+91 9876543210' }))
+                    )
+                  )
+                )
+              )
+            ),
+
+            /* Footer */
+            h('footer', { className: 'marketplace-footer' },
+              h('div', { className: 'footer-top-columns' },
+                h('div', null, h('h4', { className: 'footer-title' }, 'ABOUT'), h('ul', { className: 'footer-list' }, h('li', null, 'About Us'), h('li', null, 'Careers'), h('li', null, 'ShopSphere Stories'))),
+                h('div', null, h('h4', { className: 'footer-title' }, 'HELP'), h('ul', { className: 'footer-list' }, h('li', null, 'Payments'), h('li', null, 'Shipping'), h('li', null, 'Cancellation & Returns'))),
+                h('div', null, h('h4', { className: 'footer-title' }, 'POLICY'), h('ul', { className: 'footer-list' }, h('li', null, 'Return Policy'), h('li', null, 'Terms of Use'), h('li', null, 'Security'))),
+                h('div', null, h('h4', { className: 'footer-title' }, 'SOCIAL'), h('ul', { className: 'footer-list' }, h('li', null, 'Facebook'), h('li', null, 'Twitter'), h('li', null, 'YouTube')))
+              ),
+              h('div', { className: 'footer-bottom-trust-bar' },
+                h('span', null, '⚡ Express Delivery'),
+                h('span', null, '🔒 100% Secure Payments'),
+                h('span', null, '🔄 7-Day Easy Returns'),
+                h('span', null, '📞 24x7 Customer Support')
+              ),
+              h('div', { className: 'footer-copyright-bar' }, '© 2026 ShopSphere Internet Private Limited. All rights reserved.')
+            )
+          );
+        }
+
+        function App() {
+          return h(CartProvider, null, h(WishProvider, null, h(AppMain)));
+        }
+
+        const rootEl = document.getElementById('root');
+        ReactDOM.createRoot(rootEl).render(h(App));
+      } else {
+        // --- 4. FALLBACK VANILLA JS RENDERER (If React CDNs fail / offline) ---
+        console.warn('React UMD CDNs offline. Initializing Vanilla DOM Engine.');
+        document.getElementById('root').innerHTML = `
+          <div className="app-container" style="padding:2rem; text-align:center; background:#ffffff; margin:2rem auto; max-width:800px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1)">
+            <h1 style="color:#2874f0; font-size:2rem; margin-bottom:1rem">🛍️ ShopSphere Indian Marketplace</h1>
+            <p style="font-size:1.1rem; color:#565656; margin-bottom:1.5rem">Welcome to ShopSphere! To explore our full interactive marketplace app locally, please open this file with an active internet connection or via a local HTTP server.</p>
+            <div style="background:#f1f3f6; padding:1rem; border-radius:8px; text-align:left; font-family:monospace; font-size:0.9rem">
+              <strong>Quick Start via Web Server:</strong><br/>
+              npx serve .
             </div>
-            <div className="card-actions-row">
-              <button className="btn-card-details" onClick={() => onSelect(product.id)}>Details</button>
-              <button className="btn-card-add" onClick={e => { e.stopPropagation(); addToCart(product, 1); }}>+ Add</button>
-            </div>
           </div>
-        </article>
-      );
-    }
-
-    function ProductSection({ title, subtitle, products, onSelect }) {
-      if (!products || products.length === 0) return null;
-      return (
-        <section className="marketplace-section">
-          <div className="section-header-bar">
-            <div><h2 className="marketplace-section-title">{title}</h2>{subtitle && <p className="marketplace-section-sub">{subtitle}</p>}</div>
-          </div>
-          <div className="product-grid">
-            {products.map(p => <ProductCard key={p.id} product={p} onSelect={onSelect} />)}
-          </div>
-        </section>
-      );
-    }
-
-    // --- 5. PAGES ---
-    function HomePage({ onNavigate, onSelect, onSelectCat }) {
-      const deals = INDIAN_PRODUCTS.filter(p => p.discount >= 10).slice(0, 4);
-      const mobiles = INDIAN_PRODUCTS.filter(p => p.category === 'Mobiles').slice(0, 4);
-      const electronics = INDIAN_PRODUCTS.filter(p => p.category === 'Electronics' || p.category === 'Laptops').slice(0, 4);
-      const fashion = INDIAN_PRODUCTS.filter(p => p.category.includes('Fashion')).slice(0, 4);
-      const appliances = INDIAN_PRODUCTS.filter(p => p.category === 'Appliances' || p.category === 'TVs').slice(0, 4);
-      const { recentlyViewed } = useWishlist();
-
-      return (
-        <div>
-          <CategoryBar selectedCategory="all" onSelectCategory={onSelectCat} />
-          <HeroCarousel onNavigateCategory={onSelectCat} />
-          <div className="bank-offers-grid">
-            <div className="bank-offer-card"><h4>HDFC BANK</h4><p>10% Instant Discount on Credit Cards</p></div>
-            <div className="bank-offer-card"><h4>ICICI BANK</h4><p>Up to ₹3,000 Off on No Cost EMI</p></div>
-            <div className="bank-offer-card"><h4>FREE SHIPPING</h4><p>Zero Delivery Charges on Orders Over ₹500</p></div>
-          </div>
-
-          <ProductSection title="🔥 Deals of the Day" subtitle="Massive price drops on top-rated products" products={deals} onSelect={onSelect} />
-          <ProductSection title="📱 Top Smartphones & Mobiles" subtitle="Samsung, Apple, OnePlus & Xiaomi" products={mobiles} onSelect={onSelect} />
-          <ProductSection title="💻 Laptops & Electronics" subtitle="MacBooks, ROG Gaming & Headphones" products={electronics} onSelect={onSelect} />
-          <ProductSection title="👗 Fashion Trends" subtitle="Kurtas, Cotton Shirts & Sneakers" products={fashion} onSelect={onSelect} />
-          <ProductSection title="📺 TVs & Home Appliances" subtitle="LG OLED 4K & Washing Machines" products={appliances} onSelect={onSelect} />
-          {recentlyViewed.length > 0 && <ProductSection title="👁️ Recently Viewed Products" products={recentlyViewed.slice(0, 4)} onSelect={onSelect} />}
-        </div>
-      );
-    }
-
-    function ProductsPage({ onSelect, initialCat, searchQuery }) {
-      const [cat, setCat] = useState(initialCat);
-      const [brand, setBrand] = useState('all');
-      const [priceRange, setPriceRange] = useState('all');
-      const [sortBy, setSortBy] = useState('default');
-
-      useEffect(() => { setCat(initialCat); }, [initialCat]);
-
-      const filtered = useMemo(() => {
-        return INDIAN_PRODUCTS.filter(p => {
-          const q = searchQuery.trim().toLowerCase();
-          if (q && !p.title.toLowerCase().includes(q) && !p.brand.toLowerCase().includes(q) && !p.category.toLowerCase().includes(q)) return false;
-          if (cat !== 'all' && p.category.toLowerCase() !== cat.toLowerCase()) return false;
-          if (brand !== 'all' && p.brand.toLowerCase() !== brand.toLowerCase()) return false;
-          if (priceRange === 'under-500' && p.price >= 500) return false;
-          if (priceRange === '500-1000' && (p.price < 500 || p.price > 1000)) return false;
-          if (priceRange === '1000-5000' && (p.price < 1000 || p.price > 5000)) return false;
-          if (priceRange === '5000-25000' && (p.price < 5000 || p.price > 25000)) return false;
-          if (priceRange === 'above-25000' && p.price < 25000) return false;
-          return true;
-        });
-      }, [searchQuery, cat, brand, priceRange]);
-
-      const sorted = useMemo(() => sortProducts(filtered, sortBy), [filtered, sortBy]);
-
-      return (
-        <div>
-          <CategoryBar selectedCategory={cat} onSelectCategory={setCat} />
-          <div className="catalog-layout">
-            <aside className="filter-sidebar">
-              <div className="filter-sidebar-header"><h3 className="filter-title">Filters</h3><button className="btn-clear-filters" onClick={() => { setCat('all'); setBrand('all'); setPriceRange('all'); setSortBy('default'); }}>Clear</button></div>
-              <div className="filter-group"><h4 className="filter-group-title">Brand</h4><select className="filter-select" value={brand} onChange={e => setBrand(e.target.value)}><option value="all">All Brands</option><option value="Samsung">Samsung</option><option value="Apple">Apple</option><option value="OnePlus">OnePlus</option><option value="Xiaomi">Xiaomi</option><option value="Sony">Sony</option><option value="LG">LG</option></select></div>
-              <div className="filter-group"><h4 className="filter-group-title">Price Range</h4>
-                <div className="radio-list">
-                  {[{ label: 'All Prices', val: 'all' }, { label: 'Under ₹500', val: 'under-500' }, { label: '₹1,000–₹5,000', val: '1000-5000' }, { label: '₹25,000+', val: 'above-25000' }].map(r => (
-                    <label key={r.val} className="radio-label"><input type="radio" name="pr" checked={priceRange === r.val} onChange={() => setPriceRange(r.val)} /><span>{r.label}</span></label>
-                  ))}
-                </div>
-              </div>
-            </aside>
-            <div className="catalog-main-content">
-              <div className="catalog-header-bar">
-                <div><h1 className="catalog-title">{cat === 'all' ? 'All Products' : cat}</h1><p className="catalog-subtitle">Showing {sorted.length} products</p></div>
-                <select className="sort-dropdown-select" value={sortBy} onChange={e => setSortBy(e.target.value)}>
-                  <option value="default">Relevance</option>
-                  <option value="price-low-high">Price: Low to High</option>
-                  <option value="price-high-low">Price: High to Low</option>
-                  <option value="rating-high">Rating</option>
-                </select>
-              </div>
-              <div className="product-grid">{sorted.map(p => <ProductCard key={p.id} product={p} onSelect={onSelect} />)}</div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    function ProductDetailsPage({ productId, onNavigate }) {
-      const { addToCart } = useCart();
-      const { addToWishlist, removeFromWishlist, isInWishlist, addRecentlyViewed } = useWishlist();
-      const p = INDIAN_PRODUCTS.find(i => i.id === Number(productId)) || INDIAN_PRODUCTS[0];
-
-      useEffect(() => { addRecentlyViewed(p); }, [productId]);
-
-      const isWish = isInWishlist(p.id);
-      return (
-        <div className="product-details-page">
-          <button className="btn-back-link" onClick={() => onNavigate('products')}>← Back to Catalog</button>
-          <div className="details-main-layout">
-            <div className="details-gallery-box">
-              <div className="details-primary-image-wrapper">
-                <img src={p.image} alt={p.title} className="details-primary-img" />
-                <button className={`details-wishlist-btn ${isWish ? 'active' : ''}`} onClick={() => isWish ? removeFromWishlist(p.id) : addToWishlist(p)}>{isWish ? '❤️ Wishlisted' : '🤍 Wishlist'}</button>
-              </div>
-            </div>
-            <div className="details-info-box">
-              <span className="details-brand-pill">{p.brand}</span>
-              <h1 className="details-product-title">{p.title}</h1>
-              <div className="details-rating-row"><span className="details-rating-pill">{formatRating(p.rating)}</span></div>
-              <div className="details-price-card">
-                <div className="price-tag-row">
-                  <span className="details-final-price">{formatCurrency(p.price)}</span>
-                  {p.originalPrice && <span className="details-original-price">{formatCurrency(p.originalPrice)}</span>}
-                </div>
-              </div>
-              <p className="details-description">{p.description}</p>
-              <div className="details-buttons-row" style={{ marginTop: '1rem' }}>
-                <button className="btn-add-to-cart" onClick={() => addToCart(p, 1)}>🛒 Add to Cart</button>
-                <button className="btn-buy-now" onClick={() => { addToCart(p, 1); onNavigate('cart'); }}>⚡ Buy Now</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    function CartPage({ onNavigate }) {
-      const { cartItems, totalItems, subtotalPrice, increaseQuantity, decreaseQuantity, removeFromCart, clearCart } = useCart();
-      const { addOrder } = useWishlist();
-      const [placed, setPlaced] = useState(null);
-
-      const totalOriginal = cartItems.reduce((s, i) => s + (i.originalPrice || i.price * 1.2) * i.quantity, 0);
-      const discountSavings = totalOriginal - subtotalPrice;
-
-      if (placed) {
-        return (
-          <div className="hero-section" style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-            <span style={{ fontSize: '4rem' }}>🎉</span>
-            <h1 className="hero-title">Order Placed Successfully!</h1>
-            <p className="hero-subtitle">Order ID: <strong>#{placed.id}</strong> • Amount: <strong>{formatCurrency(placed.total)}</strong></p>
-            <button className="hero-cta-btn" onClick={() => onNavigate('orders')}>View My Orders →</button>
-          </div>
-        );
+        `;
       }
-
-      if (cartItems.length === 0) {
-        return (
-          <div className="hero-section" style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-            <span style={{ fontSize: '4rem' }}>🛒</span>
-            <h1 className="hero-title">Your Cart is Empty</h1>
-            <button className="hero-cta-btn" onClick={() => onNavigate('products')}>Shop Products →</button>
-          </div>
-        );
-      }
-
-      return (
-        <div className="cart-page-layout">
-          <div className="cart-items-column">
-            {cartItems.map(item => (
-              <div key={item.id} className="cart-item-row">
-                <img src={item.image} alt={item.title} className="cart-row-img" />
-                <div className="cart-row-info">
-                  <h4 className="cart-row-title">{item.title}</h4>
-                  <span className="row-price">{formatCurrency(item.price)}</span>
-                  <div className="cart-row-actions" style={{ marginTop: '0.5rem' }}>
-                    <div className="qty-control-box">
-                      <button onClick={() => decreaseQuantity(item.id)}>-</button><span>{item.quantity}</span><button onClick={() => increaseQuantity(item.id)}>+</button>
-                    </div>
-                    <button className="btn-row-action remove" onClick={() => removeFromCart(item.id)}>Remove 🗑️</button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="cart-price-details-card">
-            <h3 className="price-details-title">PRICE DETAILS</h3>
-            <div className="price-detail-row"><span>Price ({totalItems} items)</span><span>{formatCurrency(totalOriginal)}</span></div>
-            <div className="price-detail-row discount"><span>Discount Savings</span><span>- {formatCurrency(discountSavings)}</span></div>
-            <div className="price-detail-row total-amount-row"><span>Total Amount</span><span>{formatCurrency(subtotalPrice)}</span></div>
-            <button className="btn-place-order" onClick={() => { const o = addOrder(cartItems, subtotalPrice); setPlaced(o); clearCart(); }}>PLACE ORDER →</button>
-          </div>
-        </div>
-      );
-    }
-
-    function WishlistPage({ onNavigate, onSelect }) {
-      const { wishlistItems, removeFromWishlist } = useWishlist();
-      const { addToCart } = useCart();
-      if (wishlistItems.length === 0) return <div className="hero-section" style={{ textAlign: 'center', padding: '4rem 2rem' }}><h1>Your Wishlist is Empty</h1></div>;
-
-      return (
-        <div className="product-grid">
-          {wishlistItems.map(p => (
-            <div key={p.id} className="marketplace-card">
-              <img src={p.image} alt={p.title} style={{ height: '160px', objectFit: 'contain' }} />
-              <h4 style={{ fontSize: '0.9rem', margin: '0.5rem 0' }}>{p.title}</h4>
-              <span style={{ fontWeight: 800 }}>{formatCurrency(p.price)}</span>
-              <button className="btn-card-add" style={{ marginTop: '0.5rem' }} onClick={() => { addToCart(p, 1); removeFromWishlist(p.id); }}>🛒 Move to Cart</button>
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    function OrdersPage() {
-      const { orders } = useWishlist();
-      return (
-        <div className="orders-list">
-          {orders.map(o => (
-            <div key={o.id} className="order-card">
-              <div className="order-card-header"><span>Order #{o.id} • {o.date}</span><span className="order-status-badge delivered">● {o.status}</span></div>
-              <div>Total: <strong>{formatCurrency(o.total)}</strong></div>
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    function AccountPage() {
-      return (
-        <div className="account-card">
-          <h2>My Profile</h2>
-          <p><strong>Name:</strong> Karthik P M</p>
-          <p><strong>Email:</strong> karthikpm2005@gmail.com</p>
-          <p><strong>Status:</strong> ShopSphere Plus Member ✦</p>
-        </div>
-      );
-    }
-
-    // --- 7. MASTER APP ---
-    function AppContent() {
-      const [activePage, setActivePage] = useState('home');
-      const [selectedProductId, setSelectedProductId] = useState(null);
-      const [selectedCat, setSelectedCat] = useState('all');
-      const [searchQuery, setSearchQuery] = useState('');
-      const { toastMsg } = useCart();
-
-      useEffect(() => {
-        const handleHash = () => {
-          const hash = window.location.hash.replace(/^#\/?/, '');
-          if (!hash || hash === 'home') setActivePage('home');
-          else if (hash === 'products') setActivePage('products');
-          else if (hash.startsWith('category/')) { setSelectedCat(decodeURIComponent(hash.split('/')[1])); setActivePage('products'); }
-          else if (hash.startsWith('products/')) { setSelectedProductId(hash.split('/')[1]); setActivePage('product-details'); }
-          else if (hash === 'cart') setActivePage('cart');
-          else if (hash === 'wishlist') setActivePage('wishlist');
-          else if (hash === 'orders') setActivePage('orders');
-          else if (hash === 'account') setActivePage('account');
-          else setActivePage('home');
-        };
-        handleHash();
-        window.addEventListener('hashchange', handleHash);
-        return () => window.removeEventListener('hashchange', handleHash);
-      }, []);
-
-      const navigateTo = (page, param = null) => {
-        if (page === 'product-details' && param) { setSelectedProductId(param); setActivePage('product-details'); window.location.hash = `#/products/${param}`; }
-        else if (page === 'category' && param) { setSelectedCat(param); setActivePage('products'); window.location.hash = `#/category/${encodeURIComponent(param)}`; }
-        else { if (page === 'products' && param) setSelectedCat(param); setActivePage(page); window.location.hash = `#/${page}`; }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      };
-
-      return (
-        <div className="app-container">
-          {toastMsg && <div className="global-toast-banner">{toastMsg}</div>}
-          <Navbar activePage={activePage} onNavigate={navigateTo} onSearch={q => { setSearchQuery(q); navigateTo('products'); }} />
-          <main className="main-content">
-            {activePage === 'home' && <HomePage onNavigate={navigateTo} onSelect={id => navigateTo('product-details', id)} onSelectCat={cat => navigateTo('category', cat)} />}
-            {activePage === 'products' && <ProductsPage onSelect={id => navigateTo('product-details', id)} initialCat={selectedCat} searchQuery={searchQuery} />}
-            {activePage === 'product-details' && <ProductDetailsPage productId={selectedProductId} onNavigate={navigateTo} />}
-            {activePage === 'cart' && <CartPage onNavigate={navigateTo} />}
-            {activePage === 'wishlist' && <WishlistPage onNavigate={navigateTo} onSelect={id => navigateTo('product-details', id)} />}
-            {activePage === 'orders' && <OrdersPage />}
-            {activePage === 'account' && <AccountPage />}
-          </main>
-          <Footer onNavigate={navigateTo} />
-        </div>
-      );
-    }
-
-    function App() {
-      return (
-        <CartProvider>
-          <WishlistProvider>
-            <AppContent />
-          </WishlistProvider>
-        </CartProvider>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    })();
   </script>
 </body>
 </html>
