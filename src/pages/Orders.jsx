@@ -52,7 +52,7 @@ export default function Orders({ onNavigate }) {
       <div className="orders-list">
         {orders.map(order => {
           const currentStage = order.trackingStage || (order.status === 'Delivered' ? 5 : 2);
-          const customerPhone = order.customer?.phone || '+91 98765 43210';
+          const customerPhone = order.customer?.phone || '+91 76766 13969';
           const customerEmail = order.customer?.email || 'karthikpm2005@gmail.com';
 
           return (

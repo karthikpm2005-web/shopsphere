@@ -92,7 +92,7 @@ export function WishlistProvider({ children }) {
     const orderId = `SS${Math.floor(10000 + Math.random() * 90000)}`;
     const nowStr = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
     
-    const phone = customerInfo.phone || '+91 98765 43210';
+    const phone = customerInfo.phone || '+91 76766 13969';
     const email = customerInfo.email || 'karthikpm2005@gmail.com';
     const name = customerInfo.name || 'Karthik PM';
     

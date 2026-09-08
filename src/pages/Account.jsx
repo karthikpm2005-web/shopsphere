@@ -45,7 +45,7 @@ export default function Account({ onNavigate }) {
               </div>
               <div>
                 <label className="info-label">Mobile Number</label>
-                <input type="text" className="info-input" defaultValue="+91 98765 43210" readOnly />
+                <input type="text" className="info-input" defaultValue="+91 76766 13969" readOnly />
               </div>
               <div>
                 <label className="info-label">Member Status</label>
@@ -60,7 +60,7 @@ export default function Account({ onNavigate }) {
               <strong>Karthik P M</strong><br />
               #42, 3rd Main Road, Outer Ring Road, Devarabeesanahalli<br />
               Bengaluru, Karnataka - 560103<br />
-              Phone: +91 98765 43210
+              Phone: +91 76766 13969
             </p>
           </div>
         </div>

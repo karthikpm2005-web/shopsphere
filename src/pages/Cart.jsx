@@ -12,7 +12,7 @@ export default function Cart({ onNavigate }) {
   
   const [customerInfo, setCustomerInfo] = useState({
     name: 'Karthik PM',
-    phone: '+91 98765 43210',
+    phone: '+91 76766 13969',
     email: 'karthikpm2005@gmail.com',
     pincode: '560038',
     address: 'Flat 402, Royal Palms, Indiranagar, Bengaluru, KA'
