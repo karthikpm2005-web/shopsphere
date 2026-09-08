@@ -95,14 +95,6 @@
     .header-search-btn { background: #ffffff; color: var(--brand-blue); padding: 0 1.15rem; font-size: 1.1rem; transition: background var(--transition-fast); }
     .header-search-btn:hover { background: #f1f3f6; }
 
-    .search-suggestions-dropdown { position: absolute; top: 100%; left: 0; width: 100%; background: #ffffff; border-radius: 0 0 var(--radius-md) var(--radius-md); box-shadow: var(--shadow-lg); list-style: none; margin-top: 4px; z-index: 1001; max-height: 380px; overflow-y: auto; }
-    .suggestion-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background var(--transition-fast); }
-    .suggestion-item:hover { background: #f8fafc; }
-    .suggestion-img { width: 40px; height: 40px; object-fit: contain; }
-    .suggestion-info { display: flex; flex-direction: column; }
-    .suggestion-title { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
-    .suggestion-meta { font-size: 0.775rem; color: var(--text-sub); }
-
     .header-actions { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; }
     .header-action-btn { color: #ffffff; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.85rem; border-radius: var(--radius-sm); transition: background var(--transition-fast); }
     .header-action-btn:hover, .header-action-btn.active { background: rgba(255, 255, 255, 0.15); }
@@ -110,7 +102,6 @@
     .action-badge { font-size: 0.725rem; font-weight: 800; padding: 0.1rem 0.45rem; border-radius: var(--radius-full); }
     .action-badge.yellow { background: var(--brand-yellow); color: var(--text-main); }
     .action-badge.red { background: #ef4444; color: #ffffff; }
-    .mobile-menu-toggle { display: none; color: #ffffff; font-size: 1.5rem; }
 
     /* Category Bar */
     .category-bar-wrapper { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0.75rem 1rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm); }
@@ -132,10 +123,6 @@
     .carousel-cta-btn:hover { transform: translateY(-2px); }
     .hero-carousel-image-box { width: 320px; height: 220px; display: flex; align-items: center; justify-content: center; z-index: 2; }
     .carousel-img { max-height: 100%; object-fit: contain; border-radius: var(--radius-md); }
-    .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.25); color: #ffffff; width: 40px; height: 60px; font-size: 1.75rem; display: flex; align-items: center; justify-content: center; z-index: 3; transition: background var(--transition-fast); }
-    .carousel-arrow:hover { background: rgba(255, 255, 255, 0.45); }
-    .carousel-arrow.prev { left: 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
-    .carousel-arrow.next { right: 0; border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
 
     /* Bank Offers */
     .bank-offers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
@@ -143,11 +130,10 @@
     .bank-offer-card h4 { font-size: 0.95rem; font-weight: 700; }
     .bank-offer-card p { font-size: 0.8rem; color: var(--text-sub); }
 
-    /* Product Section & Cards */
+    /* Product Cards */
     .marketplace-section { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: var(--shadow-sm); }
     .section-header-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.15rem; padding-bottom: 0.75rem; border-bottom: 1px solid #f0f0f0; }
     .marketplace-section-title { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: var(--text-main); }
-    .marketplace-section-sub { font-size: 0.85rem; color: var(--text-sub); }
     .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
     @media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -155,8 +141,7 @@
     .marketplace-card { background: #ffffff; border: 1px solid #f0f0f0; border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; padding: 1rem; position: relative; transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
     .marketplace-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: #e0e0e0; }
     .card-top-image-box { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 0.85rem; }
-    .card-main-img { max-height: 100%; max-width: 100%; object-fit: contain; transition: transform var(--transition-fast); }
-    .marketplace-card:hover .card-main-img { transform: scale(1.06); }
+    .card-main-img { max-height: 100%; max-width: 100%; object-fit: contain; }
     .discount-badge-pill { position: absolute; top: 0; left: 0; background: var(--brand-green); color: #ffffff; font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); }
     .wishlist-heart-btn { position: absolute; top: 0; right: 0; font-size: 1.25rem; background: #ffffff; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); z-index: 2; }
 
@@ -174,53 +159,7 @@
     .btn-card-details { flex: 1; background: #f1f3f6; color: var(--text-main); font-weight: 600; font-size: 0.8rem; padding: 0.45rem; border-radius: var(--radius-sm); }
     .btn-card-add { flex: 1.2; background: var(--brand-orange); color: #ffffff; font-weight: 700; font-size: 0.8rem; padding: 0.45rem; border-radius: var(--radius-sm); }
 
-    /* Catalog Page Layout & Filters */
-    .catalog-layout { display: grid; grid-template-columns: 260px 1fr; gap: 1rem; }
-    @media (max-width: 868px) { .catalog-layout { grid-template-columns: 1fr; } }
-    .filter-sidebar { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.15rem; height: fit-content; }
-    .filter-sidebar-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid #f0f0f0; margin-bottom: 1rem; }
-    .filter-title { font-size: 1.1rem; font-weight: 800; }
-    .btn-clear-filters { font-size: 0.8rem; color: var(--brand-blue); font-weight: 700; }
-    .filter-group { margin-bottom: 1.25rem; }
-    .filter-group-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase; color: var(--text-sub); }
-    .filter-select { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.85rem; }
-    .radio-list { display: flex; flex-direction: column; gap: 0.4rem; }
-    .radio-label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer; }
-
-    .catalog-header-bar { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-    .catalog-title { font-size: 1.35rem; font-weight: 800; }
-    .catalog-subtitle { font-size: 0.85rem; color: var(--text-sub); }
-    .sort-box { display: flex; align-items: center; gap: 0.5rem; }
-    .sort-label { font-size: 0.85rem; font-weight: 700; color: var(--text-sub); }
-    .sort-dropdown-select { padding: 0.45rem 0.85rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.85rem; }
-
-    /* Details Page Layout */
-    .product-details-page { display: flex; flex-direction: column; gap: 1rem; }
-    .btn-back-link { align-self: flex-start; font-size: 0.85rem; font-weight: 700; color: var(--brand-blue); margin-bottom: 0.5rem; }
-    .details-main-layout { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; display: grid; grid-template-columns: 1fr 1.2fr; gap: 2.5rem; }
-    @media (max-width: 868px) { .details-main-layout { grid-template-columns: 1fr; padding: 1.25rem; } }
-    .details-gallery-box { display: flex; flex-direction: column; gap: 1rem; }
-    .details-primary-image-wrapper { background: #ffffff; border: 1px solid #f0f0f0; border-radius: var(--radius-md); padding: 2rem; display: flex; align-items: center; justify-content: center; min-height: 380px; position: relative; }
-    .details-primary-img { max-height: 340px; object-fit: contain; }
-    .details-info-box { display: flex; flex-direction: column; gap: 1rem; }
-    .details-brand-pill { font-size: 0.8rem; font-weight: 800; color: var(--brand-blue); text-transform: uppercase; }
-    .details-product-title { font-size: 1.6rem; font-weight: 800; line-height: 1.25; }
-    .details-rating-row { display: flex; align-items: center; gap: 0.6rem; }
-    .details-rating-pill { background: var(--brand-green); color: #ffffff; font-weight: 700; font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: var(--radius-sm); }
-    .details-reviews-count { font-size: 0.85rem; color: var(--text-sub); }
-    .details-price-card { background: #f8fafc; border: 1px solid #f0f0f0; border-radius: var(--radius-md); padding: 1rem; }
-    .price-tag-row { display: flex; align-items: baseline; gap: 0.85rem; }
-    .details-final-price { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: var(--text-main); }
-    .details-original-price { font-size: 1.1rem; color: var(--text-sub); text-decoration: line-through; }
-    .details-discount-tag { color: var(--brand-green); font-size: 1.1rem; font-weight: 800; }
-    .details-offers-box { background: #fffbe6; border: 1px solid #ffe58f; border-radius: var(--radius-md); padding: 1rem; }
-    .offers-title { font-size: 0.9rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .offers-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; }
-    .details-buttons-row { display: flex; gap: 1rem; }
-    .btn-add-to-cart { flex: 1; background: var(--brand-yellow); color: var(--text-main); font-weight: 800; font-size: 1rem; padding: 0.85rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); }
-    .btn-buy-now { flex: 1; background: var(--brand-orange); color: #ffffff; font-weight: 800; font-size: 1rem; padding: 0.85rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); }
-
-    /* Cart Layout */
+    /* Cart & Price Details */
     .cart-page-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.25rem; }
     @media (max-width: 868px) { .cart-page-layout { grid-template-columns: 1fr; } }
     .cart-items-column { display: flex; flex-direction: column; gap: 1rem; }
@@ -230,7 +169,6 @@
     .cart-row-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
     .cart-row-price-box { display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.75rem; }
     .row-price { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; }
-    .row-orig-price { font-size: 0.85rem; color: var(--text-sub); text-decoration: line-through; }
     .cart-row-actions { display: flex; align-items: center; gap: 1.25rem; }
     .qty-control-box { display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); }
     .btn-row-action { font-size: 0.85rem; font-weight: 700; color: var(--brand-blue); }
@@ -239,9 +177,9 @@
     .price-details-title { font-size: 0.95rem; font-weight: 800; color: var(--text-sub); border-bottom: 1px solid #f0f0f0; padding-bottom: 0.75rem; }
     .price-detail-row { display: flex; justify-content: space-between; font-size: 0.95rem; }
     .total-amount-row { font-size: 1.25rem; font-weight: 800; border-top: 1px dashed var(--border-color); border-bottom: 1px dashed var(--border-color); padding: 0.85rem 0; }
-    .btn-place-order { background: var(--brand-orange); color: #ffffff; font-weight: 800; font-size: 1rem; padding: 0.85rem; border-radius: var(--radius-sm); text-align: center; box-shadow: var(--shadow-sm); }
+    .btn-place-order { background: var(--brand-orange); color: #ffffff; font-weight: 800; font-size: 1rem; padding: 0.85rem; border-radius: var(--radius-sm); text-align: center; box-shadow: var(--shadow-sm); width: 100%; }
 
-    /* Orders & Account */
+    /* Orders Page & Live Tracking */
     .orders-list { display: flex; flex-direction: column; gap: 1rem; }
     .order-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
     .order-card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 0.75rem; }
@@ -251,20 +189,62 @@
     .order-status-badge.transit { color: var(--brand-orange); }
     .order-item-row { display: flex; align-items: center; gap: 1rem; }
     .order-item-img { width: 50px; height: 50px; object-fit: contain; }
+    .order-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 0.75rem; }
+    .btn-track-order { background: var(--brand-blue); color: #ffffff; font-weight: 700; font-size: 0.85rem; padding: 0.45rem 1rem; border-radius: var(--radius-sm); }
+    .order-meta-info-bar { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; background: #f8fafc; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid #f0f0f0; color: var(--text-muted); }
 
-    .account-layout { display: grid; grid-template-columns: 260px 1fr; gap: 1.25rem; }
-    @media (max-width: 768px) { .account-layout { grid-template-columns: 1fr; } }
-    .account-sidebar { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; height: fit-content; }
-    .account-main-content { display: flex; flex-direction: column; gap: 1.25rem; }
-    .account-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; }
-    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .info-input { width: 100%; padding: 0.55rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.9rem; background: #f8fafc; }
+    /* Modal Backdrop & Payment Gateway */
+    .modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+    .checkout-modal-container, .tracking-modal-container { background: #ffffff; border-radius: var(--radius-lg); width: 100%; max-width: 820px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: modalPopUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes modalPopUp { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-header { padding: 1.25rem 1.75rem; background: #f8fafc; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
+    .modal-header h3 { font-size: 1.2rem; font-weight: 800; color: var(--brand-blue); }
+    .modal-close-btn { font-size: 1.25rem; font-weight: 800; color: var(--text-sub); }
+    .modal-body { padding: 1.75rem; }
+
+    .checkout-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-group.full-width { grid-column: 1 / -1; }
+    .form-group label { font-size: 0.825rem; font-weight: 700; color: var(--text-sub); }
+    .form-control { padding: 0.65rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.9rem; outline: none; }
+
+    .payment-options-layout { display: grid; grid-template-columns: 220px 1fr; gap: 1.25rem; margin-top: 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; }
+    .payment-tabs-sidebar { background: #f8fafc; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; }
+    .pay-tab-btn { padding: 0.85rem 1rem; text-align: left; font-size: 0.875rem; font-weight: 700; color: var(--text-main); border-bottom: 1px solid #f0f0f0; }
+    .pay-tab-btn.active { background: #ffffff; color: var(--brand-blue); border-left: 4px solid var(--brand-blue); }
+    .payment-tab-content { padding: 1.25rem; }
+
+    .qr-box { background: #e8f0fe; border: 2px dashed var(--brand-blue); padding: 1.25rem; text-align: center; border-radius: var(--radius-md); margin-top: 0.5rem; }
+    .modal-actions-bar { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem; }
+    .btn-primary { background: var(--brand-blue); color: #ffffff; font-weight: 800; font-size: 0.95rem; padding: 0.75rem 1.5rem; border-radius: var(--radius-sm); }
+    .btn-primary.success-btn { background: var(--brand-orange); }
+    .btn-secondary { background: #f1f3f6; color: var(--text-main); font-weight: 700; font-size: 0.9rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-sm); }
+
+    /* Notifications & Tracking Timeline */
+    .sms-alert-card { background: #1e293b; color: #ffffff; padding: 1rem; border-radius: var(--radius-md); border-left: 4px solid var(--brand-yellow); margin-top: 0.5rem; }
+    .sms-header { display: flex; justify-content: space-between; font-size: 0.775rem; font-weight: 800; color: var(--brand-yellow); margin-bottom: 0.4rem; }
+    .email-alert-card { background: #ffffff; border: 1px solid #e2e8f0; color: #1e293b; padding: 1rem; border-radius: var(--radius-md); border-left: 4px solid var(--brand-blue); margin-top: 0.5rem; }
+
+    .tracking-timeline-box { position: relative; margin: 1.5rem 0 2rem 0; }
+    .timeline-progress-bar { height: 6px; background: #e2e8f0; border-radius: 3px; position: absolute; top: 22px; left: 10%; right: 10%; z-index: 1; }
+    .timeline-progress-fill { height: 100%; background: var(--brand-green); border-radius: 3px; transition: width 0.4s ease; }
+    .timeline-steps-nodes { position: relative; z-index: 2; display: flex; justify-content: space-between; }
+    .timeline-node-item { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; width: 100px; text-align: center; }
+    .node-icon-circle { width: 44px; height: 44px; border-radius: 50%; background: #ffffff; border: 3px solid #cbd5e1; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .timeline-node-item.completed .node-icon-circle { background: #e8f5e9; border-color: var(--brand-green); }
+    .timeline-node-item.current .node-icon-circle { background: var(--brand-yellow); border-color: var(--brand-orange); transform: scale(1.15); }
+    .node-title { font-size: 0.75rem; font-weight: 700; color: var(--text-sub); }
+
+    .courier-agent-card { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md); padding: 1.15rem; display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+    .agent-info { flex: 1; }
+    .agent-info h4 { font-size: 0.95rem; font-weight: 800; color: var(--brand-blue-dark); }
+    .btn-call-agent { background: var(--brand-blue); color: #ffffff; font-weight: 800; font-size: 0.85rem; padding: 0.5rem 1rem; border-radius: var(--radius-sm); }
+    .btn-simulate-next { background: linear-gradient(135deg, #fb641b, #d97706); color: #ffffff; font-weight: 800; font-size: 0.95rem; padding: 0.85rem 1.75rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); width: 100%; margin-bottom: 1rem; }
 
     /* Footer */
     .marketplace-footer { background: #172337; color: #ffffff; padding: 3rem 1.5rem 1rem 1.5rem; margin-top: 3rem; }
     .footer-top-columns { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr) 1.5fr; gap: 2rem; margin-bottom: 2rem; }
-    @media (max-width: 868px) { .footer-top-columns { grid-template-columns: repeat(2, 1fr); } }
-    .footer-title { font-size: 0.775rem; font-weight: 800; color: #878787; margin-bottom: 0.85rem; letter-spacing: 0.05em; }
+    .footer-title { font-size: 0.775rem; font-weight: 800; color: #878787; margin-bottom: 0.85rem; }
     .footer-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.825rem; }
     .footer-bottom-trust-bar { max-width: 1380px; margin: 0 auto; border-top: 1px solid #454d5e; border-bottom: 1px solid #454d5e; padding: 1rem 0; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; font-weight: 700; color: var(--brand-yellow); }
     .footer-copyright-bar { max-width: 1380px; margin: 1rem auto 0 auto; text-align: center; font-size: 0.8rem; color: #878787; }
@@ -286,10 +266,7 @@
         { id: 106, title: "ASUS ROG Strix G16 Gaming Laptop (i7 13th Gen, RTX 4060, 16GB)", brand: "ASUS", category: "Laptops", price: 124990, originalPrice: 149990, discount: 16, rating: { rate: 4.6, count: 940 }, image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery in 2 Days", highlights: ["NVIDIA RTX 4060", "165Hz FHD+ Display"], specifications: { "Brand": "ASUS", "GPU": "RTX 4060" }, description: "Dominate gaming with 13th Gen i7 processor and NVIDIA RTX 4060 GPU." },
         { id: 107, title: "Sony WH-1000XM5 Wireless Noise Canceling Headphones", brand: "Sony", category: "Electronics", price: 26990, originalPrice: 34990, discount: 22, rating: { rate: 4.7, count: 3210 }, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", isFeatured: true, highlights: ["Auto NC Optimizer", "30-Hour Battery"], specifications: { "Brand": "Sony", "Battery": "30 Hours" }, description: "Industry-leading Noise Cancellation powered by 8 microphones." },
         { id: 108, title: "LG 55 inches 4K Ultra HD Smart OLED TV", brand: "LG", category: "TVs", price: 119990, originalPrice: 169990, discount: 29, rating: { rate: 4.8, count: 870 }, image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=80", delivery: "Free Scheduled Installation", isFeatured: true, highlights: ["Self-lighting OLED", "Dolby Vision & Atmos"], specifications: { "Brand": "LG", "Screen Size": "55 Inches" }, description: "Self-lit OLED pixels delivering infinite contrast and Dolby Vision sound." },
-        { id: 109, title: "Men's Premium Slim Fit Casual Cotton Shirt - Olive", brand: "Roadster", category: "Men's Fashion", price: 899, originalPrice: 1999, discount: 55, rating: { rate: 4.2, count: 6820 }, image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", highlights: ["100% Cotton", "Slim Fit"], specifications: { "Brand": "Roadster", "Fit": "Slim Fit" }, description: "100% pure breathable cotton fabric, perfect for casual smart styling." },
-        { id: 110, title: "Women's Printed Anarkali Kurta Set with Dupatta", brand: "BIBA", category: "Women's Fashion", price: 2499, originalPrice: 5999, discount: 58, rating: { rate: 4.5, count: 4210 }, image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", highlights: ["Rayon Fabric", "Palazzo Included"], specifications: { "Brand": "BIBA", "Style": "Anarkali" }, description: "Graceful floral foil printed Anarkali suit set for festive celebrations." },
-        { id: 111, title: "Nike Air Max Solo Men's Running Sneakers - Black", brand: "Nike", category: "Sports", price: 6495, originalPrice: 8295, discount: 21, rating: { rate: 4.6, count: 1290 }, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery in 2 Days", highlights: ["Max Air Cushioning", "Breathable Mesh"], specifications: { "Brand": "Nike", "Sole": "Rubber" }, description: "Running sneakers with Max Air heel cushioning and mesh ventilation." },
-        { id: 112, title: "LG 8 Kg 5 Star Inverter AI Front Load Washing Machine", brand: "LG", category: "Appliances", price: 36990, originalPrice: 48990, discount: 24, rating: { rate: 4.5, count: 2310 }, image: "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=600&q=80", delivery: "Free Installation", highlights: ["AI DD Tech", "5 Star Rating"], specifications: { "Brand": "LG", "Capacity": "8 Kg" }, description: "AI DD technology optimizes fabric motion sensing for 18% fabric care." }
+        { id: 109, title: "Men's Premium Slim Fit Casual Cotton Shirt - Olive", brand: "Roadster", category: "Men's Fashion", price: 899, originalPrice: 1999, discount: 55, rating: { rate: 4.2, count: 6820 }, image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80", delivery: "Free delivery by Tomorrow", highlights: ["100% Cotton", "Slim Fit"], specifications: { "Brand": "Roadster", "Fit": "Slim Fit" }, description: "100% pure breathable cotton fabric, perfect for casual smart styling." }
       ];
 
       const CATEGORIES = [
@@ -298,17 +275,12 @@
         { id: "Laptops", name: "Laptops", icon: "💻" },
         { id: "Electronics", name: "Electronics", icon: "🎧" },
         { id: "TVs", name: "TVs", icon: "📺" },
-        { id: "Appliances", name: "Appliances", icon: "🧺" },
-        { id: "Men's Fashion", name: "Men's Fashion", icon: "👔" },
-        { id: "Women's Fashion", name: "Women's Fashion", icon: "👗" },
-        { id: "Sports", name: "Sports", icon: "⚽" }
+        { id: "Men's Fashion", name: "Men's Fashion", icon: "👔" }
       ];
 
-      // --- 2. HELPERS ---
       function fmtRs(amt) { return '₹' + Math.round(amt || 0).toLocaleString('en-IN'); }
       function fmtRating(r) { return '★ ' + (r && r.rate ? r.rate : '4.5') + ' (' + (r && r.count ? r.count : '120') + ')'; }
 
-      // --- 3. REACT APPLICATION RENDERER ---
       if (window.React && window.ReactDOM) {
         const { useState, useEffect, createContext, useContext, useMemo } = React;
         const h = React.createElement;
@@ -335,11 +307,12 @@
           };
           const removeCart = (id) => setCart(prev => prev.filter(i => i.id !== id));
           const updateQty = (id, delta) => setCart(prev => prev.map(i => i.id === id ? { ...i, qty: Math.max(1, i.qty + delta) } : i));
+          const clearCart = () => setCart([]);
 
           const totalQty = cart.reduce((s, i) => s + i.qty, 0);
           const totalAmt = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
-          return h(CartCtx.Provider, { value: { cart, totalQty, totalAmt, toast, addToCart, removeCart, updateQty } }, props.children);
+          return h(CartCtx.Provider, { value: { cart, totalQty, totalAmt, toast, addToCart, removeCart, updateQty, clearCart } }, props.children);
         }
 
         function WishProvider(props) {
@@ -347,16 +320,79 @@
             try { return JSON.parse(localStorage.getItem('ss_wish')) || []; } catch(e) { return []; }
           });
           const [orders, setOrders] = useState(() => [
-            { id: 'SS84920', date: '06 Sep 2026', status: 'Delivered', total: 129999, item: 'Samsung Galaxy S24 Ultra 5G' }
+            {
+              id: 'SS84920',
+              date: '06 Sep 2026',
+              status: 'Order Placed & Confirmed',
+              trackingStage: 1,
+              total: 129999,
+              items: [{ title: 'Samsung Galaxy S24 Ultra 5G', price: 129999, qty: 1, image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80' }],
+              customer: { name: 'Karthik PM', phone: '+91 98765 43210', email: 'karthikpm2005@gmail.com', address: 'Flat 402, Royal Palms, Indiranagar, Bengaluru, KA - 560038' },
+              payment: { method: 'UPI Instant (GPay)', status: 'Paid' },
+              tracking: { courier: 'ExpressLogistics India', trackingId: 'EX-849201', agentName: 'Rajesh Kumar', agentPhone: '+91 98123 45678', estimatedDelivery: 'Tomorrow by 5:00 PM' },
+              notifications: [
+                { type: 'SMS', recipient: '+91 98765 43210', message: '💬 SMS to +91 98765 43210: Hi Karthik PM, your Order #SS84920 of ₹1,29,999 is CONFIRMED via UPI Instant (GPay)!', time: '06 Sep, 10:15 AM' },
+                { type: 'EMAIL', recipient: 'karthikpm2005@gmail.com', message: '✉️ Email to karthikpm2005@gmail.com: Subject: Order Confirmation #SS84920 - ShopSphere India.', time: '06 Sep, 10:15 AM' }
+              ]
+            }
           ]);
 
           useEffect(() => { try { localStorage.setItem('ss_wish', JSON.stringify(wish)); } catch(e){} }, [wish]);
 
           const toggleWish = (p) => setWish(prev => prev.some(i => i.id === p.id) ? prev.filter(i => i.id !== p.id) : [...prev, p]);
           const isWish = (id) => wish.some(i => i.id === id);
-          const placeOrder = (items, total) => setOrders(prev => [{ id: 'SS' + Math.floor(10000 + Math.random()*90000), date: 'Today', status: 'In Transit', total, item: items[0]?.title || 'Products' }, ...prev]);
 
-          return h(WishCtx.Provider, { value: { wish, orders, toggleWish, isWish, placeOrder } }, props.children);
+          const placeOrder = (items, total, cust, pay) => {
+            const orderId = 'SS' + Math.floor(10000 + Math.random()*90000);
+            const now = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+            const phone = cust.phone || '+91 98765 43210';
+            const email = cust.email || 'karthikpm2005@gmail.com';
+            const name = cust.name || 'Karthik PM';
+
+            const newOrd = {
+              id: orderId,
+              date: now,
+              status: 'Order Placed & Confirmed',
+              trackingStage: 1,
+              total,
+              items,
+              customer: { name, phone, email, address: cust.address || 'Bengaluru, KA' },
+              payment: { method: pay.method || 'UPI', status: 'Paid' },
+              tracking: { courier: 'ExpressLogistics India', trackingId: 'EX-' + Math.floor(100000 + Math.random()*900000), agentName: 'Rajesh Kumar', agentPhone: '+91 98123 45678', estimatedDelivery: 'Tomorrow by 5:00 PM' },
+              notifications: [
+                { type: 'SMS', recipient: phone, message: `💬 SMS to ${phone}: Hi ${name}, your Order #${orderId} of ₹${Math.round(total).toLocaleString('en-IN')} is CONFIRMED!`, time: now },
+                { type: 'EMAIL', recipient: email, message: `✉️ Email to ${email}: Subject: Order Confirmation #${orderId} - ShopSphere India.`, time: now }
+              ]
+            };
+            setOrders(prev => [newOrd, ...prev]);
+            return newOrd;
+          };
+
+          const updateOrderStatus = (orderId) => {
+            setOrders(prev => prev.map(o => {
+              if (o.id !== orderId) return o;
+              const stages = ['Order Placed & Confirmed', 'Packed at Bengaluru Warehouse', 'Shipped via Express Logistics', 'Out for Delivery', 'Delivered'];
+              const nextStage = Math.min(5, (o.trackingStage || 1) + 1);
+              const stageName = stages[nextStage - 1];
+              const now = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+
+              const newSMS = `💬 SMS to ${o.customer.phone}: Order #${o.id} Update: Status is now "${stageName}". Agent: ${o.tracking.agentName}.`;
+              const newEmail = `✉️ Email to ${o.customer.email}: Order #${o.id} Update: Package status changed to "${stageName}".`;
+
+              return {
+                ...o,
+                trackingStage: nextStage,
+                status: stageName,
+                notifications: [
+                  { type: 'SMS', recipient: o.customer.phone, message: newSMS, time: now },
+                  { type: 'EMAIL', recipient: o.customer.email, message: newEmail, time: now },
+                  ...o.notifications
+                ]
+              };
+            }));
+          };
+
+          return h(WishCtx.Provider, { value: { wish, orders, toggleWish, isWish, placeOrder, updateOrderStatus } }, props.children);
         }
 
         function AppMain() {
@@ -364,18 +400,42 @@
           const [cat, setCat] = useState('all');
           const [selId, setSelId] = useState(null);
           const [search, setSearch] = useState('');
-          const { cart, totalQty, totalAmt, toast, addToCart, removeCart, updateQty } = useContext(CartCtx);
-          const { wish, orders, toggleWish, isWish, placeOrder } = useContext(WishCtx);
+          const [showCheckout, setShowCheckout] = useState(false);
+          const [checkoutStep, setCheckoutStep] = useState(1);
+          const [payMethod, setPayMethod] = useState('upi');
+          const [activeTrackOrd, setActiveTrackOrd] = useState(null);
+
+          const [custInfo, setCustInfo] = useState({
+            name: 'Karthik PM',
+            phone: '+91 98765 43210',
+            email: 'karthikpm2005@gmail.com',
+            address: 'Flat 402, Royal Palms, Indiranagar, Bengaluru, KA - 560038'
+          });
+
+          const [placedOrd, setPlacedOrd] = useState(null);
+
+          const { cart, totalQty, totalAmt, toast, addToCart, removeCart, updateQty, clearCart } = useContext(CartCtx);
+          const { wish, orders, toggleWish, isWish, placeOrder, updateOrderStatus } = useContext(WishCtx);
 
           const filtered = useMemo(() => {
-            return INDIAN_PRODUCTS.filter(p => {
-              const matchCat = cat === 'all' || p.category === cat;
-              const matchSearch = !search || p.title.toLowerCase().includes(search.toLowerCase()) || p.brand.toLowerCase().includes(search.toLowerCase());
-              return matchCat && matchSearch;
-            });
+            return INDIAN_PRODUCTS.filter(p => (cat === 'all' || p.category === cat) && (!search || p.title.toLowerCase().includes(search.toLowerCase())));
           }, [cat, search]);
 
           const selectedProd = INDIAN_PRODUCTS.find(p => p.id === selId) || INDIAN_PRODUCTS[0];
+          const trackModalOrd = activeTrackOrd ? orders.find(o => o.id === activeTrackOrd.id) || activeTrackOrd : null;
+
+          const handlePayConfirm = () => {
+            let mName = 'UPI Instant (GPay / PhonePe)';
+            if (payMethod === 'card') mName = 'Credit / Debit Card (Visa/RuPay)';
+            if (payMethod === 'netbanking') mName = 'Net Banking (HDFC)';
+            if (payMethod === 'cod') mName = 'Cash on Delivery (COD OTP Verified)';
+            if (payMethod === 'wallet') mName = 'ShopSphere Pay Balance';
+
+            const ord = placeOrder(cart, totalAmt, custInfo, { method: mName });
+            setPlacedOrd(ord);
+            setCheckoutStep(3);
+            clearCart();
+          };
 
           return h('div', { className: 'app-container' },
             toast && h('div', { className: 'global-toast-banner' }, toast),
@@ -389,27 +449,20 @@
                 ),
                 h('div', { className: 'header-search-wrapper' },
                   h('form', { className: 'header-search-form', onSubmit: (e) => { e.preventDefault(); setPage('products'); } },
-                    h('input', { type: 'text', className: 'header-search-input', placeholder: 'Search for products, brands and categories...', value: search, onChange: (e) => setSearch(e.target.value) }),
+                    h('input', { type: 'text', className: 'header-search-input', placeholder: 'Search products...', value: search, onChange: (e) => setSearch(e.target.value) }),
                     h('button', { type: 'submit', className: 'header-search-btn' }, '🔍')
                   )
                 ),
                 h('div', { className: 'header-actions' },
-                  h('a', { href: '#', className: 'header-action-btn', onClick: (e) => { e.preventDefault(); setPage('account'); } }, '👤 Profile'),
                   h('a', { href: '#', className: 'header-action-btn', onClick: (e) => { e.preventDefault(); setPage('orders'); } }, '📦 Orders'),
-                  h('a', { href: '#', className: 'header-action-btn badge-btn', onClick: (e) => { e.preventDefault(); setPage('wishlist'); } },
-                    '❤️ Wishlist ', wish.length > 0 && h('span', { className: 'action-badge red' }, wish.length)
-                  ),
-                  h('a', { href: '#', className: 'header-action-btn badge-btn cart-btn-highlight', onClick: (e) => { e.preventDefault(); setPage('cart'); } },
-                    '🛒 Cart ', h('span', { className: 'action-badge yellow' }, totalQty)
-                  )
+                  h('a', { href: '#', className: 'header-action-btn badge-btn', onClick: (e) => { e.preventDefault(); setPage('wishlist'); } }, '❤️ Wishlist ', wish.length > 0 && h('span', { className: 'action-badge red' }, wish.length)),
+                  h('a', { href: '#', className: 'header-action-btn badge-btn cart-btn-highlight', onClick: (e) => { e.preventDefault(); setPage('cart'); } }, '🛒 Cart ', h('span', { className: 'action-badge yellow' }, totalQty))
                 )
               )
             ),
 
-            /* Main Content Router */
+            /* Main Navigation & Body */
             h('main', { className: 'main-content' },
-              
-              /* Category Bar */
               h('div', { className: 'category-bar-wrapper' },
                 h('div', { className: 'category-bar-inner' },
                   CATEGORIES.map(c => 
@@ -422,48 +475,30 @@
               ),
 
               page === 'home' && h('div', null,
-                /* Hero Carousel */
                 h('div', { className: 'hero-carousel-container', style: { background: 'linear-gradient(135deg, #1e1b4b, #311b92, #4a148c)' } },
                   h('div', { className: 'hero-carousel-content' },
                     h('span', { className: 'carousel-tag' }, '⚡ BIG SHOPPING DAYS SALE • ENDS IN 24 HOURS'),
-                    h('h1', { className: 'carousel-title' }, 'Up to 70% OFF on Top Indian Tech & Fashion'),
-                    h('p', { className: 'carousel-subtitle' }, 'Smartphones, MacBooks, Sony Headphones & Designer Wear'),
-                    h('button', { className: 'carousel-cta-btn', onClick: () => setPage('products') }, 'Explore All Deals →')
+                    h('h1', { className: 'carousel-title' }, 'Up to 70% OFF on Electronics & Smartphones'),
+                    h('button', { className: 'carousel-cta-btn', onClick: () => setPage('products') }, 'Explore Deals →')
                   ),
-                  h('div', { className: 'hero-carousel-image-box' },
-                    h('img', { src: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80', className: 'carousel-img' })
-                  )
+                  h('div', { className: 'hero-carousel-image-box' }, h('img', { src: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80', className: 'carousel-img' }))
                 ),
-
-                /* Bank Offers */
                 h('div', { className: 'bank-offers-grid' },
                   h('div', { className: 'bank-offer-card' }, h('h4', null, 'HDFC BANK'), h('p', null, '10% Instant Discount on Credit Cards')),
-                  h('div', { className: 'bank-offer-card' }, h('h4', null, 'ICICI BANK'), h('p', null, 'Up to ₹3,000 Off on No Cost EMI')),
-                  h('div', { className: 'bank-offer-card' }, h('h4', null, 'FREE SHIPPING'), h('p', null, 'Zero Delivery Charges on Orders Over ₹500'))
+                  h('div', { className: 'bank-offer-card' }, h('h4', null, 'ICICI BANK'), h('p', null, 'Up to ₹3,000 Off on No Cost EMI'))
                 ),
-
-                /* Product Grid Section */
                 h('section', { className: 'marketplace-section' },
-                  h('div', { className: 'section-header-bar' },
-                    h('h2', { className: 'marketplace-section-title' }, '🔥 Top Deals & Recommendations')
-                  ),
-                  h('div', { className: 'product-grid' },
+                  h('h2', { className: 'marketplace-section-title' }, '🔥 Recommended Deals'),
+                  h('div', { className: 'product-grid', style: { marginTop: '1rem' } },
                     filtered.map(p => h('article', { key: p.id, className: 'marketplace-card', onClick: () => { setSelId(p.id); setPage('details'); } },
                       h('div', { className: 'card-top-image-box' },
-                        p.discount && h('span', { className: 'discount-badge-pill' }, p.discount + '% off'),
                         h('button', { className: 'wishlist-heart-btn', onClick: (e) => { e.stopPropagation(); toggleWish(p); } }, isWish(p.id) ? '❤️' : '🤍'),
-                        h('img', { src: p.image, className: 'card-main-img', alt: p.title })
+                        h('img', { src: p.image, className: 'card-main-img' })
                       ),
                       h('div', { className: 'card-content-body' },
-                        h('div', { className: 'brand-category-row' }, h('span', { className: 'brand-label' }, p.brand), h('span', { className: 'delivery-tag' }, p.delivery)),
                         h('h3', { className: 'card-title' }, p.title),
-                        h('div', { className: 'card-rating-row' }, h('span', { className: 'rating-pill' }, fmtRating(p.rating))),
-                        h('div', { className: 'card-price-row' },
-                          h('span', { className: 'current-price' }, fmtRs(p.price)),
-                          p.originalPrice && h('span', { className: 'original-price' }, fmtRs(p.originalPrice))
-                        ),
+                        h('div', { className: 'card-price-row' }, h('span', { className: 'current-price' }, fmtRs(p.price))),
                         h('div', { className: 'card-actions-row' },
-                          h('button', { className: 'btn-card-details', onClick: () => { setSelId(p.id); setPage('details'); } }, 'Details'),
                           h('button', { className: 'btn-card-add', onClick: (e) => { e.stopPropagation(); addToCart(p); } }, '+ Add')
                         )
                       )
@@ -472,56 +507,15 @@
                 )
               ),
 
-              page === 'products' && h('div', { className: 'catalog-layout' },
-                h('aside', { className: 'filter-sidebar' },
-                  h('div', { className: 'filter-sidebar-header' }, h('h3', { className: 'filter-title' }, 'Filters')),
-                  h('div', { className: 'filter-group' },
-                    h('h4', { className: 'filter-group-title' }, 'Category'),
-                    h('select', { className: 'filter-select', value: cat, onChange: (e) => setCat(e.target.value) },
-                      CATEGORIES.map(c => h('option', { key: c.id, value: c.id }, c.name))
-                    )
-                  )
-                ),
-                h('section', null,
-                  h('div', { className: 'catalog-header-bar' },
-                    h('h2', { className: 'catalog-title' }, 'Marketplace Products (' + filtered.length + ')')
-                  ),
-                  h('div', { className: 'product-grid' },
-                    filtered.map(p => h('article', { key: p.id, className: 'marketplace-card', onClick: () => { setSelId(p.id); setPage('details'); } },
-                      h('div', { className: 'card-top-image-box' },
-                        h('img', { src: p.image, className: 'card-main-img' })
-                      ),
-                      h('div', { className: 'card-content-body' },
-                        h('h3', { className: 'card-title' }, p.title),
-                        h('div', { className: 'card-price-row' }, h('span', { className: 'current-price' }, fmtRs(p.price))),
-                        h('div', { className: 'card-actions-row' },
-                          h('button', { className: 'btn-card-add', onClick: (e) => { e.stopPropagation(); addToCart(p); } }, '+ Add to Cart')
-                        )
-                      )
-                    ))
-                  )
-                )
-              ),
-
-              page === 'details' && h('div', { className: 'product-details-page' },
-                h('button', { className: 'btn-back-link', onClick: () => setPage('home') }, '← Back to Products'),
-                h('div', { className: 'details-main-layout' },
-                  h('div', { className: 'details-primary-image-wrapper' },
-                    h('img', { src: selectedProd.image, className: 'details-primary-img' })
-                  ),
-                  h('div', { className: 'details-info-box' },
-                    h('span', { className: 'details-brand-pill' }, selectedProd.brand),
-                    h('h1', { className: 'details-product-title' }, selectedProd.title),
-                    h('div', { className: 'details-price-card' },
-                      h('span', { className: 'details-final-price' }, fmtRs(selectedProd.price)),
-                      selectedProd.originalPrice && h('span', { className: 'details-original-price', style: { marginLeft: '1rem' } }, fmtRs(selectedProd.originalPrice))
-                    ),
-                    h('p', null, selectedProd.description),
-                    h('div', { className: 'details-buttons-row' },
-                      h('button', { className: 'btn-add-to-cart', onClick: () => addToCart(selectedProd) }, '🛒 Add to Cart'),
-                      h('button', { className: 'btn-buy-now', onClick: () => { addToCart(selectedProd); setPage('cart'); } }, '⚡ Buy Now')
-                    )
-                  )
+              page === 'products' && h('div', null,
+                h('h2', null, 'Catalog (' + filtered.length + ')'),
+                h('div', { className: 'product-grid', style: { marginTop: '1rem' } },
+                  filtered.map(p => h('article', { key: p.id, className: 'marketplace-card', onClick: () => { setSelId(p.id); setPage('details'); } },
+                    h('img', { src: p.image, className: 'card-main-img' }),
+                    h('h3', { className: 'card-title' }, p.title),
+                    h('div', { className: 'card-price-row' }, h('span', { className: 'current-price' }, fmtRs(p.price))),
+                    h('button', { className: 'btn-card-add', onClick: (e) => { e.stopPropagation(); addToCart(p); } }, '+ Add to Cart')
+                  ))
                 )
               ),
 
@@ -549,53 +543,135 @@
                 cart.length > 0 && h('div', { className: 'cart-price-details-card' },
                   h('h3', { className: 'price-details-title' }, 'PRICE DETAILS'),
                   h('div', { className: 'price-detail-row' }, h('span', null, 'Total Price'), h('span', null, fmtRs(totalAmt))),
-                  h('div', { className: 'price-detail-row' }, h('span', null, 'Delivery Charges'), h('span', { className: 'free-delivery-tag' }, 'FREE')),
+                  h('div', { className: 'price-detail-row' }, h('span', null, 'Delivery'), h('span', null, 'FREE')),
                   h('div', { className: 'total-amount-row' }, h('span', null, 'Amount Payable'), h('span', null, fmtRs(totalAmt))),
-                  h('button', { className: 'btn-place-order', onClick: () => { placeOrder(cart, totalAmt); alert('🎉 Order placed successfully!'); setPage('orders'); } }, 'PLACE ORDER')
-                )
-              ),
-
-              page === 'wishlist' && h('div', null,
-                h('h2', null, '❤️ My Wishlist (' + wish.length + ')'),
-                h('div', { className: 'product-grid', style: { marginTop: '1rem' } },
-                  wish.length === 0 ? h('p', null, 'No items saved in wishlist.') : wish.map(p =>
-                    h('article', { key: p.id, className: 'marketplace-card' },
-                      h('img', { src: p.image, className: 'card-main-img' }),
-                      h('h3', { className: 'card-title' }, p.title),
-                      h('div', { className: 'card-price-row' }, h('span', { className: 'current-price' }, fmtRs(p.price))),
-                      h('button', { className: 'btn-card-add', onClick: () => addToCart(p) }, '+ Move to Cart')
-                    )
-                  )
+                  h('button', { className: 'btn-place-order', onClick: () => { setCheckoutStep(1); setShowCheckout(true); } }, 'PROCEED TO CHECKOUT 🔒')
                 )
               ),
 
               page === 'orders' && h('div', { className: 'orders-list' },
-                h('h2', null, '📦 My Orders'),
+                h('h2', null, '📦 My Orders & Live Tracking'),
                 orders.map(o => h('div', { key: o.id, className: 'order-card' },
                   h('div', { className: 'order-card-header' },
-                    h('span', { className: 'order-id' }, 'Order #' + o.id),
-                    h('span', { className: 'order-status-badge ' + (o.status === 'Delivered' ? 'delivered' : 'transit') }, o.status)
+                    h('span', { className: 'order-id' }, 'Order #' + o.id + ' • ' + o.date),
+                    h('span', { className: 'order-status-badge ' + (o.status === 'Delivered' ? 'delivered' : 'transit') }, '● ' + o.status)
                   ),
-                  h('div', null, h('p', { className: 'order-item-title' }, o.item), h('strong', null, fmtRs(o.total)))
-                ))
-              ),
-
-              page === 'account' && h('div', { className: 'account-layout' },
-                h('div', { className: 'account-sidebar' },
-                  h('div', { className: 'user-profile-summary' },
-                    h('span', { className: 'profile-avatar' }, '👤'),
-                    h('div', null, h('h4', { className: 'profile-name' }, 'Karthik PM'), h('p', { className: 'profile-email' }, 'karthikpm2005@gmail.com'))
+                  h('div', { className: 'order-meta-info-bar' },
+                    h('span', null, '💳 Payment: ', h('strong', null, o.payment?.method || 'UPI')),
+                    h('span', null, '📱 SMS Alert: ', h('strong', null, o.customer?.phone || '+91 98765 43210')),
+                    h('span', null, '✉️ Email Alert: ', h('strong', null, o.customer?.email || 'karthikpm2005@gmail.com'))
+                  ),
+                  h('div', { className: 'order-items-list' },
+                    o.items.map((it, idx) => h('div', { key: idx, className: 'order-item-row' },
+                      h('img', { src: it.image, className: 'order-item-img' }),
+                      h('div', null, h('h4', { className: 'order-item-title' }, it.title), h('span', null, fmtRs(it.price)))
+                    ))
+                  ),
+                  h('div', { className: 'order-card-footer' },
+                    h('strong', null, 'Total: ' + fmtRs(o.total)),
+                    h('button', { className: 'btn-track-order', onClick: () => setActiveTrackOrd(o) }, 'Live Order Tracking 🚚')
                   )
+                ))
+              )
+            ),
+
+            /* CHECKOUT MODAL */
+            showCheckout && h('div', { className: 'modal-backdrop' },
+              h('div', { className: 'checkout-modal-container' },
+                h('div', { className: 'modal-header' },
+                  h('h3', null, checkoutStep === 1 ? '📍 1. Delivery & Contact Info' : (checkoutStep === 2 ? '💳 2. Select Payment Method' : '🎉 Order Confirmed!')),
+                  h('button', { className: 'modal-close-btn', onClick: () => setShowCheckout(false) }, '✕')
                 ),
-                h('div', { className: 'account-main-content' },
-                  h('div', { className: 'account-card' },
-                    h('h3', { className: 'account-card-title' }, 'Personal Information'),
-                    h('div', { className: 'info-grid' },
-                      h('div', null, h('label', { className: 'info-label' }, 'First Name'), h('input', { className: 'info-input', defaultValue: 'Karthik' })),
-                      h('div', null, h('label', { className: 'info-label' }, 'Last Name'), h('input', { className: 'info-input', defaultValue: 'PM' })),
-                      h('div', null, h('label', { className: 'info-label' }, 'Email Address'), h('input', { className: 'info-input', defaultValue: 'karthikpm2005@gmail.com' })),
-                      h('div', null, h('label', { className: 'info-label' }, 'Mobile Number'), h('input', { className: 'info-input', defaultValue: '+91 9876543210' }))
+                h('div', { className: 'modal-body' },
+                  checkoutStep === 1 && h('div', null,
+                    h('p', null, 'Enter your phone number & email address for instant SMS & email tracking alerts:'),
+                    h('div', { className: 'checkout-form-grid' },
+                      h('div', { className: 'form-group' }, h('label', null, 'Full Name'), h('input', { className: 'form-control', value: custInfo.name, onChange: e => setCustInfo({...custInfo, name: e.target.value}) })),
+                      h('div', { className: 'form-group' }, h('label', null, 'Phone Number (SMS)'), h('input', { className: 'form-control', value: custInfo.phone, onChange: e => setCustInfo({...custInfo, phone: e.target.value}) })),
+                      h('div', { className: 'form-group' }, h('label', null, 'Email Address (Receipt)'), h('input', { className: 'form-control', value: custInfo.email, onChange: e => setCustInfo({...custInfo, email: e.target.value}) })),
+                      h('div', { className: 'form-group full-width' }, h('label', null, 'Shipping Address'), h('textarea', { className: 'form-control', value: custInfo.address, onChange: e => setCustInfo({...custInfo, address: e.target.value}) }))
+                    ),
+                    h('div', { className: 'modal-actions-bar' },
+                      h('button', { className: 'btn-primary', onClick: () => setCheckoutStep(2) }, 'Continue to Payment →')
                     )
+                  ),
+
+                  checkoutStep === 2 && h('div', null,
+                    h('div', { className: 'payment-options-layout' },
+                      h('div', { className: 'payment-tabs-sidebar' },
+                        h('button', { className: 'pay-tab-btn ' + (payMethod === 'upi' ? 'active' : ''), onClick: () => setPayMethod('upi') }, '📱 UPI (GPay/Paytm)'),
+                        h('button', { className: 'pay-tab-btn ' + (payMethod === 'card' ? 'active' : ''), onClick: () => setPayMethod('card') }, '💳 Credit/Debit Card'),
+                        h('button', { className: 'pay-tab-btn ' + (payMethod === 'netbanking' ? 'active' : ''), onClick: () => setPayMethod('netbanking') }, '🏦 Net Banking'),
+                        h('button', { className: 'pay-tab-btn ' + (payMethod === 'cod' ? 'active' : ''), onClick: () => setPayMethod('cod') }, '💵 Cash on Delivery')
+                      ),
+                      h('div', { className: 'payment-tab-content' },
+                        payMethod === 'upi' && h('div', { className: 'qr-box' }, h('p', null, 'Scan QR Code with Google Pay or PhonePe'), h('strong', { className: 'qr-amt' }, 'Pay ' + fmtRs(totalAmt))),
+                        payMethod === 'card' && h('div', null, h('p', null, 'Enter Card Number:'), h('input', { className: 'form-control', defaultValue: '4532 •••• •••• 8920' })),
+                        payMethod === 'netbanking' && h('div', null, h('p', null, 'Select Bank:'), h('select', { className: 'form-control' }, h('option', null, 'HDFC Bank'), h('option', null, 'ICICI Bank'), h('option', null, 'State Bank of India (SBI)'))),
+                        payMethod === 'cod' && h('div', null, h('p', null, 'Pay cash upon delivery. OTP sent to ' + custInfo.phone))
+                      )
+                    ),
+                    h('div', { className: 'modal-actions-bar' },
+                      h('button', { className: 'btn-secondary', onClick: () => setCheckoutStep(1) }, '← Back'),
+                      h('button', { className: 'btn-primary success-btn', onClick: handlePayConfirm }, 'PAY ' + fmtRs(totalAmt) + ' & CONFIRM ORDER →')
+                    )
+                  ),
+
+                  checkoutStep === 3 && placedOrd && h('div', { style: { textAlign: 'center' } },
+                    h('h2', { style: { color: '#388e3c', margin: '1rem 0' } }, '🎉 Order Confirmed!'),
+                    h('p', null, 'Order ID: ', h('strong', null, '#' + placedOrd.id)),
+                    h('div', { style: { textAlign: 'left', marginTop: '1.5rem' } },
+                      h('div', { className: 'sms-alert-card' }, h('div', { className: 'sms-header' }, '💬 SMS SENT TO ' + placedOrd.customer.phone), h('p', null, placedOrd.notifications[0]?.message)),
+                      h('div', { className: 'email-alert-card' }, h('div', { className: 'sms-header', style: { color: '#2874f0' } }, '✉️ EMAIL SENT TO ' + placedOrd.customer.email), h('p', null, placedOrd.notifications[1]?.message))
+                    ),
+                    h('div', { className: 'modal-actions-bar', style: { justifyContent: 'center', marginTop: '1.5rem' } },
+                      h('button', { className: 'btn-primary', onClick: () => { setShowCheckout(false); setPage('orders'); } }, 'View Order & Live Tracking 🚚')
+                    )
+                  )
+                )
+              )
+            ),
+
+            /* TRACKING MODAL */
+            trackModalOrd && h('div', { className: 'modal-backdrop' },
+              h('div', { className: 'tracking-modal-container' },
+                h('div', { className: 'modal-header' },
+                  h('h3', null, '🚚 Live Order Shipment Tracking'),
+                  h('button', { className: 'modal-close-btn', onClick: () => setActiveTrackOrd(null) }, '✕')
+                ),
+                h('div', { className: 'modal-body' },
+                  h('div', { className: 'tracking-timeline-box' },
+                    h('div', { className: 'timeline-progress-bar' },
+                      h('div', { className: 'timeline-progress-fill', style: { width: (((trackModalOrd.trackingStage || 1) - 1) / 4 * 100) + '%' } })
+                    ),
+                    h('div', { className: 'timeline-steps-nodes' },
+                      ['Confirmed', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered'].map((st, i) => {
+                        const comp = (trackModalOrd.trackingStage || 1) >= (i + 1);
+                        const curr = (trackModalOrd.trackingStage || 1) === (i + 1);
+                        return h('div', { key: i, className: 'timeline-node-item ' + (comp ? 'completed ' : '') + (curr ? 'current' : '') },
+                          h('div', { className: 'node-icon-circle' }, (i + 1)),
+                          h('span', { className: 'node-title' }, st)
+                        );
+                      })
+                    )
+                  ),
+
+                  h('div', { className: 'courier-agent-card' },
+                    h('div', { className: 'agent-info' },
+                      h('h4', null, 'Executive: ' + (trackModalOrd.tracking?.agentName || 'Rajesh Kumar')),
+                      h('p', null, 'Partner: ExpressLogistics India • Phone: ' + (trackModalOrd.tracking?.agentPhone || '+91 98123 45678'))
+                    ),
+                    h('button', { className: 'btn-call-agent', onClick: () => alert('Calling agent...') }, '📞 Call Agent')
+                  ),
+
+                  (trackModalOrd.trackingStage || 1) < 5 && h('button', { className: 'btn-simulate-next', onClick: () => updateOrderStatus(trackModalOrd.id) }, '⚡ Advance Delivery Stage & Send SMS/Email Alert →'),
+
+                  h('h4', { style: { marginTop: '1.5rem', marginBottom: '0.5rem' } }, '📲 Customer Notification Logs'),
+                  h('div', { style: { display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '200px', overflowY: 'auto' } },
+                    (trackModalOrd.notifications || []).map((n, idx) => h('div', { key: idx, className: 'log-entry-card ' + (n.type === 'SMS' ? 'sms-log' : 'email-log') },
+                      h('div', { className: 'log-entry-header' }, h('span', null, n.type + ' to ' + n.recipient), h('span', null, n.time)),
+                      h('p', null, n.message)
+                    ))
                   )
                 )
               )
@@ -603,18 +679,6 @@
 
             /* Footer */
             h('footer', { className: 'marketplace-footer' },
-              h('div', { className: 'footer-top-columns' },
-                h('div', null, h('h4', { className: 'footer-title' }, 'ABOUT'), h('ul', { className: 'footer-list' }, h('li', null, 'About Us'), h('li', null, 'Careers'), h('li', null, 'ShopSphere Stories'))),
-                h('div', null, h('h4', { className: 'footer-title' }, 'HELP'), h('ul', { className: 'footer-list' }, h('li', null, 'Payments'), h('li', null, 'Shipping'), h('li', null, 'Cancellation & Returns'))),
-                h('div', null, h('h4', { className: 'footer-title' }, 'POLICY'), h('ul', { className: 'footer-list' }, h('li', null, 'Return Policy'), h('li', null, 'Terms of Use'), h('li', null, 'Security'))),
-                h('div', null, h('h4', { className: 'footer-title' }, 'SOCIAL'), h('ul', { className: 'footer-list' }, h('li', null, 'Facebook'), h('li', null, 'Twitter'), h('li', null, 'YouTube')))
-              ),
-              h('div', { className: 'footer-bottom-trust-bar' },
-                h('span', null, '⚡ Express Delivery'),
-                h('span', null, '🔒 100% Secure Payments'),
-                h('span', null, '🔄 7-Day Easy Returns'),
-                h('span', null, '📞 24x7 Customer Support')
-              ),
               h('div', { className: 'footer-copyright-bar' }, '© 2026 ShopSphere Internet Private Limited. All rights reserved.')
             )
           );
@@ -624,21 +688,7 @@
           return h(CartProvider, null, h(WishProvider, null, h(AppMain)));
         }
 
-        const rootEl = document.getElementById('root');
-        ReactDOM.createRoot(rootEl).render(h(App));
-      } else {
-        // --- 4. FALLBACK VANILLA JS RENDERER (If React CDNs fail / offline) ---
-        console.warn('React UMD CDNs offline. Initializing Vanilla DOM Engine.');
-        document.getElementById('root').innerHTML = `
-          <div className="app-container" style="padding:2rem; text-align:center; background:#ffffff; margin:2rem auto; max-width:800px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1)">
-            <h1 style="color:#2874f0; font-size:2rem; margin-bottom:1rem">🛍️ ShopSphere Indian Marketplace</h1>
-            <p style="font-size:1.1rem; color:#565656; margin-bottom:1.5rem">Welcome to ShopSphere! To explore our full interactive marketplace app locally, please open this file with an active internet connection or via a local HTTP server.</p>
-            <div style="background:#f1f3f6; padding:1rem; border-radius:8px; text-align:left; font-family:monospace; font-size:0.9rem">
-              <strong>Quick Start via Web Server:</strong><br/>
-              npx serve .
-            </div>
-          </div>
-        `;
+        ReactDOM.createRoot(document.getElementById('root')).render(h(App));
       }
     })();
   </script>

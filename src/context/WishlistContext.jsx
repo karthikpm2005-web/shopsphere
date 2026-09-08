@@ -88,16 +88,74 @@ export function WishlistProvider({ children }) {
     });
   };
 
-  const addOrder = (orderItems, totalAmount) => {
+  const addOrder = (orderItems, totalAmount, customerInfo = {}, paymentInfo = {}) => {
+    const orderId = `SS${Math.floor(10000 + Math.random() * 90000)}`;
+    const nowStr = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    
+    const phone = customerInfo.phone || '+91 98765 43210';
+    const email = customerInfo.email || 'karthikpm2005@gmail.com';
+    const name = customerInfo.name || 'Karthik PM';
+    
+    const initialSMS = `💬 SMS to ${phone}: Hi ${name}, your ShopSphere Order #${orderId} of ₹${Math.round(totalAmount).toLocaleString('en-IN')} is CONFIRMED via ${paymentInfo.method || 'UPI Express'}! Track live at shopsphere.in/track/${orderId}`;
+    const initialEmail = `✉️ Email to ${email}: Subject: Order Confirmation #${orderId} - ShopSphere India. Dear ${name}, thank you for your purchase of ${orderItems.length} item(s).`;
+
     const newOrder = {
-      id: `SS${Math.floor(10000 + Math.random() * 90000)}`,
-      date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }),
-      status: 'In Transit',
+      id: orderId,
+      date: nowStr,
+      status: 'Order Placed & Confirmed',
+      trackingStage: 1,
       items: orderItems,
-      total: totalAmount
+      total: totalAmount,
+      customer: {
+        name,
+        phone,
+        email,
+        address: customerInfo.address || 'Flat 402, Royal Palms, Indiranagar, Bengaluru, KA - 560038'
+      },
+      payment: {
+        method: paymentInfo.method || 'UPI Express',
+        details: paymentInfo.details || 'karthik@okaxis',
+        status: paymentInfo.method === 'Cash on Delivery (COD)' ? 'Pending COD' : 'Paid'
+      },
+      tracking: {
+        courier: 'ExpressLogistics India',
+        trackingId: `EX-${Math.floor(100000 + Math.random() * 900000)}`,
+        agentName: 'Rajesh Kumar',
+        agentPhone: '+91 98123 45678',
+        estimatedDelivery: 'Tomorrow by 5:00 PM'
+      },
+      notifications: [
+        { type: 'SMS', recipient: phone, message: initialSMS, time: nowStr },
+        { type: 'EMAIL', recipient: email, message: initialEmail, time: nowStr }
+      ]
     };
+
     setOrders(prev => [newOrder, ...prev]);
     return newOrder;
+  };
+
+  const updateOrderStatus = (orderId) => {
+    setOrders(prev => prev.map(order => {
+      if (order.id !== orderId) return order;
+      const stages = ['Order Placed & Confirmed', 'Packed at Bengaluru Warehouse', 'Shipped via Express Logistics', 'Out for Delivery', 'Delivered'];
+      const nextStage = Math.min(5, (order.trackingStage || 1) + 1);
+      const stageName = stages[nextStage - 1];
+      const nowStr = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+      
+      const newSMS = `💬 SMS to ${order.customer.phone}: Update on Order #${order.id}: Status is now "${stageName}". Agent: ${order.tracking.agentName} (${order.tracking.agentPhone}).`;
+      const newEmail = `✉️ Email to ${order.customer.email}: Order #${order.id} Update: Your package status has changed to "${stageName}".`;
+
+      return {
+        ...order,
+        trackingStage: nextStage,
+        status: stageName,
+        notifications: [
+          { type: 'SMS', recipient: order.customer.phone, message: newSMS, time: nowStr },
+          { type: 'EMAIL', recipient: order.customer.email, message: newEmail, time: nowStr },
+          ...order.notifications
+        ]
+      };
+    }));
   };
 
   return (
@@ -110,7 +168,8 @@ export function WishlistProvider({ children }) {
         removeFromWishlist,
         isInWishlist,
         addRecentlyViewed,
-        addOrder
+        addOrder,
+        updateOrderStatus
       }}
     >
       {children}
@@ -125,3 +184,4 @@ export function useWishlist() {
   }
   return context;
 }
+
